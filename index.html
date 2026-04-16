@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Centers — Dialpad Admin</title>
+  <style>
+    :root {
+      --bg:             #F9F9F9;
+      --surface:        #FFFFFF;
+      --border:         rgba(28,28,28,0.11);
+      --border-md:      rgba(28,28,28,0.17);
+      --text-1:         #1C1C1C;
+      --text-2:         rgba(28,28,28,0.65);
+      --text-3:         rgba(28,28,28,0.4);
+      --active-bg:      rgba(28,28,28,0.14);
+      --hover-bg:       rgba(28,28,28,0.06);
+      --purple:         #7C52FF;
+      --purple-hover:   #6B3FEE;
+      --purple-surface: #EDE9FF;
+      --purple-border:  #C4B5FD;
+      --purple-text:    #5B21B6;
+      --success:        #15803D;
+      --success-surface:#F0FDF4;
+      --success-border: #BBF7D0;
+      --warning:        #B45309;
+      --warning-surface:#FFFBEB;
+      --warning-border: #FDE68A;
+      --danger:         #B91C1C;
+      --danger-surface: #FEF2F2;
+      --danger-border:  #FECACA;
+      --info:           #1D4ED8;
+      --info-surface:   #EFF6FF;
+      --info-border:    #BFDBFE;
+      --teal:           #0F766E;
+      --teal-surface:   #F0FDFA;
+      --teal-border:    #99F6E4;
+      --skinny-w:  50px;
+      --sidebar-w: 216px;
+      --header-h:  66px;
+      --drawer-w:  480px;
+      --font: "SF Pro", -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif;
+      --mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+      --fs: 15px; --fs-sm: 13px; --fs-xs: 12px;
+      --shadow-drawer: -4px 0 20px rgba(0,0,0,0.08), -1px 0 4px rgba(0,0,0,0.04);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); font-size: var(--fs); background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; line-height: 21px; }
+
+    /* ── Layout ── */
+    .app { display: flex; min-height: 100vh; }
+
+    /* ── Skinny nav ── */
+    .skinny-nav { width: var(--skinny-w); background: var(--bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 12px 0; flex-shrink: 0; z-index: 30; }
+    .skinny-logo { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#7C52FF,#B06EFF); display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+    .skinny-logo svg { width: 16px; height: 16px; fill: #fff; }
+    .skinny-icons { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 24px; flex: 1; }
+    .skinny-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; color: var(--text-3); transition: background .1s, color .1s; }
+    .skinny-icon:hover { background: var(--hover-bg); color: var(--text-2); }
+    .skinny-icon.active { background: var(--active-bg); color: var(--text-1); }
+    .skinny-icon svg { width: 18px; height: 18px; }
+    .skinny-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-bottom: 8px; }
+
+    /* ── Root layout ── */
+    .root-layout { flex: 1; display: grid; grid-template-rows: var(--header-h) 1fr; grid-template-columns: var(--sidebar-w) 1fr; grid-template-areas: "header header" "sidebar content"; background: var(--surface); min-height: 100vh; overflow: hidden; }
+
+    /* ── Header ── */
+    .root-header { grid-area: header; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 16px; }
+    .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: var(--fs-sm); color: var(--text-2); }
+    .breadcrumb-sep { color: var(--text-3); }
+    .bc-active { color: var(--text-1); font-weight: 500; }
+    .search-box { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-md); border-radius: 6px; padding: 6px 12px; font-size: var(--fs-sm); color: var(--text-3); width: 212px; }
+    .search-box svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ── Sidebar ── */
+    .root-sidebar { grid-area: sidebar; background: var(--bg); border-right: 1px solid var(--border); overflow-y: auto; }
+    .nav-list { list-style: none; padding: 16px 0; display: flex; flex-direction: column; gap: 4px; }
+    .nav-item { padding: 6px 16px; font-size: var(--fs); font-weight: 400; color: var(--text-1); cursor: pointer; transition: background .1s; }
+    .nav-item:hover { background: var(--hover-bg); }
+    .nav-item.active { background: var(--active-bg); }
+
+    /* ── Content ── */
+    .root-content { grid-area: content; background: var(--surface); overflow-y: auto; padding: 28px 32px 40px; }
+
+    /* ── Buttons ── */
+    .btn { font-family: var(--font); font-size: var(--fs-sm); border-radius: 6px; padding: 7px 14px; cursor: pointer; font-weight: 500; border: none; line-height: 1; display: inline-flex; align-items: center; gap: 6px; transition: background .1s; white-space: nowrap; }
+    .btn-primary { background: var(--purple); color: #fff; }
+    .btn-primary:hover { background: var(--purple-hover); }
+    .btn-base { background: var(--surface); color: var(--text-1); border: 1px solid var(--border-md); }
+    .btn-base:hover { background: var(--bg); }
+    .btn-ai { background: var(--purple); color: #fff; }
+    .btn-ai:hover { background: var(--purple-hover); }
+    .btn-ghost { background: none; border: none; padding: 6px 10px; color: var(--text-2); font-size: var(--fs-sm); cursor: pointer; font-family: var(--font); border-radius: 4px; }
+    .btn-ghost:hover { background: var(--hover-bg); }
+
+    /* ── Alert banner ── */
+    .alert-banner { display: flex; align-items: center; gap: 10px; background: var(--info-surface); border: 1px solid var(--info-border); border-radius: 8px; padding: 10px 14px; margin-bottom: 22px; font-size: var(--fs-sm); }
+    .alert-banner-icon { width: 20px; height: 20px; flex-shrink: 0; background: var(--info); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 700; }
+    .alert-banner-text { flex: 1; color: var(--info); line-height: 1.45; }
+    .alert-banner-text strong { font-weight: 600; }
+    .alert-badge { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; background: white; color: var(--info); border: 1px solid var(--info-border); border-radius: 100px; padding: 2px 8px; flex-shrink: 0; }
+    .alert-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .alert-btn-p { font-size: var(--fs-xs); font-weight: 600; font-family: var(--font); background: var(--info); color: #fff; border: none; border-radius: 5px; padding: 5px 11px; cursor: pointer; }
+    .alert-btn-p:hover { background: #1E40AF; }
+    .alert-btn-g { font-size: var(--fs-xs); font-weight: 500; font-family: var(--font); background: none; color: var(--info); border: 1px solid var(--info-border); border-radius: 5px; padding: 5px 9px; cursor: pointer; }
+    .alert-btn-g:hover { background: white; }
+
+    /* ── Page header ── */
+    .page-hd { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; }
+    .page-hd-left h1 { font-size: 22px; font-weight: 600; color: var(--text-1); letter-spacing: -.3px; line-height: 1.2; }
+    .page-hd-left p { font-size: var(--fs-sm); color: var(--text-2); margin-top: 4px; }
+    .page-hd-right { display: flex; align-items: center; gap: 8px; }
+
+    /* ── Stats row ── */
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 15px 16px; }
+    .stat-label { font-size: var(--fs-xs); color: var(--text-2); margin-bottom: 5px; }
+    .stat-val { font-size: 26px; font-weight: 600; color: var(--text-1); letter-spacing: -.5px; line-height: 1; }
+    .stat-val.warn { color: var(--warning); }
+    .stat-val.danger { color: var(--danger); }
+    .stat-sub { font-size: var(--fs-xs); color: var(--text-3); margin-top: 4px; }
+    .stat-ai { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--purple-text); background: var(--purple-surface); border-radius: 100px; padding: 2px 7px; margin-top: 6px; }
+
+    /* ── Quick-action cards ── */
+    .section-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+    .qa-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 14px 15px; cursor: pointer;
+      transition: border-color .15s, box-shadow .15s;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .qa-card:hover { border-color: var(--purple-border); box-shadow: 0 0 0 3px var(--purple-surface); }
+    .qa-icon { font-size: 18px; line-height: 1; }
+    .qa-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
+    .qa-desc { font-size: var(--fs-xs); color: var(--text-2); line-height: 1.4; }
+    .qa-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; }
+    .qa-count { font-size: 11px; font-weight: 600; border-radius: 100px; padding: 2px 7px; }
+    .qa-count.warn { background: var(--warning-surface); color: var(--warning); }
+    .qa-count.neutral { background: var(--bg); color: var(--text-2); border: 1px solid var(--border); }
+    .qa-count.purple { background: var(--purple-surface); color: var(--purple-text); }
+    .qa-arrow { font-size: 11px; color: var(--purple-text); font-weight: 600; }
+
+    /* ── Table toolbar ── */
+    .table-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .tt-left { display: flex; align-items: center; gap: 8px; }
+    .tt-count { font-size: var(--fs-sm); color: var(--text-2); }
+    .tt-selected { font-size: var(--fs-xs); font-weight: 600; background: var(--purple-surface); color: var(--purple-text); border: 1px solid var(--purple-border); border-radius: 100px; padding: 2px 9px; display: none; }
+    .tt-right { display: flex; align-items: center; gap: 6px; }
+
+    /* ── Table ── */
+    .data-table-wrap { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+    .data-table thead tr { background: var(--bg); border-bottom: 1px solid var(--border); }
+    .data-table th { padding: 9px 13px; font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-align: left; white-space: nowrap; }
+    .data-table th:first-child { width: 36px; padding: 9px 11px; }
+    .data-table td { padding: 11px 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .data-table td:first-child { padding: 11px 11px; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover td { background: rgba(28,28,28,0.02); }
+    input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--purple); cursor: pointer; }
+    .badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; border-radius: 100px; padding: 2px 8px; white-space: nowrap; }
+    .badge-warn { background: var(--warning-surface); color: var(--warning); }
+    .badge-ok { background: var(--success-surface); color: var(--success); }
+    .badge-danger { background: var(--danger-surface); color: var(--danger); }
+    .badge-neutral { background: var(--bg); color: var(--text-2); border: 1px solid var(--border); }
+    .badge-off { background: var(--bg); color: var(--text-3); border: 1px solid var(--border); }
+    .cc-link { color: var(--purple); font-weight: 500; cursor: pointer; }
+    .cc-link:hover { text-decoration: underline; }
+    .btn-fix { font-family: var(--font); font-size: 11px; font-weight: 600; color: var(--purple-text); background: var(--purple-surface); border: 1px solid var(--purple-border); border-radius: 5px; padding: 3px 9px; cursor: pointer; white-space: nowrap; transition: background .1s; }
+    .btn-fix:hover { background: var(--purple-border); }
+
+    /* ── Overlay ── */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 90; }
+    .overlay.open { display: block; }
+
+    /* ── Drawer ── */
+    .drawer { position: fixed; top: 0; right: calc(-1 * var(--drawer-w) - 20px); width: var(--drawer-w); height: 100vh; background: var(--surface); border-left: 1px solid var(--border); box-shadow: var(--shadow-drawer); z-index: 100; transition: right .22s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
+    .drawer.open { right: 0; }
+    .drawer-header { padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .drawer-hd-left { display: flex; align-items: center; gap: 10px; }
+    .drawer-ai-icon { width: 28px; height: 28px; background: var(--purple); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .drawer-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
+    .drawer-close { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-2); font-size: 16px; }
+    .drawer-close:hover { background: var(--hover-bg); }
+    .drawer-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; padding: 0 16px; }
+    .drawer-tab { padding: 10px 14px 9px; font-size: var(--fs-sm); font-weight: 400; color: var(--text-2); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .1s, border-color .1s; }
+    .drawer-tab:hover { color: var(--text-1); }
+    .drawer-tab.active { color: var(--purple); border-bottom-color: var(--purple); font-weight: 500; }
+    .drawer-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
+    .drawer-panel { padding: 16px; flex: 1; }
+    .drawer-panel.hidden { display: none; }
+
+    .sim-notice { display: none; background: var(--warning-surface); border: 1px solid var(--warning-border); border-radius: 6px; padding: 10px 12px; font-size: var(--fs-sm); color: var(--warning); margin-bottom: 14px; line-height: 1.45; }
+
+    /* ── Category sections ── */
+    .sugg-section { margin-bottom: 14px; }
+    .sugg-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .phase-pip { font-size: 10px; font-weight: 600; border-radius: 100px; padding: 1px 6px; letter-spacing: .03em; }
+    .pip-1 { background: var(--teal-surface); color: var(--teal); border: 1px solid var(--teal-border); }
+    .pip-2 { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
+    .pip-3 { background: var(--info-surface); color: var(--info); border: 1px solid var(--info-border); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { font-size: var(--fs-xs); font-weight: 500; background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 5px; padding: 5px 10px; cursor: pointer; white-space: nowrap; transition: background .1s, border-color .1s; }
+    .chip:hover { background: var(--hover-bg); border-color: rgba(28,28,28,0.22); }
+
+    /* ── Command input ── */
+    .cmd-section { margin-top: 4px; }
+    .cmd-textarea { width: 100%; font-family: var(--mono); font-size: var(--fs-sm); background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 6px; padding: 10px 12px; resize: none; outline: none; line-height: 1.5; }
+    .cmd-textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-surface); }
+    .cmd-textarea::placeholder { color: var(--text-3); }
+    .cmd-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+    .cmd-hint { font-size: var(--fs-xs); color: var(--text-3); }
+    .btn-run { font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; background: var(--purple); color: #fff; border: none; border-radius: 6px; padding: 7px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .btn-run:hover { background: var(--purple-hover); }
+    .btn-run.simulate { background: var(--warning); }
+    .btn-run.simulate:hover { background: #92400E; }
+
+    /* ── Chat pane ── */
+    .chat-pane { display: none; flex-direction: column; padding: 16px; }
+    .chat-pane.visible { display: flex; }
+    .msg-user { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+    .msg-bubble { background: var(--purple); color: #fff; border-radius: 12px 12px 2px 12px; padding: 8px 13px; font-size: var(--fs-sm); max-width: 90%; line-height: 1.5; }
+
+    .parse-steps { display: none; flex-direction: column; gap: 0; margin-bottom: 12px; }
+    .parse-steps.visible { display: flex; }
+    .step-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); margin-bottom: 6px; font-size: var(--fs-sm); color: var(--text-2); opacity: .35; transition: opacity .2s; }
+    .step-row.done { color: var(--text-1); }
+    .step-icon-wrap { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .step-spinner { width: 14px; height: 14px; border: 2px solid var(--purple-border); border-top-color: var(--purple); border-radius: 50%; animation: spin .7s linear infinite; }
+    .step-idle { width: 14px; height: 14px; border: 2px solid var(--border-md); border-radius: 50%; }
+    .step-check { width: 18px; height: 18px; border-radius: 50%; background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); font-size: 10px; font-weight: 700; display: none; align-items: center; justify-content: center; }
+    .agent-msg { display: none; flex-direction: column; gap: 10px; }
+
+    .entity-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .entity-card.simulate-card { border-color: var(--warning-border); }
+    .entity-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-bottom: 1px solid var(--border); background: var(--surface); }
+    .entity-card.simulate-card .entity-header { border-bottom-color: var(--warning-border); }
+    .entity-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; }
+    .entity-mode-tag { font-size: 10px; font-weight: 600; border-radius: 100px; padding: 1px 7px; }
+    .entity-mode-tag.admin { background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); }
+    .entity-mode-tag.sim { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
+    .entity-rows { padding: 8px 0; }
+    .entity-row { display: flex; padding: 5px 13px; font-size: var(--fs-sm); gap: 10px; align-items: baseline; }
+    .e-key { width: 60px; flex-shrink: 0; font-size: var(--fs-xs); color: var(--text-3); font-weight: 500; }
+    .e-val { color: var(--text-1); line-height: 1.4; }
+    .e-code { font-family: var(--mono); font-size: 11px; background: var(--surface); color: var(--purple-text); border: 1px solid var(--purple-border); border-radius: 3px; padding: 1px 4px; }
+
+    .diff-preview { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-size: var(--fs-sm); }
+    .diff-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .diff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
+    .diff-toggle-all { display: flex; align-items: center; gap: 6px; font-size: var(--fs-xs); color: var(--text-2); }
+    .diff-table { width: 100%; border-collapse: collapse; }
+    .diff-table th { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); padding: 6px 12px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .diff-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .prev-row { display: none; }
+    .prev-row.show { display: table-row; }
+    .prev-row.excluded { opacity: .45; }
+    .diff-table tbody tr:last-child td { border-bottom: none; }
+    .diff-old { color: var(--text-3); text-decoration: line-through; font-size: var(--fs-xs); }
+    .diff-arr { color: var(--text-3); margin: 0 4px; }
+    .diff-new { color: var(--success); font-weight: 500; }
+    .diff-new.sim { color: var(--warning); }
+    .cell-name { font-weight: 500; }
+    .more-row td { color: var(--text-3); font-size: var(--fs-xs); padding: 8px 12px; }
+    .chip-update { display: inline-block; font-size: 10px; font-weight: 600; background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); border-radius: 100px; padding: 2px 7px; }
+    .chip-update.sim { background: var(--warning-surface); color: var(--warning); border-color: var(--warning-border); }
+    .chip-excluded { display: inline-block; font-size: 10px; font-weight: 600; background: var(--bg); color: var(--text-3); border: 1px solid var(--border); border-radius: 100px; padding: 2px 7px; }
+    .sim-note { display: none; background: var(--warning-surface); border: 1px solid var(--warning-border); border-radius: 6px; padding: 9px 12px; font-size: var(--fs-sm); color: var(--warning); margin-top: 10px; line-height: 1.45; }
+
+    /* ── Success pane ── */
+    .success-pane { display: none; flex-direction: column; align-items: center; padding: 28px 20px 16px; text-align: center; }
+    .success-pane.visible { display: flex; }
+    .success-icon-wrap { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 12px; }
+    .success-icon-wrap.applied { background: var(--success-surface); color: var(--success); border: 1.5px solid var(--success-border); }
+    .success-icon-wrap.simulated { background: var(--warning-surface); color: var(--warning); border: 1.5px solid var(--warning-border); }
+    .success-title { font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+    .success-sub { font-size: var(--fs-sm); color: var(--text-2); max-width: 300px; line-height: 1.5; margin-bottom: 18px; }
+    .success-stat { display: flex; flex-direction: column; align-items: center; border-radius: 8px; padding: 14px 24px; margin-bottom: 18px; min-width: 160px; }
+    .success-stat.applied { background: var(--success-surface); border: 1px solid var(--success-border); }
+    .success-stat.simulated { background: var(--warning-surface); border: 1px solid var(--warning-border); }
+    .success-num { font-size: 32px; font-weight: 700; line-height: 1; }
+    .success-num.applied { color: var(--success); }
+    .success-num.simulated { color: var(--warning); }
+    .success-num-label { font-size: var(--fs-xs); color: var(--text-2); margin-top: 4px; font-weight: 500; }
+    .activity-entry { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: left; margin-bottom: 14px; }
+    .ae-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+    .ae-row { display: flex; align-items: center; justify-content: space-between; }
+    .ae-action { font-size: var(--fs-sm); font-weight: 500; }
+    .ae-time { font-size: var(--fs-xs); color: var(--text-3); }
+    .ae-sub { font-size: var(--fs-xs); color: var(--text-2); margin-top: 4px; }
+    .link-row { display: flex; gap: 12px; margin-bottom: 14px; }
+    .link-btn { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; background: none; border: none; color: var(--purple-text); cursor: pointer; padding: 0; }
+    .link-btn:hover { text-decoration: underline; }
+    .link-btn.danger { color: var(--danger); }
+    .btn-reset { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+    .btn-reset:hover { background: var(--hover-bg); }
+
+    /* ── History pane ── */
+    .suggestions-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .recent-list { display: flex; flex-direction: column; gap: 6px; }
+    .recent-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: var(--fs-sm); }
+    .recent-icon { font-size: 16px; flex-shrink: 0; }
+    .recent-body { flex: 1; min-width: 0; }
+    .recent-action { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .recent-meta { font-size: var(--fs-xs); color: var(--text-3); margin-top: 2px; }
+    .recent-status { font-size: 11px; font-weight: 600; border-radius: 100px; padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+    .rs-done { background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); }
+    .rs-pending { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
+
+    /* ── Drawer footer ── */
+    .drawer-footer { padding: 12px 16px; border-top: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+    .drawer-footer.hidden { display: none; }
+    .btn-apply { font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; background: var(--purple); color: #fff; border: none; border-radius: 6px; padding: 9px 16px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
+    .btn-apply:hover { background: var(--purple-hover); }
+    .btn-apply:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-apply.sim { background: var(--warning); }
+    .btn-apply.sim:hover { background: #92400E; }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; }
+    .btn-secondary-action { font-family: var(--font); font-size: var(--fs-xs); font-weight: 500; background: none; border: none; color: var(--text-2); cursor: pointer; padding: 4px 2px; display: flex; align-items: center; gap: 5px; }
+    .btn-secondary-action:hover { color: var(--text-1); }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1C1C1C; color: #fff; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 9px; font-size: var(--fs-sm); box-shadow: 0 4px 16px rgba(0,0,0,.16); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; transform: translateX(-50%) translateY(8px); white-space: nowrap; }
+    .toast.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .toast-dot { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+    .toast-dot.applied { background: var(--success); color: #fff; }
+    .toast-dot.simulated { background: var(--warning); color: #fff; }
+    .toast-sep { color: rgba(255,255,255,.35); }
+    .toast-link { color: #A78BFA; cursor: pointer; font-weight: 500; }
+  </style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<div class="app">
+  <!-- Skinny nav -->
+  <div class="skinny-nav">
+    <div class="skinny-logo">
+      <svg viewBox="0 0 20 20"><path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 3a2 2 0 110 4 2 2 0 010-4zm0 10.5c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+    </div>
+    <ol class="skinny-icons">
+      <li class="skinny-icon" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></li>
+      <li class="skinny-icon" title="Users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></li>
+      <li class="skinny-icon" title="Favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></li>
+      <li class="skinny-icon active" title="Admin Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></li>
+      <li class="skinny-icon" title="Analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></li>
+      <li class="skinny-icon" title="Activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 100 .5M3 4v4h4"/></svg></li>
+      <li class="skinny-icon" title="AI"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></li>
+    </ol>
+    <div class="skinny-bottom">
+      <div class="skinny-icon" title="Integrations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+    </div>
+  </div>
+
+  <!-- Root layout -->
+  <div class="root-layout">
+    <header class="root-header">
+      <div class="breadcrumb">
+        <span>Admin</span><span class="breadcrumb-sep">/</span>
+        <span>Admin Settings</span><span class="breadcrumb-sep">/</span>
+        <span class="bc-active">Contact Centers</span>
+      </div>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search Help Center
+      </div>
+    </header>
+
+    <aside class="root-sidebar">
+      <ul class="nav-list">
+        <li class="nav-item">Company settings</li>
+        <li class="nav-item">Office management</li>
+        <li class="nav-item">Licenses</li>
+        <li class="nav-item active">Contact Centers</li>
+        <li class="nav-item">AI Settings</li>
+        <li class="nav-item">Access control</li>
+        <li class="nav-item">Integrations</li>
+        <li class="nav-item">Reserved Numbers</li>
+        <li class="nav-item">Number management</li>
+        <li class="nav-item">Authentication</li>
+        <li class="nav-item">SMS Management</li>
+        <li class="nav-item">Shared Contacts</li>
+        <li class="nav-item">Deskphone settings</li>
+        <li class="nav-item">Billing</li>
+      </ul>
+    </aside>
+
+    <main class="root-content">
+
+      <!-- Phase 3 proactive banner -->
+      <div class="alert-banner" id="alertBanner">
+        <div class="alert-banner-icon">✦</div>
+        <div class="alert-banner-text">
+          <strong>AI detected 3 issues</strong> — 11 CCs missing holiday hours, 8 CCs missing after-hours greetings, and 23 CCs have call recording disabled despite your compliance policy.
+        </div>
+        <span class="alert-badge">Phase 3 · Proactive</span>
+        <div class="alert-actions">
+          <button class="alert-btn-p" onclick="openWithCmd('Fix all flagged issues: enable call recording on 23 CCs, set holiday hours on 11 CCs, add after-hours greetings on 8 CCs')">Fix all</button>
+          <button class="alert-btn-g" onclick="document.getElementById('alertBanner').style.display='none'">Dismiss</button>
+        </div>
+      </div>
+
+      <!-- Page header -->
+      <div class="page-hd">
+        <div class="page-hd-left">
+          <h1>Contact Centers</h1>
+          <p>47 contact centers across NA, EMEA, and APAC</p>
+        </div>
+        <div class="page-hd-right">
+          <button class="btn btn-base"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New contact center</button>
+          <button class="btn btn-ai" onclick="openDrawer()">✦ AI Admin</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total contact centers</div>
+          <div class="stat-val">47</div>
+          <div class="stat-sub">across 3 regions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Recording disabled</div>
+          <div class="stat-val danger">23</div>
+          <div class="stat-sub">compliance risk</div>
+          <div class="stat-ai">✦ AI flagged</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Holiday hours missing</div>
+          <div class="stat-val warn">11</div>
+          <div class="stat-sub">of 47 contact centers</div>
+          <div class="stat-ai">✦ AI flagged</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg config age</div>
+          <div class="stat-val">14mo</div>
+          <div class="stat-sub">last bulk update Apr 2025</div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="section-label">Bulk actions — what AI Admin can do</div>
+      <div class="quick-grid">
+        <div class="qa-card" onclick="openWithCmd('Enable automatic call recording on all contact centers that have it disabled')">
+          <div class="qa-icon">⏺</div>
+          <div class="qa-title">Call Recording</div>
+          <div class="qa-desc">Enable, disable, or update recording rules across all CCs</div>
+          <div class="qa-footer">
+            <span class="qa-count warn">23 CCs off</span>
+            <span class="qa-arrow">Fix →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Set all NA contact centers closed on Dec 25 and Jan 1')">
+          <div class="qa-icon">🗓</div>
+          <div class="qa-title">Business Hours &amp; Holidays</div>
+          <div class="qa-desc">Set holiday closures, adjust hours, clone templates</div>
+          <div class="qa-footer">
+            <span class="qa-count warn">11 CCs missing</span>
+            <span class="qa-arrow">Fix →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Update routing method to round robin for all NA contact centers')">
+          <div class="qa-icon">🔀</div>
+          <div class="qa-title">Call Routing</div>
+          <div class="qa-desc">Change routing method, overflow, skills-based routing</div>
+          <div class="qa-footer">
+            <span class="qa-count neutral">Routing method</span>
+            <span class="qa-arrow">Update →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Replace COVID temporary greeting with standard welcome on all affected CCs')">
+          <div class="qa-icon">🔊</div>
+          <div class="qa-title">Greetings &amp; Hold Music</div>
+          <div class="qa-desc">Upload MP3s, set welcome, closed, hold queue greetings</div>
+          <div class="qa-footer">
+            <span class="qa-count warn">8 CCs outdated</span>
+            <span class="qa-arrow">Fix →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Set wrap-up time to 90 seconds across all contact centers')">
+          <div class="qa-icon">⏱</div>
+          <div class="qa-title">Wrap-Up Time</div>
+          <div class="qa-desc">Standardize post-call buffer across all agent groups</div>
+          <div class="qa-footer">
+            <span class="qa-count neutral">Currently varies</span>
+            <span class="qa-arrow">Set →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">
+          <div class="qa-icon">👥</div>
+          <div class="qa-title">Agent Management</div>
+          <div class="qa-desc">Bulk add/remove agents, update skills, set statuses</div>
+          <div class="qa-footer">
+            <span class="qa-count neutral">47 CCs</span>
+            <span class="qa-arrow">Manage →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Enable Dialpad AI features including transcription, summaries, and sentiment on all contact centers')">
+          <div class="qa-icon">🤖</div>
+          <div class="qa-title">AI Features</div>
+          <div class="qa-desc">Enable transcription, AI CSAT, summaries, PII redaction</div>
+          <div class="qa-footer">
+            <span class="qa-count purple">✦ AI-powered</span>
+            <span class="qa-arrow">Enable →</span>
+          </div>
+        </div>
+        <div class="qa-card" onclick="openWithCmd('Enable spam call blocking and set max queue wait time to 10 minutes on all contact centers')">
+          <div class="qa-icon">🛡</div>
+          <div class="qa-title">Queue &amp; Security</div>
+          <div class="qa-desc">Set max wait time, callback, spam blocking, data retention</div>
+          <div class="qa-footer">
+            <span class="qa-count neutral">Queue settings</span>
+            <span class="qa-arrow">Configure →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-toolbar">
+        <div class="tt-left">
+          <span class="tt-count">47 contact centers</span>
+          <span class="tt-selected" id="selBadge">0 selected</span>
+        </div>
+        <div class="tt-right">
+          <button class="btn btn-base" style="font-size:12px;padding:5px 11px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter</button>
+          <button class="btn btn-ai" id="bulkBtn" style="display:none;font-size:12px;padding:5px 11px;" onclick="openWithCmd('Bulk update selected contact centers')">✦ AI bulk edit</button>
+        </div>
+      </div>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="masterCheck" onchange="toggleAllMain(this)"></th>
+              <th>Name</th>
+              <th>Region</th>
+              <th>Recording</th>
+              <th>Holiday hours</th>
+              <th>Greeting</th>
+              <th>Routing</th>
+              <th>Agents</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">Sales East</span></td>
+              <td style="color:var(--text-2);font-size:13px">NA</td>
+              <td><span class="badge badge-danger">Off</span></td>
+              <td><span class="badge badge-warn">Missing</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-neutral">Round robin</span></td>
+              <td style="color:var(--text-2);font-size:13px">12</td>
+              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording and set Dec 25 holiday hours for Sales East')">✦ Fix</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">Support West</span></td>
+              <td style="color:var(--text-2);font-size:13px">NA</td>
+              <td><span class="badge badge-danger">Off</span></td>
+              <td><span class="badge badge-warn">Missing</span></td>
+              <td><span class="badge badge-danger">Missing</span></td>
+              <td><span class="badge badge-neutral">Longest idle</span></td>
+              <td style="color:var(--text-2);font-size:13px">8</td>
+              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording, set holiday hours, and add after-hours greeting for Support West')">✦ Fix</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">Billing Team</span></td>
+              <td style="color:var(--text-2);font-size:13px">NA</td>
+              <td><span class="badge badge-ok">On</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-neutral">Fixed order</span></td>
+              <td style="color:var(--text-2);font-size:13px">5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">Enterprise Desk</span></td>
+              <td style="color:var(--text-2);font-size:13px">NA</td>
+              <td><span class="badge badge-danger">Off</span></td>
+              <td><span class="badge badge-warn">Missing</span></td>
+              <td><span class="badge badge-danger">Missing</span></td>
+              <td><span class="badge badge-neutral">Skills-based</span></td>
+              <td style="color:var(--text-2);font-size:13px">20</td>
+              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording, set holiday hours, and add after-hours greeting for Enterprise Desk')">✦ Fix</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">EMEA Sales</span></td>
+              <td style="color:var(--text-2);font-size:13px">EMEA</td>
+              <td><span class="badge badge-ok">On</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-warn">Outdated</span></td>
+              <td><span class="badge badge-neutral">Round robin</span></td>
+              <td style="color:var(--text-2);font-size:13px">9</td>
+              <td><button class="btn-fix" onclick="openWithCmd('Update EMEA Sales after-hours greeting to spring_promo_2026.mp3')">✦ Fix</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">APAC Tech Support</span></td>
+              <td style="color:var(--text-2);font-size:13px">APAC</td>
+              <td><span class="badge badge-ok">On</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-neutral">Longest idle</span></td>
+              <td style="color:var(--text-2);font-size:13px">14</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
+              <td><span class="cc-link">Canada Support</span></td>
+              <td style="color:var(--text-2);font-size:13px">NA</td>
+              <td><span class="badge badge-danger">Off</span></td>
+              <td><span class="badge badge-warn">Missing</span></td>
+              <td><span class="badge badge-ok">Set</span></td>
+              <td><span class="badge badge-neutral">Round robin</span></td>
+              <td style="color:var(--text-2);font-size:13px">6</td>
+              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording and clone US Thanksgiving holiday hours to Canada Support using Canadian Thanksgiving date')">✦ Fix</button></td>
+            </tr>
+            <tr>
+              <td colspan="9" style="padding:10px 13px;color:var(--text-3);font-size:13px">+ 40 more contact centers — <span style="color:var(--purple);cursor:pointer">show all</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- AI Admin Drawer -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-hd-left">
+      <div class="drawer-ai-icon">✦</div>
+      <span class="drawer-title">AI Admin</span>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-tabs">
+    <div class="drawer-tab active" id="tab-cmd" onclick="switchTab('cmd')">Command</div>
+    <div class="drawer-tab" id="tab-history" onclick="switchTab('history')">History</div>
+    <div class="drawer-tab" id="tab-simulate" onclick="switchTab('simulate')">Simulate</div>
+  </div>
+
+  <div class="drawer-body">
+
+    <!-- Command panel -->
+    <div class="drawer-panel" id="panel-cmd">
+      <div class="sim-notice" id="simNotice">
+        <strong>Simulate mode:</strong> Commands below will generate a preview plan submitted to an admin. No changes apply until approved.
+      </div>
+
+      <!-- Hours & Holidays -->
+      <div class="sugg-section">
+        <div class="sugg-label">Hours &amp; Holidays <span class="phase-pip pip-1">Phase 1</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Set all NA contact centers closed on Dec 25 and Jan 1')">Set Dec 25 + Jan 1 · NA</div>
+          <div class="chip" onclick="fill('Shorten Friday hours by 1hr for NA support centers next quarter')">Shorten Friday hours · Q3</div>
+          <div class="chip" onclick="fill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')">Clone US → CA Thanksgiving</div>
+          <div class="chip" onclick="fill('Fix inconsistent holiday hours across all 11 flagged contact centers')">Fix 11 flagged CCs</div>
+        </div>
+      </div>
+
+      <!-- Call Recording -->
+      <div class="sugg-section">
+        <div class="sugg-label">Call Recording <span class="phase-pip pip-1">Phase 1</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Enable automatic call recording on all 23 contact centers that have it disabled')">Enable recording · 23 CCs</div>
+          <div class="chip" onclick="fill('Enable automatic call recording on all 400+ contact centers')">Enable recording · all CCs</div>
+          <div class="chip" onclick="fill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable recording · EU GDPR</div>
+          <div class="chip" onclick="fill('Enable recording pause feature for all agent groups')">Enable pause feature · all</div>
+        </div>
+      </div>
+
+      <!-- Greetings & Audio -->
+      <div class="sugg-section">
+        <div class="sugg-label">Greetings &amp; Audio <span class="phase-pip pip-2">Phase 2</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Replace COVID temporary greeting with standard welcome on all affected CCs')">Replace COVID greeting</div>
+          <div class="chip" onclick="fill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">EMEA spring promo MP3</div>
+          <div class="chip" onclick="fill('Set hold music to jazz_lite.mp3 across all NA contact centers')">Set hold music · NA</div>
+          <div class="chip" onclick="fill('Add a voicemail greeting to all 8 CCs that are missing one')">Add voicemail greeting · 8 CCs</div>
+        </div>
+      </div>
+
+      <!-- Call Routing -->
+      <div class="sugg-section">
+        <div class="sugg-label">Call Routing <span class="phase-pip pip-2">Phase 2</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Change routing method to round robin for all NA contact centers')">Round robin · NA</div>
+          <div class="chip" onclick="fill('Set overflow routing to voicemail for all CCs when no agents are available')">Set overflow → voicemail</div>
+          <div class="chip" onclick="fill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')">APAC timeout + overflow</div>
+          <div class="chip" onclick="fill('Enable skills-based routing for all Enterprise contact centers')">Skills-based · Enterprise</div>
+        </div>
+      </div>
+
+      <!-- Agent Management -->
+      <div class="sugg-section">
+        <div class="sugg-label">Agent Management <span class="phase-pip pip-2">Phase 2</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">Add agents · EMEA</div>
+          <div class="chip" onclick="fill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up 90s · all</div>
+          <div class="chip" onclick="fill('Enable auto off-duty after 3 missed calls for all agent groups')">Auto off-duty · 3 misses</div>
+          <div class="chip" onclick="fill('Remove inactive agents from all contact centers — last active 60+ days')">Remove inactive agents</div>
+        </div>
+      </div>
+
+      <!-- Queue & Wait -->
+      <div class="sugg-section">
+        <div class="sugg-label">Queue &amp; Wait <span class="phase-pip pip-2">Phase 2</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Set max queue wait time to 10 minutes for all contact centers')">Max wait 10min · all</div>
+          <div class="chip" onclick="fill('Enable callback option when queue exceeds 10 callers on all NA CCs')">Enable callback · NA</div>
+          <div class="chip" onclick="fill('Enable queue position announcements for all contact centers')">Queue position · all</div>
+        </div>
+      </div>
+
+      <!-- AI Features -->
+      <div class="sugg-section">
+        <div class="sugg-label">AI Features <span class="phase-pip pip-3">Phase 3</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable AI · all CCs</div>
+          <div class="chip" onclick="fill('Enable PII redaction on all contact center transcripts and recordings')">PII redaction · all</div>
+          <div class="chip" onclick="fill('Enable AI CSAT and live sentiment analysis across all contact centers')">AI CSAT + sentiment</div>
+        </div>
+      </div>
+
+      <!-- Compliance & Security -->
+      <div class="sugg-section">
+        <div class="sugg-label">Compliance &amp; Security <span class="phase-pip pip-3">Phase 3</span></div>
+        <div class="chips">
+          <div class="chip" onclick="fill('Enable spam call blocking at high sensitivity on all contact centers')">Spam blocking · all</div>
+          <div class="chip" onclick="fill('Set data retention to 1 year for all contact center recordings and transcripts')">Data retention 1yr</div>
+          <div class="chip" onclick="fill('Block anonymous calls on all contact centers')">Block anonymous calls</div>
+        </div>
+      </div>
+
+      <!-- Command textarea -->
+      <div class="cmd-section">
+        <textarea class="cmd-textarea" id="cmdInput" rows="3" placeholder="e.g. Enable call recording on all 400 contact centers…"></textarea>
+        <div class="cmd-footer">
+          <span class="cmd-hint">Enter to run · Shift+Enter for new line</span>
+          <button class="btn-run" onclick="runCmd()">Run <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat / result pane -->
+    <div class="chat-pane" id="chatPane">
+      <div class="msg-user">
+        <div class="msg-bubble" id="userMsg">Enable call recording on all CCs</div>
+      </div>
+      <div class="parse-steps" id="parseSteps">
+        <div class="step-row" id="ps1">
+          <div class="step-icon-wrap"><div class="step-spinner" id="ps1s"></div><div class="step-check" id="ps1c">✓</div></div>
+          <span class="step-text" id="ps1t">Identifying contact centers…</span>
+        </div>
+        <div class="step-row" id="ps2" style="opacity:.35">
+          <div class="step-icon-wrap"><div class="step-idle" id="ps2s"></div><div class="step-check" id="ps2c">✓</div></div>
+          <span class="step-text" id="ps2t">Parsing intent &amp; settings…</span>
+        </div>
+        <div class="step-row" id="ps3" style="opacity:.35">
+          <div class="step-icon-wrap"><div class="step-idle" id="ps3s"></div><div class="step-check" id="ps3c">✓</div></div>
+          <span class="step-text" id="ps3t">Building change preview…</span>
+        </div>
+      </div>
+      <div class="agent-msg" id="agentMsg">
+        <div class="entity-card" id="agentCard">
+          <div class="entity-header">
+            <span class="entity-label">AI understood</span>
+            <span class="entity-mode-tag admin" id="modeTag">Admin · will apply</span>
+          </div>
+          <div class="entity-rows">
+            <div class="entity-row"><span class="e-key">Target</span><span class="e-val" id="eTarget">23 CCs with <span class="e-code">recording disabled</span></span></div>
+            <div class="entity-row"><span class="e-key">When</span><span class="e-val" id="eWhen">Immediate</span></div>
+            <div class="entity-row"><span class="e-key">Change</span><span class="e-val" id="eChange">Auto recording → <span class="e-code">Enabled</span></span></div>
+            <div class="entity-row"><span class="e-key">Guard</span><span class="e-val" id="eGuard">Affects <strong>23 CCs</strong> — confirmation required</span></div>
+          </div>
+        </div>
+        <div class="diff-preview">
+          <div class="diff-header">
+            <span class="diff-title" id="diffTitle">Preview — 23 contact centers</span>
+            <div class="diff-toggle-all"><input type="checkbox" id="masterPrev" checked onchange="toggleAll(this)"> Select all</div>
+          </div>
+          <table class="diff-table">
+            <thead>
+              <tr><th style="width:32px"></th><th>Contact center</th><th>Region</th><th>Change</th><th></th></tr>
+            </thead>
+            <tbody id="previewBody">
+              <tr class="prev-row" data-i="0"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Sales East</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n0">Enabled</span></td><td><span class="chip-update" id="b0">Will update</span></td></tr>
+              <tr class="prev-row" data-i="1"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Support West</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n1">Enabled</span></td><td><span class="chip-update" id="b1">Will update</span></td></tr>
+              <tr class="prev-row" data-i="2"><td><input type="checkbox" class="pcb" onchange="sync()"></td><td class="cell-name">Billing Team</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Already on</span><span class="diff-arr">→</span><span class="diff-new" id="n2">No change</span></td><td><span class="chip-excluded" id="b2">Skipped</span></td></tr>
+              <tr class="prev-row" data-i="3"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Enterprise Desk</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n3">Enabled</span></td><td><span class="chip-update" id="b3">Will update</span></td></tr>
+              <tr class="prev-row" data-i="4"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Canada Support</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n4">Enabled</span></td><td><span class="chip-update" id="b4">Will update</span></td></tr>
+              <tr class="more-row prev-row" data-i="5"><td colspan="5">+ 18 more contact centers included</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sim-note" id="simNote"><strong>Simulate mode:</strong> This plan will be submitted to an admin for review. No changes will be applied until approved.</div>
+      </div>
+    </div>
+
+    <!-- Success pane -->
+    <div class="success-pane" id="successPane">
+      <div class="success-icon-wrap applied" id="successIcon">✓</div>
+      <div class="success-title" id="successTitle">Changes applied</div>
+      <div class="success-sub" id="successSub">Settings updated across your contact centers.</div>
+      <div class="success-stat applied" id="successStat">
+        <div class="success-num applied" id="successNum">23</div>
+        <div class="success-num-label" id="successLabel">contact centers updated</div>
+      </div>
+      <div class="activity-entry">
+        <div class="ae-label">Activity log</div>
+        <div class="ae-row">
+          <span class="ae-action" id="aeAction">Call recording → Enabled</span>
+          <span class="ae-time">Just now · you</span>
+        </div>
+        <div class="ae-sub" id="aeSub">Applied to 23 CCs · Revert available for 30 min</div>
+      </div>
+      <div class="link-row">
+        <button class="link-btn">↗ View audit log</button>
+        <button class="link-btn danger">↩ Revert batch</button>
+      </div>
+      <button class="btn-reset" onclick="reset()">Make another change</button>
+    </div>
+
+    <!-- History panel -->
+    <div class="drawer-panel hidden" id="panel-history">
+      <div class="suggestions-label">Recent bulk changes</div>
+      <div class="recent-list">
+        <div class="recent-row">
+          <span class="recent-icon">⏺</span>
+          <div class="recent-body"><div class="recent-action">Enabled call recording on 23 contact centers</div><div class="recent-meta">Apr 16, 2026 · by you · 23 CCs</div></div>
+          <span class="recent-status rs-done">Done</span>
+        </div>
+        <div class="recent-row">
+          <span class="recent-icon">🗓</span>
+          <div class="recent-body"><div class="recent-action">Set Easter holiday hours across 8 NA queues</div><div class="recent-meta">Apr 2, 2026 · by you · 8 CCs</div></div>
+          <span class="recent-status rs-done">Done</span>
+        </div>
+        <div class="recent-row" style="border-color:var(--warning-border)">
+          <span class="recent-icon">👁</span>
+          <div class="recent-body"><div class="recent-action">Simulate: APAC routing overflow + timeout changes</div><div class="recent-meta">Apr 10, 2026 · J. Martinez · Pending admin review</div></div>
+          <span class="recent-status rs-pending">Pending</span>
+        </div>
+        <div class="recent-row">
+          <span class="recent-icon">🔊</span>
+          <div class="recent-body"><div class="recent-action">Replaced COVID greeting with standard welcome · 3 CCs</div><div class="recent-meta">Mar 31, 2026 · by you</div></div>
+          <span class="recent-status rs-done">Done</span>
+        </div>
+        <div class="recent-row">
+          <span class="recent-icon">👥</span>
+          <div class="recent-body"><div class="recent-action">Added 3 agents to Sales East, Support West</div><div class="recent-meta">Mar 28, 2026 · by you · 2 CCs</div></div>
+          <span class="recent-status rs-done">Done</span>
+        </div>
+        <div class="recent-row">
+          <span class="recent-icon">⏱</span>
+          <div class="recent-body"><div class="recent-action">Set wrap-up time to 60s across 12 NA CCs</div><div class="recent-meta">Mar 15, 2026 · by you</div></div>
+          <span class="recent-status rs-done">Done</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulate panel -->
+    <div class="drawer-panel hidden" id="panel-simulate">
+      <div class="sim-notice" style="display:block"><strong>Simulate mode</strong> lets supervisors preview changes and submit a draft plan for admin approval. Nothing is applied until an admin confirms.</div>
+      <div class="cmd-section">
+        <textarea class="cmd-textarea" id="simInput" rows="3" placeholder="e.g. Set queue timeout to 2 minutes for all APAC queues…"></textarea>
+        <div class="cmd-footer">
+          <span class="cmd-hint">Preview only — submits to admin for approval</span>
+          <button class="btn-run simulate" onclick="runSimulate()">Simulate <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+      </div>
+      <div style="margin-top:16px">
+        <div class="suggestions-label">Pending from your team (1)</div>
+        <div class="recent-list">
+          <div class="recent-row" style="border-color:var(--warning-border)">
+            <span class="recent-icon">👁</span>
+            <div class="recent-body"><div class="recent-action">APAC routing overflow changes · 3 CCs</div><div class="recent-meta">Submitted Apr 10 · J. Martinez</div></div>
+            <button class="btn btn-base" style="font-size:12px;padding:4px 10px;flex-shrink:0;">Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /drawer-body -->
+
+  <div class="drawer-footer hidden" id="drawerFooter">
+    <button class="btn-apply" id="btnApply" onclick="apply()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="applyLabel">Apply to</span>&nbsp;<span id="applyCount">23</span>&nbsp;<span id="applyLabel2">contact centers</span>
+    </button>
+    <div class="footer-row">
+      <button class="btn-secondary-action"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download batch plan</button>
+      <button class="btn-secondary-action" onclick="reset()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-dot applied" id="toastDot">✓</div>
+  <span id="toastText">Settings updated for <strong id="toastNum">23</strong> contact centers</span>
+  <span class="toast-sep">·</span>
+  <span class="toast-link">View audit log</span>
+</div>
+
+<script>
+  let activeTab = 'cmd';
+  let isSimulate = false;
+
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function openWithCmd(text) {
+    openDrawer(); switchTab('cmd');
+    setTimeout(() => { document.getElementById('cmdInput').value = text; document.getElementById('cmdInput').focus(); }, 80);
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  function toggleAllMain(master) {
+    document.querySelectorAll('.main-cb').forEach(cb => cb.checked = master.checked);
+    updateSelCount();
+  }
+  function updateSelCount() {
+    const n = document.querySelectorAll('.main-cb:checked').length;
+    const b = document.getElementById('selBadge');
+    const bb = document.getElementById('bulkBtn');
+    b.style.display = n > 0 ? '' : 'none';
+    b.textContent = n + ' selected';
+    bb.style.display = n > 0 ? '' : 'none';
+  }
+
+  function switchTab(tab) {
+    activeTab = tab;
+    ['cmd','history','simulate'].forEach(t => {
+      document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+    });
+    document.getElementById('panel-cmd').classList.toggle('hidden', tab !== 'cmd');
+    document.getElementById('panel-history').classList.toggle('hidden', tab !== 'history');
+    document.getElementById('panel-simulate').classList.toggle('hidden', tab !== 'simulate');
+    const chat = document.getElementById('chatPane');
+    chat.style.display = 'none'; chat.classList.remove('visible');
+    document.getElementById('successPane').classList.remove('visible');
+    document.getElementById('drawerFooter').classList.add('hidden');
+    document.getElementById('parseSteps').classList.remove('visible');
+    isSimulate = (tab === 'simulate');
+    document.getElementById('simNotice').style.display = isSimulate ? 'block' : 'none';
+  }
+
+  function fill(text) { document.getElementById('cmdInput').value = text; document.getElementById('cmdInput').focus(); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('cmdInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runCmd(); }
+    });
+    syncRows();
+  });
+
+  function runCmd() { const t = document.getElementById('cmdInput').value.trim(); if (t) submitCommand(t, false); }
+  function runSimulate() {
+    const t = document.getElementById('simInput').value.trim() || document.getElementById('cmdInput').value.trim();
+    if (t) submitCommand(t, true);
+  }
+
+  function submitCommand(text, sim) {
+    isSimulate = sim;
+    ['panel-cmd','panel-simulate','panel-history'].forEach(id => document.getElementById(id).classList.add('hidden'));
+    const chat = document.getElementById('chatPane');
+    chat.style.display = 'flex'; chat.classList.add('visible');
+    document.getElementById('userMsg').textContent = text;
+    document.getElementById('agentMsg').style.display = 'none';
+    setEntityContext(text);
+    document.getElementById('parseSteps').classList.add('visible');
+    resetStepIcons();
+    animStep(1, 750, () => animStep(2, 650, () => animStep(3, 550, showResponse)));
+  }
+
+  function setEntityContext(cmd) {
+    const c = cmd.toLowerCase();
+    const t = document.getElementById('eTarget');
+    const w = document.getElementById('eWhen');
+    const ch = document.getElementById('eChange');
+    const g = document.getElementById('eGuard');
+    const dt = document.getElementById('diffTitle');
+    const mt = document.getElementById('modeTag');
+    mt.className = 'entity-mode-tag ' + (isSimulate ? 'sim' : 'admin');
+    mt.textContent = isSimulate ? 'Simulate · draft plan' : 'Admin · will apply';
+
+    // Step labels
+    const step2 = document.getElementById('ps2t');
+    const step3 = document.getElementById('ps3t');
+
+    if (c.includes('recording') && (c.includes('enable') || c.includes('all') || c.includes('400'))) {
+      t.innerHTML = c.includes('400') ? 'All <span class="e-code">400+ contact centers</span>' : '23 CCs with <span class="e-code">recording disabled</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Auto call recording → <span class="e-code">Enabled</span>';
+      g.innerHTML = 'Compliance change — affects ' + (c.includes('400') ? '<strong>all 400+ CCs</strong>' : '<strong>23 CCs</strong>') + ', confirmation required';
+      dt.textContent = c.includes('400') ? 'Preview — 400+ contact centers' : 'Preview — 23 contact centers';
+      step2.textContent = 'Checking recording status…';
+      step3.textContent = 'Building enable batch…';
+      setDiffVals('Enabled'); setDiffFrom('Off');
+      document.getElementById('applyCount').textContent = c.includes('400') ? '400+' : '23';
+    } else if (c.includes('recording') && (c.includes('disable') || c.includes('gdpr') || c.includes('germany'))) {
+      t.innerHTML = 'CCs in <span class="e-code">Germany and France</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Auto call recording → <span class="e-code">Disabled</span>';
+      g.innerHTML = '<strong>GDPR compliance</strong> — disables recording in EU jurisdictions';
+      dt.textContent = 'Preview — EU contact centers';
+      setDiffVals('Disabled'); setDiffFrom('On');
+    } else if (c.includes('friday') || c.includes('shorten')) {
+      t.innerHTML = '18 CCs matching <span class="e-code">NA support centers</span>';
+      w.textContent = 'Fridays only, next quarter (Jul–Sep 2026)';
+      ch.innerHTML = 'Close time shifted <span class="e-code">1hr earlier</span> each Friday';
+      g.innerHTML = 'Affects <strong>18 CCs</strong> — confirmation required';
+      dt.textContent = 'Preview — 18 contact centers';
+      setDiffVals('Fri 8pm→7pm'); setDiffFrom('Fri 8pm');
+    } else if (c.includes('thanksgiving') || c.includes('canadian') || c.includes('clone')) {
+      t.innerHTML = '6 CCs matching <span class="e-code">Canadian English queues</span>';
+      w.textContent = 'Canadian Thanksgiving: Oct 13, 2026';
+      ch.innerHTML = 'Clone <span class="e-code">US Thanksgiving → CA Thanksgiving</span> (+1 day)';
+      g.textContent = 'Cloning template to 6 CCs · dates shifted';
+      dt.textContent = 'Preview — 6 contact centers';
+      setDiffVals('Closed Oct 13'); setDiffFrom('Not set');
+    } else if (c.includes('covid') || (c.includes('replace') && c.includes('greeting'))) {
+      t.innerHTML = '3 CCs using <span class="e-code">COVID temporary hours greeting</span>';
+      w.textContent = 'Immediate / permanent';
+      ch.innerHTML = '<span class="e-code">covid_temp_greeting.mp3</span> → <span class="e-code">standard_welcome.mp3</span>';
+      g.innerHTML = '<strong>Phase 2</strong> — requires greetings API';
+      dt.textContent = 'Preview — 3 contact centers';
+      step2.textContent = 'Detecting outdated greetings…';
+      step3.textContent = 'Staging MP3 swap…';
+      setDiffVals('standard_welcome.mp3'); setDiffFrom('covid_temp.mp3');
+    } else if (c.includes('emea') && (c.includes('mp3') || c.includes('greeting') || c.includes('spring'))) {
+      t.innerHTML = '4 CCs matching <span class="e-code">EMEA sales queues</span>';
+      w.textContent = 'After-hours slot only';
+      ch.innerHTML = 'After-hours audio → <span class="e-code">spring_promo_2026.mp3</span>';
+      g.innerHTML = '<strong>Phase 2</strong> — requires greetings API';
+      dt.textContent = 'Preview — 4 contact centers';
+      setDiffVals('spring_promo_2026.mp3'); setDiffFrom('emea_default.mp3');
+    } else if (c.includes('hold music')) {
+      t.innerHTML = 'All <span class="e-code">NA contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Hold music → <span class="e-code">jazz_lite.mp3</span>';
+      g.innerHTML = '<strong>Phase 2</strong> — requires audio API';
+      setDiffVals('jazz_lite.mp3'); setDiffFrom('Default');
+    } else if (c.includes('voicemail greeting')) {
+      t.innerHTML = '8 CCs <span class="e-code">missing voicemail greeting</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Voicemail greeting → <span class="e-code">standard_voicemail.mp3</span>';
+      g.innerHTML = 'Affects <strong>8 CCs</strong> — confirmation required';
+      setDiffVals('standard_voicemail.mp3'); setDiffFrom('Not set');
+    } else if (c.includes('round robin') || (c.includes('routing') && c.includes('method'))) {
+      t.innerHTML = 'All <span class="e-code">NA contact centers</span>';
+      w.textContent = 'Immediate · affects call distribution';
+      ch.innerHTML = 'Routing method → <span class="e-code">Round robin</span>';
+      g.innerHTML = 'Routing change — affects <strong>all incoming calls</strong>, confirmation required';
+      step2.textContent = 'Reading current routing config…';
+      step3.textContent = 'Staging routing update…';
+      setDiffVals('Round robin'); setDiffFrom('Various');
+    } else if (c.includes('overflow') && c.includes('voicemail')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span> when no agents available';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Overflow routing → <span class="e-code">Voicemail</span>';
+      g.innerHTML = 'Affects calls when 0 agents available';
+      setDiffVals('→ Voicemail'); setDiffFrom('No answer');
+    } else if (c.includes('apac') && (c.includes('timeout') || c.includes('overflow'))) {
+      t.innerHTML = '3 CCs matching <span class="e-code">APAC technical support</span>';
+      w.textContent = 'Permanent routing rule change';
+      ch.innerHTML = 'Timeout <span class="e-code">5min → 2min</span>, overflow → <span class="e-code">Support Tier 2</span>';
+      g.innerHTML = '<strong>Phase 2</strong> — routing changes require review';
+      setDiffVals('Timeout 2min'); setDiffFrom('Timeout 5min');
+    } else if (c.includes('skills-based') || (c.includes('skills') && c.includes('routing'))) {
+      t.innerHTML = 'All <span class="e-code">Enterprise contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Routing method → <span class="e-code">Skills-based</span>';
+      g.innerHTML = 'Requires agent skill profiles to be set first';
+      setDiffVals('Skills-based'); setDiffFrom('Longest idle');
+    } else if (c.includes('sarah') || c.includes('marcus') || (c.includes('add') && c.includes('agent'))) {
+      t.innerHTML = 'All <span class="e-code">EMEA contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Agents added: <span class="e-code">Sarah Chen</span>, <span class="e-code">Marcus Liu</span>';
+      g.innerHTML = 'Affects <strong>agent roster</strong> for all EMEA CCs';
+      step2.textContent = 'Looking up agent profiles…';
+      step3.textContent = 'Staging roster changes…';
+      setDiffVals('+2 agents'); setDiffFrom('Current roster');
+    } else if (c.includes('wrap-up') || c.includes('wrap up') || c.includes('wrapup')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Wrap-up time → <span class="e-code">90 seconds</span>';
+      g.innerHTML = 'Affects <strong>all agents</strong> post-call buffer';
+      setDiffVals('90 seconds'); setDiffFrom('Varies (30–120s)');
+    } else if (c.includes('auto off-duty') || c.includes('missed call')) {
+      t.innerHTML = 'All <span class="e-code">agent groups</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Auto off-duty → <span class="e-code">On after 3 missed calls</span>';
+      g.innerHTML = 'Affects all agent status handling';
+      setDiffVals('On · 3 misses'); setDiffFrom('Off');
+    } else if (c.includes('inactive agent')) {
+      t.innerHTML = 'Agents inactive <span class="e-code">60+ days</span> across all CCs';
+      w.textContent = 'After admin review';
+      ch.innerHTML = 'Remove from <span class="e-code">all contact center rosters</span>';
+      g.innerHTML = '<strong>Irreversible roster change</strong> — requires admin confirmation';
+      step2.textContent = 'Scanning agent activity logs…';
+      step3.textContent = 'Flagging inactive accounts…';
+      setDiffVals('Removed'); setDiffFrom('Active');
+    } else if (c.includes('max queue') || c.includes('wait time') || c.includes('10 minute')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Max queue wait time → <span class="e-code">10 minutes</span>';
+      g.innerHTML = 'Callers exceeding wait are routed to voicemail';
+      setDiffVals('10 minutes'); setDiffFrom('Varies');
+    } else if (c.includes('callback')) {
+      t.innerHTML = 'All <span class="e-code">NA contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Callback → <span class="e-code">Enabled when queue > 10</span>';
+      g.innerHTML = 'Adds callback option to hold queue IVR';
+      setDiffVals('Enabled'); setDiffFrom('Disabled');
+    } else if (c.includes('queue position')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Queue position announcement → <span class="e-code">Enabled</span>';
+      g.innerHTML = 'Callers hear estimated position in queue';
+      setDiffVals('Enabled'); setDiffFrom('Disabled');
+    } else if (c.includes('ai') && (c.includes('enable') || c.includes('transcription') || c.includes('all'))) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'AI → <span class="e-code">Enabled</span> (transcription, summaries, AI CSAT)';
+      g.innerHTML = '<strong>Phase 3</strong> — requires AI feature entitlement';
+      step2.textContent = 'Checking AI entitlements…';
+      step3.textContent = 'Staging AI feature rollout…';
+      setDiffVals('AI On'); setDiffFrom('Off');
+    } else if (c.includes('pii') || c.includes('redaction')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'PII redaction → <span class="e-code">Enabled</span> on transcripts + recordings';
+      g.innerHTML = '<strong>Compliance change</strong> — affects all transcript data';
+      setDiffVals('PII On'); setDiffFrom('Off');
+    } else if (c.includes('csat') || c.includes('sentiment')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'AI CSAT + Live Sentiment → <span class="e-code">Enabled</span>';
+      g.innerHTML = '<strong>Phase 3</strong> — requires AI entitlement';
+      setDiffVals('Enabled'); setDiffFrom('Off');
+    } else if (c.includes('spam')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Spam blocking → <span class="e-code">Enabled (high sensitivity)</span>';
+      g.innerHTML = 'May block some legitimate calls — monitor for 30 days';
+      setDiffVals('Spam: On'); setDiffFrom('Off');
+    } else if (c.includes('data retention') || c.includes('retention')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate · affects future recordings only';
+      ch.innerHTML = 'Data retention → <span class="e-code">1 year</span>';
+      g.innerHTML = '<strong>Compliance setting</strong> — does not delete existing data';
+      setDiffVals('1 year'); setDiffFrom('90 days');
+    } else if (c.includes('anonymous')) {
+      t.innerHTML = 'All <span class="e-code">contact centers</span>';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Anonymous call blocking → <span class="e-code">Enabled</span>';
+      g.innerHTML = 'Blocks all callers with no caller ID';
+      setDiffVals('Blocked'); setDiffFrom('Allowed');
+    } else if (c.includes('fix all') || c.includes('flagged issue')) {
+      t.innerHTML = '<span class="e-code">42 CCs</span> with 3 detected issues';
+      w.textContent = 'Immediate';
+      ch.innerHTML = 'Recording + holiday hours + greetings <span class="e-code">→ Fixed</span>';
+      g.innerHTML = '<strong>Bulk compliance fix</strong> — affects 42 CCs, confirmation required';
+      step2.textContent = 'Scanning all 47 CCs for issues…';
+      step3.textContent = 'Building remediation batch…';
+      setDiffVals('Fixed'); setDiffFrom('Issue');
+      document.getElementById('applyCount').textContent = '42';
+    } else if (c.includes('holiday') || c.includes('dec 25') || c.includes('jan 1')) {
+      t.innerHTML = '18 CCs matching <span class="e-code">NA contact centers</span>';
+      w.textContent = 'Dec 25 &amp; Jan 1, 2026';
+      ch.innerHTML = 'Holiday hours → <span class="e-code">Closed</span>';
+      g.innerHTML = 'Affects <strong>18 CCs</strong> — confirmation required';
+      dt.textContent = 'Preview — 18 contact centers';
+      setDiffVals('Closed'); setDiffFrom('Not set');
+    } else {
+      t.innerHTML = 'Contact centers matching your criteria';
+      w.textContent = 'As specified';
+      ch.textContent = 'Settings updated as described';
+      g.innerHTML = 'Review changes below — confirmation required';
+      setDiffVals('Updated'); setDiffFrom('Previous');
+    }
+  }
+
+  function setDiffVals(val) {
+    [0,1,2,3,4].forEach(i => { const el = document.getElementById('n'+i); if (el) el.textContent = val; });
+  }
+  function setDiffFrom(val) {
+    document.querySelectorAll('.diff-old').forEach(el => el.textContent = val);
+  }
+
+  function animStep(n, ms, cb) {
+    const step = document.getElementById('ps'+n);
+    const spin = document.getElementById('ps'+n+'s');
+    const check = document.getElementById('ps'+n+'c');
+    step.style.opacity = '1';
+    if (spin && spin.className === 'step-idle') spin.className = 'step-spinner';
+    setTimeout(() => {
+      if (spin) spin.style.display = 'none';
+      if (check) check.style.display = 'flex';
+      step.classList.add('done');
+      const nxt = document.getElementById('ps'+(n+1));
+      if (nxt) nxt.style.opacity = '1';
+      if (cb) cb();
+    }, ms);
+  }
+
+  function resetStepIcons() {
+    for (let n = 1; n <= 3; n++) {
+      const step = document.getElementById('ps'+n);
+      const spin = document.getElementById('ps'+n+'s');
+      const check = document.getElementById('ps'+n+'c');
+      if (step) { step.classList.remove('done'); step.style.opacity = n===1 ? '1' : '.35'; }
+      if (spin) { spin.className = n===1 ? 'step-spinner' : 'step-idle'; spin.style.display = ''; }
+      if (check) check.style.display = 'none';
+    }
+  }
+
+  function showResponse() {
+    document.getElementById('parseSteps').classList.remove('visible');
+    const am = document.getElementById('agentMsg');
+    am.style.display = 'flex';
+    const card = document.getElementById('agentCard');
+    card.classList.toggle('simulate-card', isSimulate);
+    document.getElementById('simNote').style.display = isSimulate ? 'block' : 'none';
+    document.querySelectorAll('.diff-new').forEach(el => el.classList.toggle('sim', isSimulate));
+    document.querySelectorAll('.chip-update').forEach(el => el.classList.toggle('sim', isSimulate));
+    document.querySelectorAll('.prev-row').forEach((r, i) => setTimeout(() => r.classList.add('show'), i * 65));
+    document.getElementById('drawerFooter').classList.remove('hidden');
+    syncRows(); computeCount(); updateApplyBtn();
+  }
+
+  function toggleAll(master) {
+    document.querySelectorAll('.pcb').forEach(cb => cb.checked = master.checked);
+    syncRows(); computeCount();
+  }
+  function sync() { syncRows(); computeCount(); }
+
+  function syncRows() {
+    document.querySelectorAll('#previewBody tr.prev-row:not(.more-row)').forEach(row => {
+      const cb = row.querySelector('.pcb');
+      const badge = row.querySelector('[class^="chip-"]');
+      if (!cb || !badge) return;
+      if (cb.checked) {
+        badge.className = isSimulate ? 'chip-update sim' : 'chip-update';
+        badge.textContent = 'Will update';
+        row.classList.remove('excluded');
+      } else {
+        badge.className = 'chip-excluded';
+        badge.textContent = 'Excluded';
+        row.classList.add('excluded');
+      }
+    });
+  }
+
+  function computeCount() {
+    const checked = document.querySelectorAll('.pcb:checked').length;
+    const total = checked + 18;
+    const ac = document.getElementById('applyCount');
+    if (!ac.textContent.includes('+')) ac.textContent = total;
+    document.getElementById('btnApply').disabled = total === 0;
+  }
+
+  function updateApplyBtn() {
+    const btn = document.getElementById('btnApply');
+    btn.className = isSimulate ? 'btn-apply sim' : 'btn-apply';
+    document.getElementById('applyLabel').textContent = isSimulate ? 'Submit plan for' : 'Apply to';
+    document.getElementById('applyLabel2').textContent = isSimulate ? 'CCs to admin' : 'contact centers';
+  }
+
+  function apply() {
+    const count = document.getElementById('applyCount').textContent;
+    const chat = document.getElementById('chatPane');
+    chat.classList.remove('visible'); chat.style.display = 'none';
+    document.getElementById('drawerFooter').classList.add('hidden');
+    document.getElementById('parseSteps').classList.remove('visible');
+
+    const icon = document.getElementById('successIcon');
+    icon.className = 'success-icon-wrap ' + (isSimulate ? 'simulated' : 'applied');
+    icon.textContent = isSimulate ? '👁' : '✓';
+    document.getElementById('successTitle').textContent = isSimulate ? 'Plan submitted for review' : 'Changes applied';
+    document.getElementById('successSub').textContent = isSimulate
+      ? 'Your draft plan has been sent to an admin for approval.'
+      : 'Settings updated successfully across your contact centers.';
+    const stat = document.getElementById('successStat');
+    stat.className = 'success-stat ' + (isSimulate ? 'simulated' : 'applied');
+    document.getElementById('successNum').textContent = count;
+    document.getElementById('successNum').className = 'success-num ' + (isSimulate ? 'simulated' : 'applied');
+    document.getElementById('successLabel').textContent = isSimulate ? 'contact centers in plan' : 'contact centers updated';
+
+    const cmd = document.getElementById('cmdInput').value.toLowerCase();
+    const action = cmd.includes('recording') ? 'Call recording → Enabled' :
+                   cmd.includes('holiday') || cmd.includes('dec') ? 'Holiday hours → Closed' :
+                   cmd.includes('routing') ? 'Routing method updated' :
+                   cmd.includes('greeting') || cmd.includes('mp3') ? 'Greeting updated' :
+                   cmd.includes('wrap') ? 'Wrap-up time → 90s' :
+                   cmd.includes('agent') ? 'Agent roster updated' :
+                   cmd.includes('ai') ? 'AI features → Enabled' :
+                   'Settings updated';
+    document.getElementById('aeAction').textContent = isSimulate ? 'Simulate plan submitted · pending admin approval' : action;
+    document.getElementById('aeSub').textContent = isSimulate ? count + ' CCs in draft · submitted by you' : 'Applied to ' + count + ' CCs · Revert available for 30 min';
+    document.getElementById('successPane').classList.add('visible');
+
+    const td = document.getElementById('toastDot');
+    td.className = 'toast-dot ' + (isSimulate ? 'simulated' : 'applied');
+    td.textContent = isSimulate ? '👁' : '✓';
+    document.getElementById('toastNum').textContent = count;
+    document.getElementById('toastText').innerHTML = isSimulate
+      ? 'Plan submitted for <strong>'+count+'</strong> contact centers'
+      : action + ' · <strong>'+count+'</strong> CCs';
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4500);
+  }
+
+  function reset() {
+    const chat = document.getElementById('chatPane');
+    chat.style.display = 'none'; chat.classList.remove('visible');
+    document.getElementById('agentMsg').style.display = 'none';
+    document.getElementById('parseSteps').classList.remove('visible');
+    document.getElementById('drawerFooter').classList.add('hidden');
+    document.getElementById('successPane').classList.remove('visible');
+    document.getElementById('simNote').style.display = 'none';
+    document.getElementById('cmdInput').value = '';
+    document.querySelectorAll('.prev-row').forEach(r => r.classList.remove('show'));
+    document.querySelectorAll('.pcb').forEach((cb, i) => cb.checked = i !== 2);
+    switchTab('cmd'); resetStepIcons(); syncRows(); computeCount();
+  }
+</script>
+</body>
+</html>
