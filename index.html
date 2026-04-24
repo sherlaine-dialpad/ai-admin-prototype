@@ -5,101 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Admin — Dialpad Contact Centers</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C52FF'/%3E%3Cpath d='M10 8h5.5C19.64 8 23 11.36 23 16s-3.36 8-7.5 8H10V8zm3 3v10h2.5C17.98 21 20 18.98 20 16s-2.02-5-4.5-5H13z' fill='white'/%3E%3C/svg%3E">
 
-  <!-- Primary meta -->
   <meta name="title" content="AI Admin — Dialpad Contact Centers">
-  <meta name="description" content="Prototype: Dialpad AI Admin lets you bulk-manage all your contact centers with a single natural-language command — update call recording, routing, holiday hours, greetings, agent settings, and more across hundreds of CCs at once.">
-
-  <!-- Open Graph (LinkedIn, Slack, iMessage link previews) -->
+  <meta name="description" content="Prototype: Dialpad AI Admin lets you bulk-manage all your contact centers with a single natural-language command.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://sherlaine-dialpad.github.io/ai-admin-prototype/">
   <meta property="og:title" content="AI Admin — Dialpad Contact Centers">
-  <meta property="og:description" content="Bulk-manage 400+ contact centers with one command. Update call recording, routing rules, holiday hours, greetings, agent settings, AI features, and compliance — all at once. Prototype by Dialpad EPD.">
-  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%237C52FF'/%3E%3Crect x='60' y='60' width='1080' height='510' rx='16' fill='white'/%3E%3Ctext x='600' y='280' font-family='system-ui,sans-serif' font-size='64' font-weight='700' fill='%237C52FF' text-anchor='middle'%3EAI Admin%3C/text%3E%3Ctext x='600' y='360' font-family='system-ui,sans-serif' font-size='32' fill='%231C1C1C' text-anchor='middle'%3EBulk-manage all your contact centers%3C/text%3E%3Ctext x='600' y='410' font-family='system-ui,sans-serif' font-size='28' fill='%23666' text-anchor='middle'%3Ewith a single natural-language command%3C/text%3E%3C/svg%3E">
+  <meta property="og:description" content="Bulk-manage 400+ contact centers with one command. Prototype by Dialpad EPD.">
 
-  <!-- Twitter / X card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI Admin — Dialpad Contact Centers">
-  <meta name="twitter:description" content="Bulk-manage 400+ contact centers with one command. Update call recording, routing rules, holiday hours, greetings, agent settings, AI features, and compliance — all at once.">
   <style>
     :root {
       --bg:             #F9F9F9;
       --surface:        #FFFFFF;
-      --border:         rgba(28,28,28,0.11);
-      --border-md:      rgba(28,28,28,0.17);
+      --border:         hsl(0 0% 11% / 0.11);
+      --border-md:      hsl(0 0% 11% / 0.17);
       --text-1:         #1C1C1C;
-      --text-2:         rgba(28,28,28,0.65);
-      --text-3:         rgba(28,28,28,0.4);
-      --active-bg:      rgba(28,28,28,0.14);
-      --hover-bg:       rgba(28,28,28,0.06);
+      --text-2:         #3A3A3A;
+      --text-3:         #535353;
+      --active-bg:      hsl(0 0% 11% / 0.14);
+      --hover-bg:       hsl(0 0% 11% / 0.06);
       --purple:         #7C52FF;
-      --purple-hover:   #6B3FEE;
-      --purple-surface: #EDE9FF;
-      --purple-border:  #C4B5FD;
-      --purple-text:    #5B21B6;
-      --success:        #15803D;
-      --success-surface:#F0FDF4;
-      --success-border: #BBF7D0;
-      --warning:        #B45309;
-      --warning-surface:#FFFBEB;
-      --warning-border: #FDE68A;
-      --danger:         #B91C1C;
-      --danger-surface: #FEF2F2;
-      --danger-border:  #FECACA;
-      --info:           #1D4ED8;
-      --info-surface:   #EFF6FF;
-      --info-border:    #BFDBFE;
-      --teal:           #0F766E;
-      --teal-surface:   #F0FDFA;
-      --teal-border:    #99F6E4;
-      --skinny-w:  50px;
+      --purple-hover:   #5023DD;
+      --purple-surface: #F5F0FF;
+      --purple-border:  #D3BCFF;
+      --purple-text:    #5023DD;
+      --success:        #008E52;
+      --success-surface:#F6FCF5;
+      --success-border: #D1FF76;
+      --warning:        #815008;
+      --warning-surface:#FFFAE5;
+      --warning-border: #FFDB80;
+      --danger:         #D90A45;
+      --danger-surface: #FFF2F3;
+      --danger-border:  #FF716F;
+      --info:           #5023DD;
+      --info-surface:   #F5F0FF;
+      --info-border:    #D3BCFF;
+      --teal:           #008E52;
+      --teal-surface:   #F6FCF5;
+      --teal-border:    #D1FF76;
+      --emergency:      #C4400C;
+      --emergency-surface: #FEF3EC;
+      --emergency-border:  #F9B185;
       --sidebar-w: 216px;
-      --header-h:  66px;
-      --drawer-w:  480px;
-      --font: "SF Pro", -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif;
-      --mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+      --header-h:  56px;
+      --ai-panel-w: 360px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI Adjusted", "Segoe UI", "Helvetica Neue", Cantarell, Ubuntu, Roboto, Arial, sans-serif;
+      --mono: SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
       --fs: 15px; --fs-sm: 13px; --fs-xs: 12px;
-      --shadow-drawer: -4px 0 20px rgba(0,0,0,0.08), -1px 0 4px rgba(0,0,0,0.04);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: var(--font); font-size: var(--fs); background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; line-height: 21px; }
 
-    /* ── Layout ── */
+    /* ── App shell ── */
     .app { display: flex; min-height: 100vh; }
 
     /* ── Skinny nav ── */
-    .skinny-nav { width: var(--skinny-w); background: var(--bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 12px 0; flex-shrink: 0; z-index: 30; }
-    .skinny-logo { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#7C52FF,#B06EFF); display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
-    .skinny-logo svg { width: 16px; height: 16px; fill: #fff; }
-    .skinny-icons { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 24px; flex: 1; }
-    .skinny-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; color: var(--text-3); transition: background .1s, color .1s; }
-    .skinny-icon:hover { background: var(--hover-bg); color: var(--text-2); }
-    .skinny-icon.active { background: var(--active-bg); color: var(--text-1); }
-    .skinny-icon svg { width: 18px; height: 18px; }
+    .skinny-nav { width: 50px; flex-shrink: 0; background: var(--bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 12px 0; z-index: 30; }
+    .skinny-logo { display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+    .skinny-icons { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 28px; flex: 1; }
+    .skinny-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; color: var(--text-3); transition: background .1s, color .1s; }
+    .skinny-icon:hover { background: hsl(0 0% 11% / 0.1); color: var(--text-2); }
+    .skinny-icon.active { background: hsl(0 0% 11% / 0.14); color: var(--text-1); }
+    .skinny-icon svg { width: 16px; height: 16px; }
     .skinny-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 2px; padding-bottom: 8px; }
+    .skinny-avatar { width: 32px; height: 32px; border-radius: 50%; background: #008E52; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; }
 
-    /* ── Root layout ── */
-    .root-layout { flex: 1; display: grid; grid-template-rows: var(--header-h) 1fr; grid-template-columns: var(--sidebar-w) 1fr; grid-template-areas: "header header" "sidebar content"; background: var(--surface); min-height: 100vh; overflow: hidden; }
+    /* ── Root layout (sidebar + header + content) ── */
+    .root-layout { flex: 1; min-width: 0; display: grid; grid-template-rows: var(--header-h) 1fr; grid-template-columns: var(--sidebar-w) 1fr; grid-template-areas: "header header" "sidebar content"; min-height: 100vh; overflow: hidden; }
 
     /* ── Header ── */
-    .root-header { grid-area: header; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 16px; }
-    .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: var(--fs-sm); color: var(--text-2); }
-    .breadcrumb-sep { color: var(--text-3); }
-    .bc-active { color: var(--text-1); font-weight: 500; }
-    .search-box { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-md); border-radius: 6px; padding: 6px 12px; font-size: var(--fs-sm); color: var(--text-3); width: 212px; }
+    .root-header { grid-area: header; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: stretch; height: var(--header-h); }
+    .header-office { width: var(--sidebar-w); flex-shrink: 0; border-right: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; }
+    .office-select { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 6px; font-size: var(--fs-sm); font-weight: 500; color: var(--text-1); cursor: pointer; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-md); background: var(--surface); }
+    .office-select:hover { background: var(--bg); }
+    .office-chevron { color: var(--text-3); flex-shrink: 0; }
+    .header-main { flex: 1; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 16px; }
+    .breadcrumb { display: flex; align-items: center; gap: 2px; font-size: var(--fs-xs); font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: .04em; }
+    .breadcrumb-sep { margin: 0 3px; color: var(--text-3); }
+    .bc-active { color: var(--text-2); }
+    .search-box { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-md); border-radius: 6px; padding: 5px 10px; font-size: var(--fs-sm); color: var(--text-3); width: 220px; height: 32px; }
     .search-box svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     /* ── Sidebar ── */
     .root-sidebar { grid-area: sidebar; background: var(--bg); border-right: 1px solid var(--border); overflow-y: auto; }
-    .nav-list { list-style: none; padding: 16px 0; display: flex; flex-direction: column; gap: 4px; }
-    .nav-item { padding: 6px 16px; font-size: var(--fs); font-weight: 400; color: var(--text-1); cursor: pointer; transition: background .1s; }
-    .nav-item:hover { background: var(--hover-bg); }
-    .nav-item.active { background: var(--active-bg); }
+    .nav-list { padding: 12px 0; display: flex; flex-direction: column; }
+    .nav-section { padding: 12px 16px 4px; font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; }
+    .nav-parent { padding: 7px 16px; font-size: var(--fs-sm); font-weight: 400; color: var(--text-1); cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background .1s; }
+    .nav-parent:hover { background: hsl(0 0% 11% / 0.06); }
+    .nav-parent-add { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: var(--text-3); font-size: 16px; font-weight: 300; line-height: 1; }
+    .nav-parent-add:hover { background: hsl(0 0% 11% / 0.1); color: var(--text-1); }
+    .nav-item { padding: 5px 16px 5px 24px; font-size: var(--fs-sm); font-weight: 400; color: var(--text-2); cursor: pointer; border-radius: 6px; margin: 0 8px; transition: background .1s; }
+    .nav-item:hover { background: hsl(0 0% 11% / 0.06); }
+    .nav-item.active { background: hsl(0 0% 11% / 0.14); color: var(--text-1); font-weight: 500; }
 
     /* ── Content ── */
-    .root-content { grid-area: content; background: var(--surface); overflow-y: auto; padding: 28px 32px 40px; }
+    .root-content { grid-area: content; background: var(--surface); overflow-y: auto; padding: 24px 28px 40px; }
 
     /* ── Buttons ── */
     .btn { font-family: var(--font); font-size: var(--fs-sm); border-radius: 6px; padding: 7px 14px; cursor: pointer; font-weight: 500; border: none; line-height: 1; display: inline-flex; align-items: center; gap: 6px; transition: background .1s; white-space: nowrap; }
@@ -113,25 +114,25 @@
     .btn-ghost:hover { background: var(--hover-bg); }
 
     /* ── Alert banner ── */
-    .alert-banner { display: flex; align-items: center; gap: 10px; background: var(--info-surface); border: 1px solid var(--info-border); border-radius: 8px; padding: 10px 14px; margin-bottom: 22px; font-size: var(--fs-sm); }
+    .alert-banner { display: flex; align-items: center; gap: 10px; background: var(--info-surface); border: 1px solid var(--info-border); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; font-size: var(--fs-sm); }
     .alert-banner-icon { width: 20px; height: 20px; flex-shrink: 0; background: var(--info); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 700; }
     .alert-banner-text { flex: 1; color: var(--info); line-height: 1.45; }
     .alert-banner-text strong { font-weight: 600; }
     .alert-badge { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; background: white; color: var(--info); border: 1px solid var(--info-border); border-radius: 100px; padding: 2px 8px; flex-shrink: 0; }
     .alert-actions { display: flex; gap: 6px; flex-shrink: 0; }
     .alert-btn-p { font-size: var(--fs-xs); font-weight: 600; font-family: var(--font); background: var(--info); color: #fff; border: none; border-radius: 5px; padding: 5px 11px; cursor: pointer; }
-    .alert-btn-p:hover { background: #1E40AF; }
+    .alert-btn-p:hover { background: #3B14D0; }
     .alert-btn-g { font-size: var(--fs-xs); font-weight: 500; font-family: var(--font); background: none; color: var(--info); border: 1px solid var(--info-border); border-radius: 5px; padding: 5px 9px; cursor: pointer; }
     .alert-btn-g:hover { background: white; }
 
     /* ── Page header ── */
-    .page-hd { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; }
+    .page-hd { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
     .page-hd-left h1 { font-size: 22px; font-weight: 600; color: var(--text-1); letter-spacing: -.3px; line-height: 1.2; }
     .page-hd-left p { font-size: var(--fs-sm); color: var(--text-2); margin-top: 4px; }
     .page-hd-right { display: flex; align-items: center; gap: 8px; }
 
     /* ── Stats row ── */
-    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 24px; }
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 22px; }
     .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 15px 16px; }
     .stat-label { font-size: var(--fs-xs); color: var(--text-2); margin-bottom: 5px; }
     .stat-val { font-size: 26px; font-weight: 600; color: var(--text-1); letter-spacing: -.5px; line-height: 1; }
@@ -142,13 +143,8 @@
 
     /* ── Quick-action cards ── */
     .section-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
-    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
-    .qa-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-      padding: 14px 15px; cursor: pointer;
-      transition: border-color .15s, box-shadow .15s;
-      display: flex; flex-direction: column; gap: 6px;
-    }
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 22px; }
+    .qa-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 15px; cursor: pointer; transition: border-color .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 6px; }
     .qa-card:hover { border-color: var(--purple-border); box-shadow: 0 0 0 3px var(--purple-surface); }
     .qa-icon { font-size: 18px; line-height: 1; }
     .qa-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
@@ -189,70 +185,65 @@
     .btn-fix { font-family: var(--font); font-size: 11px; font-weight: 600; color: var(--purple-text); background: var(--purple-surface); border: 1px solid var(--purple-border); border-radius: 5px; padding: 3px 9px; cursor: pointer; white-space: nowrap; transition: background .1s; }
     .btn-fix:hover { background: var(--purple-border); }
 
-    /* ── Overlay ── */
-    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 90; }
-    .overlay.open { display: block; }
+    /* ── AI Panel (persistent right side) ── */
+    .ai-panel { width: var(--ai-panel-w); flex-shrink: 0; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; }
 
-    /* ── Drawer ── */
-    .drawer { position: fixed; top: 0; right: calc(-1 * var(--drawer-w) - 20px); width: var(--drawer-w); height: 100vh; background: var(--surface); border-left: 1px solid var(--border); box-shadow: var(--shadow-drawer); z-index: 100; transition: right .22s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
-    .drawer.open { right: 0; }
-    .drawer-header { padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-    .drawer-hd-left { display: flex; align-items: center; gap: 10px; }
-    .drawer-ai-icon { width: 28px; height: 28px; background: var(--purple); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-    .drawer-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
-    .drawer-close { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-2); font-size: 16px; }
-    .drawer-close:hover { background: var(--hover-bg); }
-    .drawer-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; padding: 0 16px; }
-    .drawer-tab { padding: 10px 14px 9px; font-size: var(--fs-sm); font-weight: 400; color: var(--text-2); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .1s, border-color .1s; }
-    .drawer-tab:hover { color: var(--text-1); }
-    .drawer-tab.active { color: var(--purple); border-bottom-color: var(--purple); font-weight: 500; }
-    .drawer-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
-    .drawer-panel { padding: 16px; flex: 1; }
-    .drawer-panel.hidden { display: none; }
+    .aip-header { padding: 0 14px; height: var(--header-h); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--bg); }
+    .aip-hd-left { display: flex; align-items: center; gap: 10px; }
+    .aip-icon { width: 26px; height: 26px; background: var(--purple); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; flex-shrink: 0; }
+    .aip-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
+    .aip-context-chip { font-size: 11px; color: var(--text-3); background: var(--bg); border: 1px solid var(--border); border-radius: 100px; padding: 2px 8px; }
+    .aip-reset-btn { font-size: var(--fs-xs); color: var(--text-3); background: none; border: none; cursor: pointer; font-family: var(--font); padding: 4px 6px; border-radius: 4px; display: none; }
+    .aip-reset-btn:hover { background: var(--hover-bg); color: var(--text-2); }
+    .aip-reset-btn.visible { display: block; }
+    .aip-toggle { width: 28px; height: 28px; background: none; border: none; border-radius: 5px; color: var(--text-3); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .1s, color .1s; }
+    .aip-toggle:hover { background: var(--hover-bg); color: var(--text-2); }
+    /* Collapsed panel */
+    .ai-panel { transition: width .22s cubic-bezier(.4,0,.2,1); }
+    .ai-panel.collapsed { width: 48px; }
+    .ai-panel.collapsed .aip-tabs,
+    .ai-panel.collapsed .aip-body,
+    .ai-panel.collapsed .aip-dock { display: none; }
+    .ai-panel.collapsed .aip-hd-left,
+    .ai-panel.collapsed .aip-context-chip,
+    .ai-panel.collapsed .aip-reset-btn { display: none; }
+    .ai-panel.collapsed .aip-header { justify-content: center; padding: 0; }
 
-    .sim-notice { display: none; background: var(--warning-surface); border: 1px solid var(--warning-border); border-radius: 6px; padding: 10px 12px; font-size: var(--fs-sm); color: var(--warning); margin-bottom: 14px; line-height: 1.45; }
+    .aip-body { flex: 1; overflow-y: auto; min-height: 0; }
 
-    /* ── Category sections ── */
-    .sugg-section { margin-bottom: 14px; }
-    .sugg-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .phase-pip { font-size: 10px; font-weight: 600; border-radius: 100px; padding: 1px 6px; letter-spacing: .03em; }
-    .pip-1 { background: var(--teal-surface); color: var(--teal); border: 1px solid var(--teal-border); }
-    .pip-2 { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
-    .pip-3 { background: var(--info-surface); color: var(--info); border: 1px solid var(--info-border); }
+    /* Suggestions (idle state) */
+    .aip-suggestions { padding: 14px; }
+    .aip-insights { background: var(--info-surface); border: 1px solid var(--info-border); border-radius: 8px; padding: 11px 13px; margin-bottom: 14px; }
+    .aip-insights-hd { font-size: var(--fs-xs); font-weight: 600; color: var(--info); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+    .aip-issue { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-top: 1px solid var(--info-border); cursor: pointer; font-size: var(--fs-sm); color: var(--text-1); gap: 8px; }
+    .aip-issue:hover .aip-fix { background: var(--info); color: white; border-color: var(--info); }
+    .aip-issue-text { display: flex; align-items: center; gap: 6px; }
+    .aip-issue-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .aip-issue-dot.danger { background: var(--danger); }
+    .aip-issue-dot.warn { background: var(--warning); }
+    .aip-fix { font-size: 11px; font-weight: 600; color: var(--info); background: white; border: 1px solid var(--info-border); border-radius: 100px; padding: 2px 9px; flex-shrink: 0; transition: background .1s, color .1s, border-color .1s; white-space: nowrap; }
 
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font-size: var(--fs-xs); font-weight: 500; background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 5px; padding: 5px 10px; cursor: pointer; white-space: nowrap; transition: background .1s, border-color .1s; }
-    .chip:hover { background: var(--hover-bg); border-color: rgba(28,28,28,0.22); }
+    .aip-sec-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; margin-top: 14px; }
+    .aip-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 2px; }
+    .aip-chip { font-size: 12px; font-weight: 500; background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 100px; padding: 4px 10px; cursor: pointer; transition: background .1s, border-color .1s; white-space: nowrap; }
+    .aip-chip:hover { background: var(--hover-bg); border-color: rgba(28,28,28,0.22); }
 
-    /* ── Command input ── */
-    .cmd-section { margin-top: 4px; }
-    .cmd-textarea { width: 100%; font-family: var(--mono); font-size: var(--fs-sm); background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 6px; padding: 10px 12px; resize: none; outline: none; line-height: 1.5; }
-    .cmd-textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-surface); }
-    .cmd-textarea::placeholder { color: var(--text-3); }
-    .cmd-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
-    .cmd-hint { font-size: var(--fs-xs); color: var(--text-3); }
-    .btn-run { font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; background: var(--purple); color: #fff; border: none; border-radius: 6px; padding: 7px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .btn-run:hover { background: var(--purple-hover); }
-    .btn-run.simulate { background: var(--warning); }
-    .btn-run.simulate:hover { background: #92400E; }
+    /* Chat state */
+    .aip-chat { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .aip-msg-user { display: flex; justify-content: flex-end; }
+    .aip-bubble { background: var(--purple); color: white; border-radius: 12px 12px 2px 12px; padding: 8px 12px; font-size: var(--fs-sm); max-width: 90%; line-height: 1.5; }
 
-    /* ── Chat pane ── */
-    .chat-pane { display: none; flex-direction: column; padding: 16px; }
-    .chat-pane.visible { display: flex; }
-    .msg-user { display: flex; justify-content: flex-end; margin-bottom: 14px; }
-    .msg-bubble { background: var(--purple); color: #fff; border-radius: 12px 12px 2px 12px; padding: 8px 13px; font-size: var(--fs-sm); max-width: 90%; line-height: 1.5; }
-
-    .parse-steps { display: none; flex-direction: column; gap: 0; margin-bottom: 12px; }
-    .parse-steps.visible { display: flex; }
-    .step-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); margin-bottom: 6px; font-size: var(--fs-sm); color: var(--text-2); opacity: .35; transition: opacity .2s; }
-    .step-row.done { color: var(--text-1); }
-    .step-icon-wrap { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .aip-steps { display: flex; flex-direction: column; gap: 4px; }
+    .aip-step { display: flex; align-items: center; gap: 9px; padding: 7px 11px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: var(--fs-sm); color: var(--text-2); opacity: .35; transition: opacity .2s; }
+    .aip-step.active { opacity: 1; }
+    .aip-step.done { opacity: 1; color: var(--text-1); }
+    .aip-step-icon { width: 18px; height: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .step-spinner { width: 14px; height: 14px; border: 2px solid var(--purple-border); border-top-color: var(--purple); border-radius: 50%; animation: spin .7s linear infinite; }
     .step-idle { width: 14px; height: 14px; border: 2px solid var(--border-md); border-radius: 50%; }
-    .step-check { width: 18px; height: 18px; border-radius: 50%; background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); font-size: 10px; font-weight: 700; display: none; align-items: center; justify-content: center; }
-    .agent-msg { display: none; flex-direction: column; gap: 10px; }
+    .step-check { width: 16px; height: 16px; border-radius: 50%; background: var(--success-surface); border: 1px solid var(--success-border); font-size: 9px; font-weight: 700; color: var(--success); display: none; align-items: center; justify-content: center; }
 
+    /* Entity card + diff (shared) */
     .entity-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .entity-card.simulate-card { border-color: var(--warning-border); }
     .entity-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-bottom: 1px solid var(--border); background: var(--surface); }
@@ -263,663 +254,941 @@
     .entity-mode-tag.sim { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
     .entity-rows { padding: 8px 0; }
     .entity-row { display: flex; padding: 5px 13px; font-size: var(--fs-sm); gap: 10px; align-items: baseline; }
-    .e-key { width: 60px; flex-shrink: 0; font-size: var(--fs-xs); color: var(--text-3); font-weight: 500; }
+    .e-key { width: 52px; flex-shrink: 0; font-size: var(--fs-xs); color: var(--text-3); font-weight: 500; }
     .e-val { color: var(--text-1); line-height: 1.4; }
     .e-code { font-family: var(--mono); font-size: 11px; background: var(--surface); color: var(--purple-text); border: 1px solid var(--purple-border); border-radius: 3px; padding: 1px 4px; }
 
     .diff-preview { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-size: var(--fs-sm); }
-    .diff-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .diff-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg); }
     .diff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
     .diff-toggle-all { display: flex; align-items: center; gap: 6px; font-size: var(--fs-xs); color: var(--text-2); }
     .diff-table { width: 100%; border-collapse: collapse; }
-    .diff-table th { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); padding: 6px 12px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg); }
-    .diff-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .diff-table th { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); padding: 5px 11px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .diff-table td { padding: 7px 11px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     .prev-row { display: none; }
     .prev-row.show { display: table-row; }
     .prev-row.excluded { opacity: .45; }
     .diff-table tbody tr:last-child td { border-bottom: none; }
     .diff-old { color: var(--text-3); text-decoration: line-through; font-size: var(--fs-xs); }
-    .diff-arr { color: var(--text-3); margin: 0 4px; }
+    .diff-arr { color: var(--text-3); margin: 0 3px; }
     .diff-new { color: var(--success); font-weight: 500; }
     .diff-new.sim { color: var(--warning); }
-    .cell-name { font-weight: 500; }
-    .more-row td { color: var(--text-3); font-size: var(--fs-xs); padding: 8px 12px; }
+    .cell-name { font-weight: 500; font-size: var(--fs-xs); }
+    .more-row td { color: var(--text-3); font-size: var(--fs-xs); padding: 7px 11px; }
     .chip-update { display: inline-block; font-size: 10px; font-weight: 600; background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); border-radius: 100px; padding: 2px 7px; }
     .chip-update.sim { background: var(--warning-surface); color: var(--warning); border-color: var(--warning-border); }
     .chip-excluded { display: inline-block; font-size: 10px; font-weight: 600; background: var(--bg); color: var(--text-3); border: 1px solid var(--border); border-radius: 100px; padding: 2px 7px; }
-    .sim-note { display: none; background: var(--warning-surface); border: 1px solid var(--warning-border); border-radius: 6px; padding: 9px 12px; font-size: var(--fs-sm); color: var(--warning); margin-top: 10px; line-height: 1.45; }
+    .sim-note { display: none; background: var(--warning-surface); border: 1px solid var(--warning-border); border-radius: 6px; padding: 9px 12px; font-size: var(--fs-sm); color: var(--warning); line-height: 1.45; }
 
-    /* ── Success pane ── */
-    .success-pane { display: none; flex-direction: column; align-items: center; padding: 28px 20px 16px; text-align: center; }
-    .success-pane.visible { display: flex; }
-    .success-icon-wrap { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 12px; }
-    .success-icon-wrap.applied { background: var(--success-surface); color: var(--success); border: 1.5px solid var(--success-border); }
-    .success-icon-wrap.simulated { background: var(--warning-surface); color: var(--warning); border: 1.5px solid var(--warning-border); }
-    .success-title { font-size: 17px; font-weight: 600; margin-bottom: 5px; }
-    .success-sub { font-size: var(--fs-sm); color: var(--text-2); max-width: 300px; line-height: 1.5; margin-bottom: 18px; }
-    .success-stat { display: flex; flex-direction: column; align-items: center; border-radius: 8px; padding: 14px 24px; margin-bottom: 18px; min-width: 160px; }
-    .success-stat.applied { background: var(--success-surface); border: 1px solid var(--success-border); }
-    .success-stat.simulated { background: var(--warning-surface); border: 1px solid var(--warning-border); }
-    .success-num { font-size: 32px; font-weight: 700; line-height: 1; }
-    .success-num.applied { color: var(--success); }
-    .success-num.simulated { color: var(--warning); }
-    .success-num-label { font-size: var(--fs-xs); color: var(--text-2); margin-top: 4px; font-weight: 500; }
-    .activity-entry { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: left; margin-bottom: 14px; }
-    .ae-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
-    .ae-row { display: flex; align-items: center; justify-content: space-between; }
-    .ae-action { font-size: var(--fs-sm); font-weight: 500; }
-    .ae-time { font-size: var(--fs-xs); color: var(--text-3); }
-    .ae-sub { font-size: var(--fs-xs); color: var(--text-2); margin-top: 4px; }
-    .link-row { display: flex; gap: 12px; margin-bottom: 14px; }
-    .link-btn { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; background: none; border: none; color: var(--purple-text); cursor: pointer; padding: 0; }
-    .link-btn:hover { text-decoration: underline; }
-    .link-btn.danger { color: var(--danger); }
-    .btn-reset { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 6px; padding: 7px 14px; cursor: pointer; }
-    .btn-reset:hover { background: var(--hover-bg); }
+    /* Inline apply actions */
+    .aip-actions { display: flex; flex-direction: column; gap: 6px; }
+    .aip-btn-apply { font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; background: var(--purple); color: white; border: none; border-radius: 6px; padding: 9px 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; transition: background .1s; }
+    .aip-btn-apply:hover { background: var(--purple-hover); }
+    .aip-btn-apply.sim { background: var(--warning); }
+    .aip-btn-apply.sim:hover { background: #B36A00; }
+    .aip-actions-row { display: flex; gap: 8px; }
+    .aip-btn-sec { font-family: var(--font); font-size: var(--fs-xs); font-weight: 500; background: none; color: var(--text-2); border: 1px solid var(--border-md); border-radius: 5px; padding: 5px 10px; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .aip-btn-sec:hover { background: var(--bg); }
 
-    /* ── History pane ── */
-    .suggestions-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    /* Success inline */
+    .aip-success { display: flex; flex-direction: column; align-items: center; padding: 20px 16px; text-align: center; }
+    .aip-success-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 10px; }
+    .aip-success-icon.applied { background: var(--success-surface); color: var(--success); border: 1.5px solid var(--success-border); }
+    .aip-success-icon.simulated { background: var(--warning-surface); color: var(--warning); border: 1.5px solid var(--warning-border); }
+    .aip-success-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .aip-success-sub { font-size: var(--fs-sm); color: var(--text-2); max-width: 260px; line-height: 1.5; margin-bottom: 14px; }
+    .aip-success-stat { display: flex; flex-direction: column; align-items: center; border-radius: 8px; padding: 12px 24px; margin-bottom: 14px; width: 100%; }
+    .aip-success-stat.applied { background: var(--success-surface); border: 1px solid var(--success-border); }
+    .aip-success-stat.simulated { background: var(--warning-surface); border: 1px solid var(--warning-border); }
+    .aip-success-num { font-size: 30px; font-weight: 700; line-height: 1; }
+    .aip-success-num.applied { color: var(--success); }
+    .aip-success-num.simulated { color: var(--warning); }
+    .aip-success-num-label { font-size: var(--fs-xs); color: var(--text-2); margin-top: 3px; font-weight: 500; }
+    .aip-activity { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; text-align: left; margin-bottom: 10px; }
+    .aip-ae-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+    .aip-ae-row { display: flex; align-items: center; justify-content: space-between; }
+    .aip-ae-action { font-size: var(--fs-sm); font-weight: 500; }
+    .aip-ae-time { font-size: var(--fs-xs); color: var(--text-3); }
+    .aip-ae-sub { font-size: var(--fs-xs); color: var(--text-2); margin-top: 3px; }
+    .aip-link-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .aip-link { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; background: none; border: none; color: var(--purple-text); cursor: pointer; padding: 0; }
+    .aip-link:hover { text-decoration: underline; }
+    .aip-link.danger { color: var(--danger); }
+    .btn-another { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; background: var(--bg); color: var(--text-1); border: 1px solid var(--border-md); border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+    .btn-another:hover { background: var(--hover-bg); }
+
+    /* History panel */
+    .aip-history { padding: 14px; }
+    .aip-hist-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
     .recent-list { display: flex; flex-direction: column; gap: 6px; }
-    .recent-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: var(--fs-sm); }
-    .recent-icon { font-size: 16px; flex-shrink: 0; }
+    .recent-row { display: flex; align-items: center; gap: 10px; padding: 9px 11px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: var(--fs-sm); }
+    .recent-icon { font-size: 15px; flex-shrink: 0; }
     .recent-body { flex: 1; min-width: 0; }
-    .recent-action { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .recent-action { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: var(--fs-sm); }
     .recent-meta { font-size: var(--fs-xs); color: var(--text-3); margin-top: 2px; }
     .recent-status { font-size: 11px; font-weight: 600; border-radius: 100px; padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
     .rs-done { background: var(--success-surface); color: var(--success); border: 1px solid var(--success-border); }
     .rs-pending { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
 
-    /* ── Drawer footer ── */
-    .drawer-footer { padding: 12px 16px; border-top: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
-    .drawer-footer.hidden { display: none; }
-    .btn-apply { font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; background: var(--purple); color: #fff; border: none; border-radius: 6px; padding: 9px 16px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
-    .btn-apply:hover { background: var(--purple-hover); }
-    .btn-apply:disabled { opacity: .45; cursor: not-allowed; }
-    .btn-apply.sim { background: var(--warning); }
-    .btn-apply.sim:hover { background: #92400E; }
-    .footer-row { display: flex; align-items: center; justify-content: space-between; }
-    .btn-secondary-action { font-family: var(--font); font-size: var(--fs-xs); font-weight: 500; background: none; border: none; color: var(--text-2); cursor: pointer; padding: 4px 2px; display: flex; align-items: center; gap: 5px; }
-    .btn-secondary-action:hover { color: var(--text-1); }
+    /* Panel tabs */
+    .aip-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .aip-tab { padding: 9px 14px 8px; font-size: var(--fs-sm); font-weight: 400; color: var(--text-2); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .1s, border-color .1s; }
+    .aip-tab:hover { color: var(--text-1); }
+    .aip-tab.active { color: var(--purple); border-bottom-color: var(--purple); font-weight: 500; }
 
-    /* ── Toast ── */
+    /* Input dock */
+    .aip-dock { flex-shrink: 0; border-top: 1px solid var(--border); padding: 10px 14px 14px; background: var(--surface); }
+    .aip-input-wrap { background: var(--bg); border: 1px solid var(--border-md); border-radius: 8px; padding: 8px 10px 6px; transition: border-color .15s, box-shadow .15s; }
+    .aip-input-wrap:focus-within { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-surface); }
+    .aip-input { width: 100%; font-family: var(--font); font-size: var(--fs-sm); background: none; border: none; outline: none; resize: none; color: var(--text-1); line-height: 1.5; min-height: 44px; max-height: 100px; }
+    .aip-input::placeholder { color: var(--text-3); }
+    .aip-dock-row { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+    .aip-dock-hint { font-size: 11px; color: var(--text-3); }
+    .aip-dock-actions { display: flex; align-items: center; gap: 6px; }
+    .aip-sim-btn { font-family: var(--font); font-size: 11px; font-weight: 600; background: none; color: var(--text-3); border: 1px solid var(--border-md); border-radius: 5px; padding: 4px 9px; cursor: pointer; }
+    .aip-sim-btn:hover { background: var(--bg); color: var(--text-2); }
+    .aip-send { font-family: var(--font); font-size: 12px; font-weight: 600; background: var(--purple); color: white; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: background .1s; }
+    .aip-send:hover { background: var(--purple-hover); }
+
+    /* ── Emergency section in idle panel ── */
+    .aip-emergency-wrap { background: var(--emergency-surface); border: 1px solid var(--emergency-border); border-radius: 8px; padding: 11px 13px; margin-bottom: 4px; }
+    .aip-emergency-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .aip-emergency-label { font-size: var(--fs-xs); font-weight: 700; color: var(--emergency); text-transform: uppercase; letter-spacing: .05em; }
+    .aip-emergency-pill { font-size: 10px; font-weight: 600; background: var(--emergency); color: white; border-radius: 100px; padding: 2px 8px; }
+    .aip-chip-em { font-size: 12px; font-weight: 500; background: white; color: var(--text-1); border: 1px solid var(--emergency-border); border-radius: 100px; padding: 4px 10px; cursor: pointer; transition: background .1s, border-color .1s; white-space: nowrap; }
+    .aip-chip-em:hover { background: var(--emergency-surface); border-color: var(--emergency); }
+
+    /* ── Emergency activation plan card ── */
+    .emergency-plan { border: 1.5px solid var(--emergency-border); border-radius: 8px; overflow: hidden; }
+    .ep-header { padding: 10px 13px 9px; background: var(--emergency-surface); border-bottom: 1px solid var(--emergency-border); }
+    .ep-badge-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+    .ep-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; background: var(--emergency); color: white; border-radius: 100px; padding: 2px 8px; }
+    .ep-scope { font-size: var(--fs-xs); font-weight: 600; color: var(--emergency); }
+    .ep-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
+    .ep-subtitle { font-size: var(--fs-xs); color: var(--text-3); margin-top: 2px; }
+    .ep-changes { padding: 4px 0; background: var(--surface); }
+    .ep-change { display: flex; align-items: flex-start; gap: 10px; padding: 8px 13px; border-bottom: 1px solid var(--border); }
+    .ep-change:last-child { border-bottom: none; }
+    .ep-num { width: 18px; height: 18px; border-radius: 50%; background: var(--emergency-surface); border: 1px solid var(--emergency-border); font-size: 9px; font-weight: 700; color: var(--emergency); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .ep-change-key { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); }
+    .ep-change-val { font-size: var(--fs-sm); color: var(--text-1); margin-top: 1px; }
+    .ep-change-note { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+    .ep-guard { padding: 8px 13px; font-size: var(--fs-xs); color: var(--emergency); background: var(--emergency-surface); border-top: 1px solid var(--emergency-border); line-height: 1.5; }
+
+    /* Emergency apply button */
+    .aip-btn-apply.emergency { background: var(--emergency); }
+    .aip-btn-apply.emergency:hover { background: #9B3304; }
+
+    /* Emergency success */
+    .aip-success-icon.emergency { background: var(--emergency-surface); color: var(--emergency); border: 1.5px solid var(--emergency-border); }
+    .aip-success-stat.emergency { background: var(--emergency-surface); border: 1px solid var(--emergency-border); }
+    .aip-success-num.emergency { color: var(--emergency); }
+
+    /* Phase pips */
+    .phase-pip { font-size: 10px; font-weight: 600; border-radius: 100px; padding: 1px 6px; letter-spacing: .03em; }
+    .pip-1 { background: var(--teal-surface); color: var(--teal); border: 1px solid var(--teal-border); }
+    .pip-2 { background: var(--warning-surface); color: var(--warning); border: 1px solid var(--warning-border); }
+    .pip-3 { background: var(--info-surface); color: var(--info); border: 1px solid var(--info-border); }
+
+    /* Toast */
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1C1C1C; color: #fff; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 9px; font-size: var(--fs-sm); box-shadow: 0 4px 16px rgba(0,0,0,.16); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; transform: translateX(-50%) translateY(8px); white-space: nowrap; }
     .toast.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .toast-dot { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
     .toast-dot.applied { background: var(--success); color: #fff; }
     .toast-dot.simulated { background: var(--warning); color: #fff; }
-    .toast-sep { color: rgba(255,255,255,.35); }
     .toast-link { color: #A78BFA; cursor: pointer; font-weight: 500; }
+    .toast-sep { color: rgba(255,255,255,.35); }
+
+    .hidden { display: none !important; }
+
+    /* ── Settings page sections ── */
+    .settings-section { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 14px; background: var(--surface); }
+    .settings-sxn-hd { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg); min-height: 44px; }
+    .settings-sxn-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
+    .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: var(--fs-sm); gap: 16px; }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row-lft { flex: 1; min-width: 0; }
+    .settings-row-label { font-size: var(--fs-sm); color: var(--text-1); }
+    .settings-row-desc { font-size: var(--fs-xs); color: var(--text-3); margin-top: 1px; line-height: 1.4; }
+    .settings-row-val { font-size: var(--fs-sm); color: var(--text-2); flex-shrink: 0; }
+    .settings-row-action { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .settings-mono { font-size: 12px; font-family: var(--mono); color: var(--text-3); }
+
+    /* Toggle switch */
+    .dp-toggle { display: inline-flex; align-items: center; cursor: pointer; }
+    .dp-toggle input[type="checkbox"] { display: none; }
+    .dp-track { position: relative; display: inline-flex; width: 34px; height: 20px; border-radius: 100px; background: hsl(0 0% 11% / .18); transition: background .2s; flex-shrink: 0; }
+    .dp-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: transform .2s; pointer-events: none; }
+    .dp-toggle input:checked + .dp-track { background: var(--purple); }
+    .dp-toggle input:checked + .dp-track .dp-thumb { transform: translateX(14px); }
+
+    /* Agent table inside section */
+    .agent-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+    .agent-table th { padding: 7px 16px; font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-align: left; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .agent-table td { padding: 9px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .agent-table tr:last-child td { border-bottom: none; }
+    .agent-av { width: 26px; height: 26px; border-radius: 50%; background: var(--purple-surface); border: 1px solid var(--purple-border); color: var(--purple-text); font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .agent-name-wrap { display: flex; align-items: center; gap: 8px; }
+    .agent-name { font-weight: 500; font-size: var(--fs-sm); }
+    .agent-email { color: var(--text-3); font-size: var(--fs-xs); }
+    .agent-role { font-size: var(--fs-xs); font-weight: 500; color: var(--text-3); border: 1px solid var(--border-md); border-radius: 100px; padding: 2px 8px; white-space: nowrap; }
+    .agent-role.is-admin { background: var(--purple-surface); color: var(--purple-text); border-color: var(--purple-border); }
+    .status-txt { font-size: var(--fs-xs); }
+
+    /* AI flag tag */
+    .ai-flag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--purple-text); background: var(--purple-surface); border: 1px solid var(--purple-border); border-radius: 4px; padding: 2px 7px; cursor: pointer; white-space: nowrap; }
+    .ai-flag:hover { background: var(--purple-border); }
+    .ai-flag.warn { color: var(--danger); background: var(--danger-surface); border-color: var(--danger-border); }
+
+    /* Integrations grid */
+    .integrations-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .integration-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); cursor: pointer; transition: background .1s; }
+    .integration-item:nth-child(even) { border-right: none; }
+    .integration-item:nth-last-child(-n+2) { border-bottom: none; }
+    .integration-item:hover { background: var(--bg); }
+    .integration-logo { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; background: var(--surface); }
+    .integration-name { font-size: var(--fs-sm); font-weight: 500; }
+    .integration-status { font-size: var(--fs-xs); color: var(--text-3); margin-top: 1px; }
+    .integration-connected { color: var(--success); }
+
+    /* Page header tweak for settings pages */
+    .page-hd-meta { display: flex; align-items: center; gap: 10px; margin-top: 3px; }
+    .page-meta-tag { font-size: var(--fs-xs); color: var(--text-3); }
+    .page-meta-sep { color: var(--border-md); }
   </style>
 </head>
 <body>
-<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
 
 <div class="app">
-  <!-- Skinny nav -->
+
+  <!-- ── Skinny nav ── -->
   <div class="skinny-nav">
     <div class="skinny-logo">
-      <svg viewBox="0 0 20 20"><path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 3a2 2 0 110 4 2 2 0 010-4zm0 10.5c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+        <defs>
+          <linearGradient id="dp-gradient" x1="-3.75" y1="-5.169" x2="24.75" y2="24.006" gradientUnits="userSpaceOnUse">
+            <stop offset=".06" stop-color="#10022C"/>
+            <stop offset=".2" stop-color="#611F93"/>
+            <stop offset=".29" stop-color="#8223A1"/>
+            <stop offset=".366" stop-color="#9325A5"/>
+            <stop offset=".459" stop-color="#C52599" stop-opacity=".9"/>
+            <stop offset=".564" stop-color="#D52C86"/>
+            <stop offset=".658" stop-color="#EA2F6F"/>
+            <stop offset=".737" stop-color="#F64850"/>
+            <stop offset=".896" stop-color="#FD6D2D"/>
+            <stop offset=".955" stop-color="#FF9E0E" stop-opacity=".95"/>
+          </linearGradient>
+        </defs>
+        <path d="M20.4.006H3.6a3.6 3.6 0 0 0-3.6 3.6v16.8a3.6 3.6 0 0 0 3.6 3.6h16.8a3.6 3.6 0 0 0 3.6-3.6v-16.8a3.6 3.6 0 0 0-3.6-3.6Z" fill="#10022C"/>
+        <path d="M20.4.006H3.6a3.6 3.6 0 0 0-3.6 3.6v16.8a3.6 3.6 0 0 0 3.6 3.6h16.8a3.6 3.6 0 0 0 3.6-3.6v-16.8a3.6 3.6 0 0 0-3.6-3.6Z" fill="url(#dp-gradient)"/>
+        <path d="M12.788 7.473c.127-.057.1-.276-.035-.306-2.02-.448-3.592-2.236-3.93-4.479-.021-.148-.284-.184-.338-.044-.87 2.68-2.752 4.777-5.256 5.8-.122.057-.097.26.034.292 1.972.474 3.503 2.23 3.846 4.429.023.145.263.178.318.042 1.003-2.804 2.922-4.91 5.361-5.734Z" fill="#F8F7F6"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.135 20.706c-2.583 0-4.438-2.068-4.438-4.898 0-2.83 1.855-4.88 4.438-4.88 1.2 0 2.346.599 2.855 1.379V7.264h2.11v13.26h-2.11V19.31c-.509.78-1.655 1.397-2.855 1.397Zm.345-1.832c1.364 0 2.383-1.052 2.51-2.485V15.19c-.127-1.433-1.146-2.43-2.51-2.43-1.527 0-2.619 1.215-2.619 3.029 0 1.814 1.091 3.084 2.62 3.084Z" fill="#F8F7F6"/>
+      </svg>
     </div>
     <ol class="skinny-icons">
-      <li class="skinny-icon" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></li>
-      <li class="skinny-icon" title="Users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></li>
-      <li class="skinny-icon" title="Favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></li>
-      <li class="skinny-icon active" title="Admin Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></li>
-      <li class="skinny-icon" title="Analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></li>
-      <li class="skinny-icon" title="Activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 100 .5M3 4v4h4"/></svg></li>
-      <li class="skinny-icon" title="AI"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></li>
+      <li class="skinny-icon" title="Home">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.089 7.5a1.487 1.487 0 0 0-1.005.35c-.246.207-.424.49-.556.759a5.17 5.17 0 0 0-.31.834 7.918 7.918 0 0 0-.21.966l-.003.017v.008a.5.5 0 0 0 .562.562h.002l.005-.002.017-.002a4.771 4.771 0 0 0 .276-.047c.178-.034.423-.087.69-.163a5.13 5.13 0 0 0 .833-.311c.269-.131.551-.31.758-.556.477-.566.485-1.447-.072-1.997l-.006-.006a1.487 1.487 0 0 0-.981-.411ZM2.28 9.82a6.238 6.238 0 0 1-.14.04 4.181 4.181 0 0 1 .287-.812c.102-.21.207-.354.3-.433a.487.487 0 0 1 .648.017.483.483 0 0 1 .007.638v.002c-.08.094-.223.198-.432.3-.204.1-.44.183-.67.249Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.392 6.72C10.645 5.007 11 2.783 11 1.5a.5.5 0 0 0-.497-.5 6.445 6.445 0 0 0-5.236 2.632l-.032-.007a6.576 6.576 0 0 0-.685-.108c-.507-.052-1.25-.063-1.806.268-.512.305-.813.888-.98 1.296a5.282 5.282 0 0 0-.25.797L1.51 5.9a.5.5 0 0 0 .49.6h2.178L5.5 7.822V10a.5.5 0 0 0 .6.49h.002l.005-.002.015-.003a4.547 4.547 0 0 0 .23-.058 5.07 5.07 0 0 0 .567-.192c.408-.166.99-.467 1.296-.979.33-.553.326-1.304.28-1.818a6.908 6.908 0 0 0-.099-.696l-.004-.023Z"/></svg>
+      </li>
+      <li class="skinny-icon" title="Your Settings">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM3.5 3.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0Zm-.768 4.232A2.5 2.5 0 0 1 4.5 7h3A2.5 2.5 0 0 1 10 9.5v1a.5.5 0 0 1-1 0v-1A1.5 1.5 0 0 0 7.5 8h-3A1.5 1.5 0 0 0 3 9.5v1a.5.5 0 0 1-1 0v-1a2.5 2.5 0 0 1 .732-1.768Z"/></svg>
+      </li>
+      <li class="skinny-icon" title="AI Agents">
+        <svg width="14" height="14" viewBox="0 0 14 16" fill="currentColor"><path d="M13.8824 7.32705C14.0644 7.24206 14.0258 6.91592 13.8311 6.87124C10.9225 6.20347 8.65803 3.53926 8.17241 0.196952C8.14025-0.0243791 7.7623-0.0769954 7.68407 0.131337C6.43151 4.1243 3.72072 7.24964 0.113845 8.77322C-0.0614008 8.85916-0.025849 9.16279 0.162416 9.20958C3.00342 9.9156 5.20872 12.532 5.7026 15.809C5.73518 16.0251 6.0818 16.074 6.16082 15.8715C7.60456 11.6933 10.3696 8.55468 13.8824 7.32705Z"/></svg>
+      </li>
+      <li class="skinny-icon active" title="Admin Settings">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 6a3 3 0 1 1 6 0 3 3 0 0 1-6 0Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 1a.5.5 0 0 1 .5.5v.55a4.01 4.01 0 0 1 1.517.628l.39-.39a.5.5 0 0 1 .707.707l-.39.39A4.01 4.01 0 0 1 9.35 4.9H9.9a.5.5 0 0 1 0 1h-.55a4.01 4.01 0 0 1-.627 1.517l.39.39a.5.5 0 0 1-.707.707l-.39-.39A4.01 4.01 0 0 1 6.5 8.75V9.3a.5.5 0 0 1-1 0v-.55a4.01 4.01 0 0 1-1.517-.627l-.39.39a.5.5 0 0 1-.707-.707l.39-.39A4.01 4.01 0 0 1 2.65 5.9H2.1a.5.5 0 0 1 0-1h.55a4.01 4.01 0 0 1 .627-1.517l-.39-.39a.5.5 0 0 1 .707-.707l.39.39A4.01 4.01 0 0 1 5.5 2.05V1.5A.5.5 0 0 1 6 1Z"/></svg>
+      </li>
+      <li class="skinny-icon" title="Coaching Hub">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM.5 6a5.5 5.5 0 1 1 11 0A5.5 5.5 0 0 1 .5 6Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5.5v1.793l1.354 1.353a.5.5 0 0 1-.708.708L5.646 6.354A.5.5 0 0 1 5.5 6V4a.5.5 0 0 1 .5-.5Z"/></svg>
+      </li>
+      <li class="skinny-icon" title="Live Dashboard">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 1a.5.5 0 0 1 .474.342L7.5 8.919l1.026-3.077A.5.5 0 0 1 9 5.5h2a.5.5 0 0 1 0 1H9.36l-1.386 4.158a.5.5 0 0 1-.948 0L4.5 3.081 3.474 6.158A.5.5 0 0 1 3 6.5H1a.5.5 0 0 1 0-1h1.64l1.386-4.158A.5.5 0 0 1 4.5 1Z"/></svg>
+      </li>
+      <li class="skinny-icon" title="Analytics">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><polyline points="2,10 5,6 7.5,8 10,3"/><polyline points="8,3 10,3 10,5"/></svg>
+      </li>
+      <li class="skinny-icon" title="Conversation History">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 1.5a4.5 4.5 0 1 0 2.636 8.178.5.5 0 1 1 .585.81A5.5 5.5 0 1 1 11.5 6a.5.5 0 0 1-1 0A4.5 4.5 0 0 0 6 1.5Z"/><path d="M10.5 8a.5.5 0 0 1 .5.5V11a.5.5 0 0 1-.5.5H8a.5.5 0 0 1 0-1h2V8.5a.5.5 0 0 1 .5-.5Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5.5v1.793l1.354 1.353a.5.5 0 0 1-.708.708L5.646 6.354A.5.5 0 0 1 5.5 6V4a.5.5 0 0 1 .5-.5Z"/></svg>
+      </li>
     </ol>
     <div class="skinny-bottom">
-      <div class="skinny-icon" title="Integrations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+      <div class="skinny-icon" title="Help Center" style="margin-bottom:6px">
+        <svg viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM.5 6a5.5 5.5 0 1 1 11 0A5.5 5.5 0 0 1 .5 6Zm5-2a1 1 0 0 0-.894.553.5.5 0 1 1-.894-.447A2 2 0 0 1 8 5c0 .76-.456 1.34-.943 1.736A4.062 4.062 0 0 1 6.5 7.2V7.5a.5.5 0 0 1-1 0V7c0-.488.2-.832.443-1.064.234-.224.504-.37.682-.497C6.918 5.22 7 5.023 7 5a1 1 0 0 0-1-1Zm0 5.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/></svg>
+      </div>
+      <div class="skinny-avatar" title="Your Account">SL</div>
     </div>
   </div>
 
-  <!-- Root layout -->
+  <!-- ── Left: admin shell ── -->
   <div class="root-layout">
     <header class="root-header">
-      <div class="breadcrumb">
-        <span>Admin</span><span class="breadcrumb-sep">/</span>
-        <span>Admin Settings</span><span class="breadcrumb-sep">/</span>
-        <span class="bc-active">Contact Centers</span>
+      <div class="header-office">
+        <div class="office-select">
+          <span>Dialpadbeta</span>
+          <svg class="office-chevron" viewBox="0 0 12 12" fill="currentColor" width="12" height="12"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.22 4.47a.75.75 0 0 1 1.06 0L6 7.19l2.72-2.72a.75.75 0 1 1 1.06 1.06L6.53 8.78a.75.75 0 0 1-1.06 0L2.22 5.53a.75.75 0 0 1 0-1.06Z"/></svg>
+        </div>
       </div>
-      <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        Search Help Center
+      <div class="header-main">
+        <div class="breadcrumb">
+          <span>Admin</span><span class="breadcrumb-sep">/</span>
+          <span>Contact Centers</span><span class="breadcrumb-sep">/</span>
+          <span class="bc-active">Sales East</span>
+        </div>
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search Help Center
+        </div>
       </div>
     </header>
 
     <aside class="root-sidebar">
-      <ul class="nav-list">
-        <li class="nav-item">Company settings</li>
-        <li class="nav-item">Office management</li>
-        <li class="nav-item">Licenses</li>
-        <li class="nav-item active">Contact Centers</li>
-        <li class="nav-item">AI Settings</li>
-        <li class="nav-item">Access control</li>
-        <li class="nav-item">Integrations</li>
-        <li class="nav-item">Reserved Numbers</li>
-        <li class="nav-item">Number management</li>
-        <li class="nav-item">Authentication</li>
-        <li class="nav-item">SMS Management</li>
-        <li class="nav-item">Shared Contacts</li>
-        <li class="nav-item">Deskphone settings</li>
-        <li class="nav-item">Billing</li>
-      </ul>
+      <nav class="nav-list">
+        <div class="nav-section">Office</div>
+        <div class="nav-parent"><span>Company Settings</span><span class="nav-parent-add">+</span></div>
+        <div class="nav-parent"><span>Office Management</span><span class="nav-parent-add">+</span></div>
+        <div class="nav-parent"><span>Licenses</span></div>
+        <div class="nav-parent"><span>Billing</span></div>
+
+        <div class="nav-section" style="margin-top:4px">Contact Centers</div>
+        <div class="nav-parent"><span>All Contact Centers</span><span class="nav-parent-add">+</span></div>
+        <div class="nav-item active">Sales East</div>
+        <div class="nav-item" style="padding-left:32px;font-size:12px;color:var(--text-3)">Agents &amp; Admins</div>
+        <div class="nav-item" style="padding-left:32px;font-size:12px;color:var(--text-3)">Business Hours</div>
+        <div class="nav-item" style="padding-left:32px;font-size:12px;color:var(--text-3)">Call Routing</div>
+        <div class="nav-item" style="padding-left:32px;font-size:12px;color:var(--text-3)">AI Settings</div>
+        <div class="nav-item" style="padding-left:32px;font-size:12px;color:var(--text-3)">Integrations</div>
+        <div class="nav-parent" style="margin-top:2px"><span>Agents</span></div>
+        <div class="nav-parent"><span>Skills &amp; Queues</span></div>
+        <div class="nav-parent"><span>Routing</span></div>
+
+        <div class="nav-section" style="margin-top:4px">Settings</div>
+        <div class="nav-parent"><span>AI Settings</span></div>
+        <div class="nav-parent"><span>Access Control</span></div>
+        <div class="nav-parent"><span>Number Management</span><span class="nav-parent-add">+</span></div>
+        <div class="nav-parent"><span>Integrations</span></div>
+        <div class="nav-parent"><span>Authentication</span></div>
+        <div class="nav-parent"><span>SMS Management</span></div>
+        <div class="nav-parent"><span>Deskphone Settings</span></div>
+      </nav>
     </aside>
 
     <main class="root-content">
 
-      <!-- Phase 3 proactive banner -->
       <div class="alert-banner" id="alertBanner">
         <div class="alert-banner-icon">✦</div>
         <div class="alert-banner-text">
-          <strong>AI detected 3 issues</strong> — 11 CCs missing holiday hours, 8 CCs missing after-hours greetings, and 23 CCs have call recording disabled despite your compliance policy.
+          <strong>AI found 2 issues in Sales East</strong> — call recording is off (compliance risk) and holiday hours are missing for Dec 25 and Jan 1.
         </div>
-        <span class="alert-badge">Phase 3 · Proactive</span>
         <div class="alert-actions">
-          <button class="alert-btn-p" onclick="openWithCmd('Fix all flagged issues: enable call recording on 23 CCs, set holiday hours on 11 CCs, add after-hours greetings on 8 CCs')">Fix all</button>
+          <button class="alert-btn-p" onclick="aipFill('Fix all issues for Sales East: enable call recording and set Dec 25 and Jan 1 holiday closures')">Fix both</button>
           <button class="alert-btn-g" onclick="document.getElementById('alertBanner').style.display='none'">Dismiss</button>
         </div>
       </div>
 
-      <!-- Page header -->
       <div class="page-hd">
         <div class="page-hd-left">
-          <h1>Contact Centers</h1>
-          <p>47 contact centers across NA, EMEA, and APAC</p>
+          <h1>Sales East</h1>
+          <div class="page-hd-meta">
+            <span class="page-meta-tag">10 agents</span>
+            <span class="page-meta-sep">·</span>
+            <span class="page-meta-tag">NA West</span>
+            <span class="page-meta-sep">·</span>
+            <span class="page-meta-tag">Ext. 1200</span>
+          </div>
         </div>
         <div class="page-hd-right">
-          <button class="btn btn-base"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New contact center</button>
-          <button class="btn btn-ai" onclick="openDrawer()">✦ AI Admin</button>
+          <button class="btn btn-base" style="font-size:13px">Edit</button>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-label">Total contact centers</div>
-          <div class="stat-val">47</div>
-          <div class="stat-sub">across 3 regions</div>
+      <!-- ── Agents & Admins ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Agents &amp; Admins</div>
+          <button class="btn btn-base" style="font-size:12px;padding:4px 10px" onclick="aipFill('Add a new agent to Sales East contact center')">+ Add</button>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Recording disabled</div>
-          <div class="stat-val danger">23</div>
-          <div class="stat-sub">compliance risk</div>
-          <div class="stat-ai">✦ AI flagged</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Holiday hours missing</div>
-          <div class="stat-val warn">11</div>
-          <div class="stat-sub">of 47 contact centers</div>
-          <div class="stat-ai">✦ AI flagged</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Avg config age</div>
-          <div class="stat-val">14mo</div>
-          <div class="stat-sub">last bulk update Apr 2025</div>
-        </div>
-      </div>
-
-      <!-- Quick actions -->
-      <div class="section-label">Bulk actions — what AI Admin can do</div>
-      <div class="quick-grid">
-        <div class="qa-card" onclick="openWithCmd('Enable automatic call recording on all contact centers that have it disabled')">
-          <div class="qa-icon">⏺</div>
-          <div class="qa-title">Call Recording</div>
-          <div class="qa-desc">Enable, disable, or update recording rules across all CCs</div>
-          <div class="qa-footer">
-            <span class="qa-count warn">23 CCs off</span>
-            <span class="qa-arrow">Fix →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Set all NA contact centers closed on Dec 25 and Jan 1')">
-          <div class="qa-icon">🗓</div>
-          <div class="qa-title">Business Hours &amp; Holidays</div>
-          <div class="qa-desc">Set holiday closures, adjust hours, clone templates</div>
-          <div class="qa-footer">
-            <span class="qa-count warn">11 CCs missing</span>
-            <span class="qa-arrow">Fix →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Update routing method to round robin for all NA contact centers')">
-          <div class="qa-icon">🔀</div>
-          <div class="qa-title">Call Routing</div>
-          <div class="qa-desc">Change routing method, overflow, skills-based routing</div>
-          <div class="qa-footer">
-            <span class="qa-count neutral">Routing method</span>
-            <span class="qa-arrow">Update →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Replace COVID temporary greeting with standard welcome on all affected CCs')">
-          <div class="qa-icon">🔊</div>
-          <div class="qa-title">Greetings &amp; Hold Music</div>
-          <div class="qa-desc">Upload MP3s, set welcome, closed, hold queue greetings</div>
-          <div class="qa-footer">
-            <span class="qa-count warn">8 CCs outdated</span>
-            <span class="qa-arrow">Fix →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Set wrap-up time to 90 seconds across all contact centers')">
-          <div class="qa-icon">⏱</div>
-          <div class="qa-title">Wrap-Up Time</div>
-          <div class="qa-desc">Standardize post-call buffer across all agent groups</div>
-          <div class="qa-footer">
-            <span class="qa-count neutral">Currently varies</span>
-            <span class="qa-arrow">Set →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">
-          <div class="qa-icon">👥</div>
-          <div class="qa-title">Agent Management</div>
-          <div class="qa-desc">Bulk add/remove agents, update skills, set statuses</div>
-          <div class="qa-footer">
-            <span class="qa-count neutral">47 CCs</span>
-            <span class="qa-arrow">Manage →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Enable Dialpad AI features including transcription, summaries, and sentiment on all contact centers')">
-          <div class="qa-icon">🤖</div>
-          <div class="qa-title">AI Features</div>
-          <div class="qa-desc">Enable transcription, AI CSAT, summaries, PII redaction</div>
-          <div class="qa-footer">
-            <span class="qa-count purple">✦ AI-powered</span>
-            <span class="qa-arrow">Enable →</span>
-          </div>
-        </div>
-        <div class="qa-card" onclick="openWithCmd('Enable spam call blocking and set max queue wait time to 10 minutes on all contact centers')">
-          <div class="qa-icon">🛡</div>
-          <div class="qa-title">Queue &amp; Security</div>
-          <div class="qa-desc">Set max wait time, callback, spam blocking, data retention</div>
-          <div class="qa-footer">
-            <span class="qa-count neutral">Queue settings</span>
-            <span class="qa-arrow">Configure →</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Table -->
-      <div class="table-toolbar">
-        <div class="tt-left">
-          <span class="tt-count">47 contact centers</span>
-          <span class="tt-selected" id="selBadge">0 selected</span>
-        </div>
-        <div class="tt-right">
-          <button class="btn btn-base" style="font-size:12px;padding:5px 11px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter</button>
-          <button class="btn btn-ai" id="bulkBtn" style="display:none;font-size:12px;padding:5px 11px;" onclick="openWithCmd('Bulk update selected contact centers')">✦ AI bulk edit</button>
-        </div>
-      </div>
-      <div class="data-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th><input type="checkbox" id="masterCheck" onchange="toggleAllMain(this)"></th>
-              <th>Name</th>
-              <th>Region</th>
-              <th>Recording</th>
-              <th>Holiday hours</th>
-              <th>Greeting</th>
-              <th>Routing</th>
-              <th>Agents</th>
-              <th></th>
-            </tr>
-          </thead>
+        <table class="agent-table">
+          <thead><tr><th>Name</th><th>Role</th><th>Status</th><th></th></tr></thead>
           <tbody>
             <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">Sales East</span></td>
-              <td style="color:var(--text-2);font-size:13px">NA</td>
-              <td><span class="badge badge-danger">Off</span></td>
-              <td><span class="badge badge-warn">Missing</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-neutral">Round robin</span></td>
-              <td style="color:var(--text-2);font-size:13px">12</td>
-              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording and set Dec 25 holiday hours for Sales East')">✦ Fix</button></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">Support West</span></td>
-              <td style="color:var(--text-2);font-size:13px">NA</td>
-              <td><span class="badge badge-danger">Off</span></td>
-              <td><span class="badge badge-warn">Missing</span></td>
-              <td><span class="badge badge-danger">Missing</span></td>
-              <td><span class="badge badge-neutral">Longest idle</span></td>
-              <td style="color:var(--text-2);font-size:13px">8</td>
-              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording, set holiday hours, and add after-hours greeting for Support West')">✦ Fix</button></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">Billing Team</span></td>
-              <td style="color:var(--text-2);font-size:13px">NA</td>
-              <td><span class="badge badge-ok">On</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-neutral">Fixed order</span></td>
-              <td style="color:var(--text-2);font-size:13px">5</td>
+              <td><div class="agent-name-wrap"><div class="agent-av">JS</div><div><div class="agent-name">Jordan Smith</div><div class="agent-email">jordan.smith@acme.com</div></div></div></td>
+              <td><span class="agent-role is-admin">Admin</span></td>
+              <td><span class="status-txt" style="color:var(--success)">&#x25CF; Available</span></td>
               <td></td>
             </tr>
             <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">Enterprise Desk</span></td>
-              <td style="color:var(--text-2);font-size:13px">NA</td>
-              <td><span class="badge badge-danger">Off</span></td>
-              <td><span class="badge badge-warn">Missing</span></td>
-              <td><span class="badge badge-danger">Missing</span></td>
-              <td><span class="badge badge-neutral">Skills-based</span></td>
-              <td style="color:var(--text-2);font-size:13px">20</td>
-              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording, set holiday hours, and add after-hours greeting for Enterprise Desk')">✦ Fix</button></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">EMEA Sales</span></td>
-              <td style="color:var(--text-2);font-size:13px">EMEA</td>
-              <td><span class="badge badge-ok">On</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-warn">Outdated</span></td>
-              <td><span class="badge badge-neutral">Round robin</span></td>
-              <td style="color:var(--text-2);font-size:13px">9</td>
-              <td><button class="btn-fix" onclick="openWithCmd('Update EMEA Sales after-hours greeting to spring_promo_2026.mp3')">✦ Fix</button></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">APAC Tech Support</span></td>
-              <td style="color:var(--text-2);font-size:13px">APAC</td>
-              <td><span class="badge badge-ok">On</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-neutral">Longest idle</span></td>
-              <td style="color:var(--text-2);font-size:13px">14</td>
+              <td><div class="agent-name-wrap"><div class="agent-av" style="background:#F6FCF5;border-color:#D1FF76;color:#008E52">AL</div><div><div class="agent-name">Aisha Lee</div><div class="agent-email">aisha.lee@acme.com</div></div></div></td>
+              <td><span class="agent-role">Agent</span></td>
+              <td><span class="status-txt" style="color:var(--success)">&#x25CF; Available</span></td>
               <td></td>
             </tr>
             <tr>
-              <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
-              <td><span class="cc-link">Canada Support</span></td>
-              <td style="color:var(--text-2);font-size:13px">NA</td>
-              <td><span class="badge badge-danger">Off</span></td>
-              <td><span class="badge badge-warn">Missing</span></td>
-              <td><span class="badge badge-ok">Set</span></td>
-              <td><span class="badge badge-neutral">Round robin</span></td>
-              <td style="color:var(--text-2);font-size:13px">6</td>
-              <td><button class="btn-fix" onclick="openWithCmd('Enable call recording and clone US Thanksgiving holiday hours to Canada Support using Canadian Thanksgiving date')">✦ Fix</button></td>
+              <td><div class="agent-name-wrap"><div class="agent-av" style="background:#FFF2F3;border-color:#FF716F;color:#D90A45">MR</div><div><div class="agent-name">Marcus Rivera</div><div class="agent-email">m.rivera@acme.com</div></div></div></td>
+              <td><span class="agent-role">Agent</span></td>
+              <td><span class="status-txt" style="color:var(--text-3)">&#x25CF; Offline</span></td>
+              <td></td>
             </tr>
             <tr>
-              <td colspan="9" style="padding:10px 13px;color:var(--text-3);font-size:13px">+ 40 more contact centers — <span style="color:var(--purple);cursor:pointer">show all</span></td>
+              <td><div class="agent-name-wrap"><div class="agent-av" style="background:#FFFAE5;border-color:#FFDB80;color:#815008">PK</div><div><div class="agent-name">Priya Kapoor</div><div class="agent-email">p.kapoor@acme.com</div></div></div></td>
+              <td><span class="agent-role">Agent</span></td>
+              <td><span class="status-txt" style="color:var(--warning)">&#x25CF; On a call</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="4" style="padding:9px 16px;color:var(--text-3);font-size:13px">+ 6 more agents &middot; <span style="color:var(--purple);cursor:pointer" onclick="aipFill('Show me all agents in Sales East contact center')">show all</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
+      <!-- ── Business Hours ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Business Hours</div>
+          <button class="btn btn-base" style="font-size:12px;padding:4px 10px" onclick="aipFill('Update business hours for Sales East')">Edit</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Timezone</div></div>
+          <div class="settings-row-val">Pacific Time (UTC&minus;8)</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Monday &ndash; Friday</div></div>
+          <div class="settings-row-val">9:00 AM &ndash; 5:00 PM</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Saturday</div></div>
+          <div class="settings-row-val" style="color:var(--text-3)">Closed</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Sunday</div></div>
+          <div class="settings-row-val" style="color:var(--text-3)">Closed</div>
+        </div>
+      </div>
+
+      <!-- ── Holiday Hours ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Holiday Hours</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="ai-flag warn" onclick="aipFill('Set Dec 25 and Jan 1 as holiday closures for Sales East')">&#x2736; Missing holidays</span>
+            <button class="btn btn-base" style="font-size:12px;padding:4px 10px" onclick="aipFill('Add Dec 25 and Jan 1 holiday closures to Sales East')">+ Add holiday</button>
+          </div>
+        </div>
+        <div style="padding:24px 16px;text-align:center;color:var(--text-3);font-size:13px;line-height:1.7">
+          No holiday hours set.<br><span style="color:var(--purple);cursor:pointer;font-weight:500" onclick="aipFill('Set Dec 25 Christmas and Jan 1 New Years as holiday closures for Sales East contact center')">Ask AI to add common US holidays &rarr;</span>
+        </div>
+      </div>
+
+      <!-- ── Call Routing ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Call Routing</div>
+          <button class="btn btn-base" style="font-size:12px;padding:4px 10px" onclick="aipFill('Update call routing settings for Sales East')">Edit</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Routing method</div></div>
+          <div class="settings-row-val">Round robin</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Max queue wait time</div></div>
+          <div class="settings-row-val">5 minutes</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Queue overflow</div></div>
+          <div class="settings-row-val" style="color:var(--text-3)">Voicemail after 2 min</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">After-hours routing</div></div>
+          <div class="settings-row-val" style="color:var(--text-3)">Voicemail</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Callback</div>
+            <div class="settings-row-desc">Offer callers a callback instead of waiting on hold</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox"><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+      </div>
+
+      <!-- ── Greetings ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Greetings</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Welcome greeting</div>
+            <div class="settings-row-desc">Plays when a caller reaches the queue</div>
+          </div>
+          <div class="settings-row-action">
+            <span class="settings-mono">welcome_standard.mp3</span>
+            <button class="btn btn-base" style="font-size:12px;padding:3px 9px" onclick="aipFill('Update welcome greeting for Sales East contact center')">Change</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Closed greeting</div>
+            <div class="settings-row-desc">Plays outside business hours</div>
+          </div>
+          <div class="settings-row-action">
+            <span class="settings-mono">closed_standard.mp3</span>
+            <button class="btn btn-base" style="font-size:12px;padding:3px 9px" onclick="aipFill('Update closed greeting for Sales East contact center')">Change</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Hold music</div>
+          </div>
+          <div class="settings-row-action">
+            <span class="settings-mono">hold_music_default.mp3</span>
+            <button class="btn btn-base" style="font-size:12px;padding:3px 9px" onclick="aipFill('Update hold music for Sales East contact center')">Change</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">After-hours voicemail</div>
+          </div>
+          <div class="settings-row-action">
+            <span class="settings-mono">afterhours_voicemail.mp3</span>
+            <button class="btn btn-base" style="font-size:12px;padding:3px 9px" onclick="aipFill('Update after-hours voicemail greeting for Sales East contact center')">Change</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── AI Settings ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">AI Settings</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">AI transcription</div>
+            <div class="settings-row-desc">Real-time call transcription for agents</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">AI CSAT</div>
+            <div class="settings-row-desc">Automated post-call satisfaction scoring</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">AI summaries</div>
+            <div class="settings-row-desc">Auto-generated call summaries after each interaction</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">PII redaction</div>
+            <div class="settings-row-desc">Automatically redact sensitive data from transcripts</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox"><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Coaching alerts</div>
+            <div class="settings-row-desc">Notify supervisors when coaching moments are detected</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Spam blocking</div>
+            <div class="settings-row-desc">Automatically screen suspected spam calls</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox"><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+      </div>
+
+      <!-- ── Call Recording ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Call Recording</div>
+          <span class="ai-flag warn" onclick="aipFill('Enable automatic call recording for Sales East contact center')">&#x2736; Recording is off</span>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Automatic call recording</div>
+            <div class="settings-row-desc">Record all inbound and outbound calls</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox"><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft">
+            <div class="settings-row-label">Recording announcement</div>
+            <div class="settings-row-desc">Play a disclosure at the start of each call</div>
+          </div>
+          <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"><span class="dp-thumb"></span></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-lft"><div class="settings-row-label">Retention period</div></div>
+          <div class="settings-row-val">90 days</div>
+        </div>
+      </div>
+
+      <!-- ── Integrations ── -->
+      <div class="settings-section">
+        <div class="settings-sxn-hd">
+          <div class="settings-sxn-title">Integrations</div>
+          <button class="btn btn-base" style="font-size:12px;padding:4px 10px" onclick="aipFill('Add a new integration to Sales East')">+ Add</button>
+        </div>
+        <div class="integrations-grid">
+          <div class="integration-item" onclick="aipFill('Configure Salesforce CRM integration for Sales East')">
+            <div class="integration-logo" style="color:#00A1E0">SF</div>
+            <div><div class="integration-name">Salesforce CRM</div><div class="integration-status integration-connected">&#x25CF; Connected</div></div>
+          </div>
+          <div class="integration-item" onclick="aipFill('Configure Slack integration for Sales East')">
+            <div class="integration-logo" style="color:#4A154B">Sl</div>
+            <div><div class="integration-name">Slack</div><div class="integration-status integration-connected">&#x25CF; Connected</div></div>
+          </div>
+          <div class="integration-item" onclick="aipFill('Set up ServiceNow integration for Sales East')">
+            <div class="integration-logo" style="color:#81B5A1">SN</div>
+            <div><div class="integration-name">ServiceNow</div><div class="integration-status">Not connected</div></div>
+          </div>
+          <div class="integration-item" onclick="aipFill('Set up Zendesk integration for Sales East')">
+            <div class="integration-logo" style="color:#03363D">Zd</div>
+            <div><div class="integration-name">Zendesk</div><div class="integration-status">Not connected</div></div>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
-</div>
 
-<!-- AI Admin Drawer -->
-<div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <div class="drawer-hd-left">
-      <div class="drawer-ai-icon">✦</div>
-      <span class="drawer-title">AI Admin</span>
-    </div>
-    <button class="drawer-close" onclick="closeDrawer()">✕</button>
-  </div>
-  <div class="drawer-tabs">
-    <div class="drawer-tab active" id="tab-cmd" onclick="switchTab('cmd')">Command</div>
-    <div class="drawer-tab" id="tab-history" onclick="switchTab('history')">History</div>
-    <div class="drawer-tab" id="tab-simulate" onclick="switchTab('simulate')">Simulate</div>
-  </div>
+  <!-- ── Right: persistent AI panel ── -->
+  <aside class="ai-panel">
 
-  <div class="drawer-body">
-
-    <!-- Command panel -->
-    <div class="drawer-panel" id="panel-cmd">
-      <div class="sim-notice" id="simNotice">
-        <strong>Simulate mode:</strong> Commands below will generate a preview plan submitted to an admin. No changes apply until approved.
-      </div>
-
-      <!-- Hours & Holidays -->
-      <div class="sugg-section">
-        <div class="sugg-label">Hours &amp; Holidays <span class="phase-pip pip-1">Phase 1</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Set all NA contact centers closed on Dec 25 and Jan 1')">Set Dec 25 + Jan 1 · NA</div>
-          <div class="chip" onclick="fill('Shorten Friday hours by 1hr for NA support centers next quarter')">Shorten Friday hours · Q3</div>
-          <div class="chip" onclick="fill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')">Clone US → CA Thanksgiving</div>
-          <div class="chip" onclick="fill('Fix inconsistent holiday hours across all 11 flagged contact centers')">Fix 11 flagged CCs</div>
+    <!-- Panel header -->
+    <div class="aip-header">
+      <div class="aip-hd-left">
+        <div class="aip-icon">✦</div>
+        <div>
+          <div class="aip-title">AI Admin</div>
         </div>
       </div>
-
-      <!-- Call Recording -->
-      <div class="sugg-section">
-        <div class="sugg-label">Call Recording <span class="phase-pip pip-1">Phase 1</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Enable automatic call recording on all 23 contact centers that have it disabled')">Enable recording · 23 CCs</div>
-          <div class="chip" onclick="fill('Enable automatic call recording on all 400+ contact centers')">Enable recording · all CCs</div>
-          <div class="chip" onclick="fill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable recording · EU GDPR</div>
-          <div class="chip" onclick="fill('Enable recording pause feature for all agent groups')">Enable pause feature · all</div>
-        </div>
-      </div>
-
-      <!-- Greetings & Audio -->
-      <div class="sugg-section">
-        <div class="sugg-label">Greetings &amp; Audio <span class="phase-pip pip-2">Phase 2</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Replace COVID temporary greeting with standard welcome on all affected CCs')">Replace COVID greeting</div>
-          <div class="chip" onclick="fill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">EMEA spring promo MP3</div>
-          <div class="chip" onclick="fill('Set hold music to jazz_lite.mp3 across all NA contact centers')">Set hold music · NA</div>
-          <div class="chip" onclick="fill('Add a voicemail greeting to all 8 CCs that are missing one')">Add voicemail greeting · 8 CCs</div>
-        </div>
-      </div>
-
-      <!-- Call Routing -->
-      <div class="sugg-section">
-        <div class="sugg-label">Call Routing <span class="phase-pip pip-2">Phase 2</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Change routing method to round robin for all NA contact centers')">Round robin · NA</div>
-          <div class="chip" onclick="fill('Set overflow routing to voicemail for all CCs when no agents are available')">Set overflow → voicemail</div>
-          <div class="chip" onclick="fill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')">APAC timeout + overflow</div>
-          <div class="chip" onclick="fill('Enable skills-based routing for all Enterprise contact centers')">Skills-based · Enterprise</div>
-        </div>
-      </div>
-
-      <!-- Agent Management -->
-      <div class="sugg-section">
-        <div class="sugg-label">Agent Management <span class="phase-pip pip-2">Phase 2</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">Add agents · EMEA</div>
-          <div class="chip" onclick="fill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up 90s · all</div>
-          <div class="chip" onclick="fill('Enable auto off-duty after 3 missed calls for all agent groups')">Auto off-duty · 3 misses</div>
-          <div class="chip" onclick="fill('Remove inactive agents from all contact centers — last active 60+ days')">Remove inactive agents</div>
-        </div>
-      </div>
-
-      <!-- Queue & Wait -->
-      <div class="sugg-section">
-        <div class="sugg-label">Queue &amp; Wait <span class="phase-pip pip-2">Phase 2</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Set max queue wait time to 10 minutes for all contact centers')">Max wait 10min · all</div>
-          <div class="chip" onclick="fill('Enable callback option when queue exceeds 10 callers on all NA CCs')">Enable callback · NA</div>
-          <div class="chip" onclick="fill('Enable queue position announcements for all contact centers')">Queue position · all</div>
-        </div>
-      </div>
-
-      <!-- AI Features -->
-      <div class="sugg-section">
-        <div class="sugg-label">AI Features <span class="phase-pip pip-3">Phase 3</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable AI · all CCs</div>
-          <div class="chip" onclick="fill('Enable PII redaction on all contact center transcripts and recordings')">PII redaction · all</div>
-          <div class="chip" onclick="fill('Enable AI CSAT and live sentiment analysis across all contact centers')">AI CSAT + sentiment</div>
-        </div>
-      </div>
-
-      <!-- Compliance & Security -->
-      <div class="sugg-section">
-        <div class="sugg-label">Compliance &amp; Security <span class="phase-pip pip-3">Phase 3</span></div>
-        <div class="chips">
-          <div class="chip" onclick="fill('Enable spam call blocking at high sensitivity on all contact centers')">Spam blocking · all</div>
-          <div class="chip" onclick="fill('Set data retention to 1 year for all contact center recordings and transcripts')">Data retention 1yr</div>
-          <div class="chip" onclick="fill('Block anonymous calls on all contact centers')">Block anonymous calls</div>
-        </div>
-      </div>
-
-      <!-- Command textarea -->
-      <div class="cmd-section">
-        <textarea class="cmd-textarea" id="cmdInput" rows="3" placeholder="e.g. Enable call recording on all 400 contact centers…"></textarea>
-        <div class="cmd-footer">
-          <span class="cmd-hint">Enter to run · Shift+Enter for new line</span>
-          <button class="btn-run" onclick="runCmd()">Run <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
-        </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="aip-context-chip">Sales East</div>
+        <button class="aip-reset-btn" id="aipResetBtn" onclick="aipReset()">New chat</button>
+        <button class="aip-toggle" id="aipToggle" onclick="togglePanel()" title="Collapse">
+          <svg id="aipToggleIcon" viewBox="0 0 12 12" fill="currentColor" width="12" height="12"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.78 2.47a.75.75 0 0 1 0 1.06L5.31 6l2.47 2.47a.75.75 0 1 1-1.06 1.06L3.72 6.53a.75.75 0 0 1 0-1.06l2.97-2.97a.75.75 0 0 1 1.09-.03Z"/></svg>
+        </button>
       </div>
     </div>
 
-    <!-- Chat / result pane -->
-    <div class="chat-pane" id="chatPane">
-      <div class="msg-user">
-        <div class="msg-bubble" id="userMsg">Enable call recording on all CCs</div>
-      </div>
-      <div class="parse-steps" id="parseSteps">
-        <div class="step-row" id="ps1">
-          <div class="step-icon-wrap"><div class="step-spinner" id="ps1s"></div><div class="step-check" id="ps1c">✓</div></div>
-          <span class="step-text" id="ps1t">Identifying contact centers…</span>
-        </div>
-        <div class="step-row" id="ps2" style="opacity:.35">
-          <div class="step-icon-wrap"><div class="step-idle" id="ps2s"></div><div class="step-check" id="ps2c">✓</div></div>
-          <span class="step-text" id="ps2t">Parsing intent &amp; settings…</span>
-        </div>
-        <div class="step-row" id="ps3" style="opacity:.35">
-          <div class="step-icon-wrap"><div class="step-idle" id="ps3s"></div><div class="step-check" id="ps3c">✓</div></div>
-          <span class="step-text" id="ps3t">Building change preview…</span>
-        </div>
-      </div>
-      <div class="agent-msg" id="agentMsg">
-        <div class="entity-card" id="agentCard">
-          <div class="entity-header">
-            <span class="entity-label">AI understood</span>
-            <span class="entity-mode-tag admin" id="modeTag">Admin · will apply</span>
+    <!-- Tabs -->
+    <div class="aip-tabs">
+      <div class="aip-tab active" id="atab-cmd" onclick="aipSwitchTab('cmd')">Ask AI</div>
+      <div class="aip-tab" id="atab-history" onclick="aipSwitchTab('history')">History</div>
+    </div>
+
+    <!-- Scrollable body -->
+    <div class="aip-body" id="aipBody">
+
+      <!-- ASK AI tab -->
+      <div id="apanel-cmd">
+
+        <!-- IDLE: proactive insights + chip suggestions -->
+        <div id="aipIdle" class="aip-suggestions">
+
+          <!-- Emergency scenarios -->
+          <div class="aip-emergency-wrap">
+            <div class="aip-emergency-hd">
+              <span class="aip-emergency-label">Emergency &amp; Disaster</span>
+              <span class="aip-emergency-pill">Try it</span>
+            </div>
+            <div class="aip-chips" style="gap:5px">
+              <div class="aip-chip-em" onclick="aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup CCs, and close offices for the next 72 hours')">Hurricane mode · FL CCs</div>
+              <div class="aip-chip-em" onclick="aipFill('Deploy emergency IVR message to all contact centers: we are operating at reduced capacity due to severe weather, please hold or call back later')">Emergency IVR · all CCs</div>
+              <div class="aip-chip-em" onclick="aipFill('Restore all Florida contact centers to normal operations after hurricane — standard hours, routing, and greetings')">Restore normal · FL CCs</div>
+              <div class="aip-chip-em" onclick="aipFill('Reroute all Florida inbound calls to Austin Texas backup contact centers until further notice')">Disaster routing · TX backup</div>
+            </div>
           </div>
-          <div class="entity-rows">
-            <div class="entity-row"><span class="e-key">Target</span><span class="e-val" id="eTarget">23 CCs with <span class="e-code">recording disabled</span></span></div>
-            <div class="entity-row"><span class="e-key">When</span><span class="e-val" id="eWhen">Immediate</span></div>
-            <div class="entity-row"><span class="e-key">Change</span><span class="e-val" id="eChange">Auto recording → <span class="e-code">Enabled</span></span></div>
-            <div class="entity-row"><span class="e-key">Guard</span><span class="e-val" id="eGuard">Affects <strong>23 CCs</strong> — confirmation required</span></div>
+
+          <!-- Proactive issues block -->
+          <div class="aip-insights">
+            <div class="aip-insights-hd">✦ I noticed 3 things</div>
+            <div class="aip-issue" onclick="aipSubmit('Enable automatic call recording on all 23 contact centers that have it disabled', false)">
+              <div class="aip-issue-text"><div class="aip-issue-dot danger"></div><span>23 CCs have call recording off</span></div>
+              <span class="aip-fix">Fix →</span>
+            </div>
+            <div class="aip-issue" onclick="aipSubmit('Set all NA contact centers closed on Dec 25 and Jan 1', false)">
+              <div class="aip-issue-text"><div class="aip-issue-dot warn"></div><span>11 CCs missing holiday hours</span></div>
+              <span class="aip-fix">Fix →</span>
+            </div>
+            <div class="aip-issue" onclick="aipSubmit('Add after-hours greeting to the 8 contact centers that are missing one', false)">
+              <div class="aip-issue-text"><div class="aip-issue-dot warn"></div><span>8 CCs missing after-hours greeting</span></div>
+              <span class="aip-fix">Fix →</span>
+            </div>
+          </div>
+
+          <!-- Suggestion chips by category -->
+          <div class="aip-sec-label">Hours &amp; Holidays <span class="phase-pip pip-1">Phase 1</span></div>
+          <div class="aip-chips">
+            <div class="aip-chip" onclick="aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')">Dec 25 + Jan 1 · NA</div>
+            <div class="aip-chip" onclick="aipFill('Shorten Friday hours by 1hr for NA support centers next quarter')">Shorten Friday hours</div>
+            <div class="aip-chip" onclick="aipFill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')">Clone US → CA Thanksgiving</div>
+          </div>
+
+          <div class="aip-sec-label">Call Recording <span class="phase-pip pip-1">Phase 1</span></div>
+          <div class="aip-chips">
+            <div class="aip-chip" onclick="aipFill('Enable automatic call recording on all 23 contact centers that have it disabled')">Enable recording · 23 CCs</div>
+            <div class="aip-chip" onclick="aipFill('Enable automatic call recording on all 400+ contact centers')">Enable recording · all CCs</div>
+            <div class="aip-chip" onclick="aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable · EU GDPR</div>
+          </div>
+
+          <div class="aip-sec-label">Greetings &amp; Audio <span class="phase-pip pip-2">Phase 2</span></div>
+          <div class="aip-chips">
+            <div class="aip-chip" onclick="aipFill('Replace COVID temporary greeting with standard welcome on all affected CCs')">Replace COVID greeting</div>
+            <div class="aip-chip" onclick="aipFill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">EMEA spring promo MP3</div>
+            <div class="aip-chip" onclick="aipFill('Add a voicemail greeting to all 8 CCs that are missing one')">Add voicemail greeting</div>
+          </div>
+
+          <div class="aip-sec-label">Call Routing <span class="phase-pip pip-2">Phase 2</span></div>
+          <div class="aip-chips">
+            <div class="aip-chip" onclick="aipFill('Change routing method to round robin for all NA contact centers')">Round robin · NA</div>
+            <div class="aip-chip" onclick="aipFill('Set overflow routing to voicemail for all CCs when no agents are available')">Overflow → voicemail</div>
+            <div class="aip-chip" onclick="aipFill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')">APAC timeout + overflow</div>
+          </div>
+
+          <div class="aip-sec-label">Agent Management <span class="phase-pip pip-2">Phase 2</span></div>
+          <div class="aip-chips">
+            <div class="aip-chip" onclick="aipFill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">Add agents · EMEA</div>
+            <div class="aip-chip" onclick="aipFill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up 90s</div>
+            <div class="aip-chip" onclick="aipFill('Remove inactive agents from all contact centers — last active 60+ days')">Remove inactive agents</div>
+          </div>
+
+          <div class="aip-sec-label">AI Features <span class="phase-pip pip-3">Phase 3</span></div>
+          <div class="aip-chips">
+            <div class="aip-chip" onclick="aipFill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable AI · all CCs</div>
+            <div class="aip-chip" onclick="aipFill('Enable PII redaction on all contact center transcripts and recordings')">PII redaction · all</div>
+            <div class="aip-chip" onclick="aipFill('Enable spam call blocking at high sensitivity on all contact centers')">Spam blocking · all</div>
           </div>
         </div>
-        <div class="diff-preview">
-          <div class="diff-header">
-            <span class="diff-title" id="diffTitle">Preview — 23 contact centers</span>
-            <div class="diff-toggle-all"><input type="checkbox" id="masterPrev" checked onchange="toggleAll(this)"> Select all</div>
+
+        <!-- CHAT: user message → thinking → response -->
+        <div id="aipChat" class="aip-chat hidden">
+          <div class="aip-msg-user">
+            <div class="aip-bubble" id="aipUserMsg">…</div>
           </div>
-          <table class="diff-table">
-            <thead>
-              <tr><th style="width:32px"></th><th>Contact center</th><th>Region</th><th>Change</th><th></th></tr>
-            </thead>
-            <tbody id="previewBody">
-              <tr class="prev-row" data-i="0"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Sales East</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n0">Enabled</span></td><td><span class="chip-update" id="b0">Will update</span></td></tr>
-              <tr class="prev-row" data-i="1"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Support West</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n1">Enabled</span></td><td><span class="chip-update" id="b1">Will update</span></td></tr>
-              <tr class="prev-row" data-i="2"><td><input type="checkbox" class="pcb" onchange="sync()"></td><td class="cell-name">Billing Team</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Already on</span><span class="diff-arr">→</span><span class="diff-new" id="n2">No change</span></td><td><span class="chip-excluded" id="b2">Skipped</span></td></tr>
-              <tr class="prev-row" data-i="3"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Enterprise Desk</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n3">Enabled</span></td><td><span class="chip-update" id="b3">Will update</span></td></tr>
-              <tr class="prev-row" data-i="4"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Canada Support</td><td style="font-size:12px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n4">Enabled</span></td><td><span class="chip-update" id="b4">Will update</span></td></tr>
-              <tr class="more-row prev-row" data-i="5"><td colspan="5">+ 18 more contact centers included</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="sim-note" id="simNote"><strong>Simulate mode:</strong> This plan will be submitted to an admin for review. No changes will be applied until approved.</div>
-      </div>
-    </div>
 
-    <!-- Success pane -->
-    <div class="success-pane" id="successPane">
-      <div class="success-icon-wrap applied" id="successIcon">✓</div>
-      <div class="success-title" id="successTitle">Changes applied</div>
-      <div class="success-sub" id="successSub">Settings updated across your contact centers.</div>
-      <div class="success-stat applied" id="successStat">
-        <div class="success-num applied" id="successNum">23</div>
-        <div class="success-num-label" id="successLabel">contact centers updated</div>
-      </div>
-      <div class="activity-entry">
-        <div class="ae-label">Activity log</div>
-        <div class="ae-row">
-          <span class="ae-action" id="aeAction">Call recording → Enabled</span>
-          <span class="ae-time">Just now · you</span>
-        </div>
-        <div class="ae-sub" id="aeSub">Applied to 23 CCs · Revert available for 30 min</div>
-      </div>
-      <div class="link-row">
-        <button class="link-btn">↗ View audit log</button>
-        <button class="link-btn danger">↩ Revert batch</button>
-      </div>
-      <button class="btn-reset" onclick="reset()">Make another change</button>
-    </div>
+          <!-- Thinking steps -->
+          <div id="aipSteps" class="aip-steps">
+            <div class="aip-step active" id="as1">
+              <div class="aip-step-icon"><div class="step-spinner" id="as1s"></div><div class="step-check" id="as1c">✓</div></div>
+              <span id="as1t">Identifying contact centers…</span>
+            </div>
+            <div class="aip-step" id="as2">
+              <div class="aip-step-icon"><div class="step-idle" id="as2s"></div><div class="step-check" id="as2c">✓</div></div>
+              <span id="as2t">Parsing intent &amp; settings…</span>
+            </div>
+            <div class="aip-step" id="as3">
+              <div class="aip-step-icon"><div class="step-idle" id="as3s"></div><div class="step-check" id="as3c">✓</div></div>
+              <span id="as3t">Building change preview…</span>
+            </div>
+          </div>
 
-    <!-- History panel -->
-    <div class="drawer-panel hidden" id="panel-history">
-      <div class="suggestions-label">Recent bulk changes</div>
-      <div class="recent-list">
-        <div class="recent-row">
-          <span class="recent-icon">⏺</span>
-          <div class="recent-body"><div class="recent-action">Enabled call recording on 23 contact centers</div><div class="recent-meta">Apr 16, 2026 · by you · 23 CCs</div></div>
-          <span class="recent-status rs-done">Done</span>
-        </div>
-        <div class="recent-row">
-          <span class="recent-icon">🗓</span>
-          <div class="recent-body"><div class="recent-action">Set Easter holiday hours across 8 NA queues</div><div class="recent-meta">Apr 2, 2026 · by you · 8 CCs</div></div>
-          <span class="recent-status rs-done">Done</span>
-        </div>
-        <div class="recent-row" style="border-color:var(--warning-border)">
-          <span class="recent-icon">👁</span>
-          <div class="recent-body"><div class="recent-action">Simulate: APAC routing overflow + timeout changes</div><div class="recent-meta">Apr 10, 2026 · J. Martinez · Pending admin review</div></div>
-          <span class="recent-status rs-pending">Pending</span>
-        </div>
-        <div class="recent-row">
-          <span class="recent-icon">🔊</span>
-          <div class="recent-body"><div class="recent-action">Replaced COVID greeting with standard welcome · 3 CCs</div><div class="recent-meta">Mar 31, 2026 · by you</div></div>
-          <span class="recent-status rs-done">Done</span>
-        </div>
-        <div class="recent-row">
-          <span class="recent-icon">👥</span>
-          <div class="recent-body"><div class="recent-action">Added 3 agents to Sales East, Support West</div><div class="recent-meta">Mar 28, 2026 · by you · 2 CCs</div></div>
-          <span class="recent-status rs-done">Done</span>
-        </div>
-        <div class="recent-row">
-          <span class="recent-icon">⏱</span>
-          <div class="recent-body"><div class="recent-action">Set wrap-up time to 60s across 12 NA CCs</div><div class="recent-meta">Mar 15, 2026 · by you</div></div>
-          <span class="recent-status rs-done">Done</span>
-        </div>
-      </div>
-    </div>
+          <!-- AI response (shown after steps) -->
+          <div id="aipResponse" class="hidden">
+            <div class="entity-card" id="aipCard">
+              <div class="entity-header">
+                <span class="entity-label">AI understood</span>
+                <span class="entity-mode-tag admin" id="aipModeTag">Admin · will apply</span>
+              </div>
+              <div class="entity-rows">
+                <div class="entity-row"><span class="e-key">Target</span><span class="e-val" id="eTarget">23 CCs with <span class="e-code">recording disabled</span></span></div>
+                <div class="entity-row"><span class="e-key">When</span><span class="e-val" id="eWhen">Immediate</span></div>
+                <div class="entity-row"><span class="e-key">Change</span><span class="e-val" id="eChange">Auto recording → <span class="e-code">Enabled</span></span></div>
+                <div class="entity-row"><span class="e-key">Guard</span><span class="e-val" id="eGuard">Affects <strong>23 CCs</strong> — confirmation required</span></div>
+              </div>
+            </div>
 
-    <!-- Simulate panel -->
-    <div class="drawer-panel hidden" id="panel-simulate">
-      <div class="sim-notice" style="display:block"><strong>Simulate mode</strong> lets supervisors preview changes and submit a draft plan for admin approval. Nothing is applied until an admin confirms.</div>
-      <div class="cmd-section">
-        <textarea class="cmd-textarea" id="simInput" rows="3" placeholder="e.g. Set queue timeout to 2 minutes for all APAC queues…"></textarea>
-        <div class="cmd-footer">
-          <span class="cmd-hint">Preview only — submits to admin for approval</span>
-          <button class="btn-run simulate" onclick="runSimulate()">Simulate <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <!-- Emergency activation plan (shown instead of entity card for emergency commands) -->
+            <div class="emergency-plan hidden" id="emergencyPlan">
+              <div class="ep-header">
+                <div class="ep-badge-row">
+                  <span class="ep-badge" id="epBadge">Emergency Mode</span>
+                  <span class="ep-scope" id="epScope">4 Florida contact centers</span>
+                </div>
+                <div class="ep-title" id="epTitle">Hurricane activation plan</div>
+                <div class="ep-subtitle" id="epSubtitle">5 coordinated changes · activates immediately</div>
+              </div>
+              <div class="ep-changes" id="epChanges">
+                <div class="ep-change">
+                  <div class="ep-num">1</div>
+                  <div>
+                    <div class="ep-change-key">IVR / Welcome Greeting</div>
+                    <div class="ep-change-val" id="ep1val">→ hurricane_emergency_2026.mp3</div>
+                    <div class="ep-change-note" id="ep1note">replaces standard welcome on all affected CCs</div>
+                  </div>
+                </div>
+                <div class="ep-change">
+                  <div class="ep-num">2</div>
+                  <div>
+                    <div class="ep-change-key">Business Hours</div>
+                    <div class="ep-change-val" id="ep2val">→ Closed · next 72 hours</div>
+                    <div class="ep-change-note" id="ep2note">override through Apr 26 · auto-restores after</div>
+                  </div>
+                </div>
+                <div class="ep-change">
+                  <div class="ep-num">3</div>
+                  <div>
+                    <div class="ep-change-key">Call Routing</div>
+                    <div class="ep-change-val" id="ep3val">→ Overflow to Austin TX backup</div>
+                    <div class="ep-change-note" id="ep3note">Sales East TX · Support Central TX · Enterprise TX</div>
+                  </div>
+                </div>
+                <div class="ep-change">
+                  <div class="ep-num">4</div>
+                  <div>
+                    <div class="ep-change-key">Call Recording</div>
+                    <div class="ep-change-val" id="ep4val">→ Enabled (forced)</div>
+                    <div class="ep-change-note" id="ep4note">compliance requirement during declared emergency</div>
+                  </div>
+                </div>
+                <div class="ep-change">
+                  <div class="ep-num">5</div>
+                  <div>
+                    <div class="ep-change-key">After-hours Message</div>
+                    <div class="ep-change-val" id="ep5val">→ hurricane_afterhours_2026.mp3</div>
+                    <div class="ep-change-note" id="ep5note">plays when closed or no agents available</div>
+                  </div>
+                </div>
+              </div>
+              <div class="ep-guard" id="epGuard">
+                Affects all inbound calls to 4 CCs · revert anytime with "restore normal operations" · admin confirmation required
+              </div>
+            </div>
+
+            <div style="height:8px"></div>
+
+            <div class="diff-preview" id="diffPreview">
+              <div class="diff-header">
+                <span class="diff-title" id="diffTitle">Preview — 23 contact centers</span>
+                <div class="diff-toggle-all"><input type="checkbox" id="masterPrev" checked onchange="toggleAll(this)"> All</div>
+              </div>
+              <table class="diff-table">
+                <thead><tr><th style="width:28px"></th><th>CC</th><th>Region</th><th>Change</th><th></th></tr></thead>
+                <tbody id="previewBody">
+                  <tr class="prev-row" data-i="0"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Sales East</td><td style="font-size:11px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n0">Enabled</span></td><td><span class="chip-update" id="b0">Will update</span></td></tr>
+                  <tr class="prev-row" data-i="1"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Support West</td><td style="font-size:11px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n1">Enabled</span></td><td><span class="chip-update" id="b1">Will update</span></td></tr>
+                  <tr class="prev-row" data-i="2"><td><input type="checkbox" class="pcb" onchange="sync()"></td><td class="cell-name">Billing Team</td><td style="font-size:11px;color:var(--text-3)">NA</td><td><span class="diff-old">Already on</span><span class="diff-arr">→</span><span class="diff-new" id="n2">No change</span></td><td><span class="chip-excluded" id="b2">Skipped</span></td></tr>
+                  <tr class="prev-row" data-i="3"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Enterprise Desk</td><td style="font-size:11px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n3">Enabled</span></td><td><span class="chip-update" id="b3">Will update</span></td></tr>
+                  <tr class="prev-row" data-i="4"><td><input type="checkbox" class="pcb" checked onchange="sync()"></td><td class="cell-name">Canada Support</td><td style="font-size:11px;color:var(--text-3)">NA</td><td><span class="diff-old">Off</span><span class="diff-arr">→</span><span class="diff-new" id="n4">Enabled</span></td><td><span class="chip-update" id="b4">Will update</span></td></tr>
+                  <tr class="more-row prev-row" data-i="5"><td colspan="5">+ 18 more included</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="height:6px"></div>
+            <div class="sim-note" id="aipSimNote"></div>
+            <div style="height:8px"></div>
+
+            <div class="aip-actions">
+              <button class="aip-btn-apply" id="aipApplyBtn" onclick="aipApply()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="aipApplyLabel">Apply to</span>&nbsp;<span id="aipApplyCount">23</span>&nbsp;<span id="aipApplyLabel2">contact centers</span>
+              </button>
+              <div class="aip-actions-row">
+                <button class="aip-btn-sec" onclick="aipSimulate()">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  Simulate
+                </button>
+                <button class="aip-btn-sec" onclick="aipReset()">Cancel</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div style="margin-top:16px">
-        <div class="suggestions-label">Pending from your team (1)</div>
+
+        <!-- SUCCESS: after apply/simulate -->
+        <div id="aipSuccess" class="aip-chat hidden">
+          <div class="aip-msg-user">
+            <div class="aip-bubble" id="aipSuccessUserMsg">…</div>
+          </div>
+          <div class="aip-success">
+            <div class="aip-success-icon applied" id="aipSuccessIcon">✓</div>
+            <div class="aip-success-title" id="aipSuccessTitle">Changes applied</div>
+            <div class="aip-success-sub" id="aipSuccessSub">Settings updated across your contact centers.</div>
+            <div class="aip-success-stat applied" id="aipSuccessStat">
+              <div class="aip-success-num applied" id="aipSuccessNum">23</div>
+              <div class="aip-success-num-label" id="aipSuccessNumLabel">contact centers updated</div>
+            </div>
+            <div class="aip-activity">
+              <div class="aip-ae-label">Activity log</div>
+              <div class="aip-ae-row">
+                <span class="aip-ae-action" id="aipAeAction">Call recording → Enabled</span>
+                <span class="aip-ae-time">Just now · you</span>
+              </div>
+              <div class="aip-ae-sub" id="aipAeSub">Applied to 23 CCs · Revert available for 30 min</div>
+            </div>
+            <div class="aip-link-row">
+              <button class="aip-link">↗ View audit log</button>
+              <button class="aip-link danger">↩ Revert batch</button>
+            </div>
+            <button class="btn-another" onclick="aipReset()">Make another change</button>
+          </div>
+        </div>
+
+      </div><!-- /apanel-cmd -->
+
+      <!-- HISTORY tab -->
+      <div id="apanel-history" class="hidden aip-history">
+        <div class="aip-hist-label">Recent bulk changes</div>
         <div class="recent-list">
+          <div class="recent-row">
+            <span class="recent-icon">⏺</span>
+            <div class="recent-body"><div class="recent-action">Enabled call recording on 23 contact centers</div><div class="recent-meta">Apr 16, 2026 · by you · 23 CCs</div></div>
+            <span class="recent-status rs-done">Done</span>
+          </div>
+          <div class="recent-row">
+            <span class="recent-icon">🗓</span>
+            <div class="recent-body"><div class="recent-action">Set Easter holiday hours across 8 NA queues</div><div class="recent-meta">Apr 2, 2026 · by you · 8 CCs</div></div>
+            <span class="recent-status rs-done">Done</span>
+          </div>
           <div class="recent-row" style="border-color:var(--warning-border)">
             <span class="recent-icon">👁</span>
-            <div class="recent-body"><div class="recent-action">APAC routing overflow changes · 3 CCs</div><div class="recent-meta">Submitted Apr 10 · J. Martinez</div></div>
-            <button class="btn btn-base" style="font-size:12px;padding:4px 10px;flex-shrink:0;">Review</button>
+            <div class="recent-body"><div class="recent-action">Simulate: APAC routing overflow + timeout changes</div><div class="recent-meta">Apr 10, 2026 · J. Martinez · Pending admin review</div></div>
+            <span class="recent-status rs-pending">Pending</span>
           </div>
+          <div class="recent-row">
+            <span class="recent-icon">🔊</span>
+            <div class="recent-body"><div class="recent-action">Replaced COVID greeting with standard welcome · 3 CCs</div><div class="recent-meta">Mar 31, 2026 · by you</div></div>
+            <span class="recent-status rs-done">Done</span>
+          </div>
+          <div class="recent-row">
+            <span class="recent-icon">👥</span>
+            <div class="recent-body"><div class="recent-action">Added 3 agents to Sales East, Support West</div><div class="recent-meta">Mar 28, 2026 · by you · 2 CCs</div></div>
+            <span class="recent-status rs-done">Done</span>
+          </div>
+          <div class="recent-row">
+            <span class="recent-icon">⏱</span>
+            <div class="recent-body"><div class="recent-action">Set wrap-up time to 60s across 12 NA CCs</div><div class="recent-meta">Mar 15, 2026 · by you</div></div>
+            <span class="recent-status rs-done">Done</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /aip-body -->
+
+    <!-- Input dock (always visible) -->
+    <div class="aip-dock">
+      <div class="aip-input-wrap">
+        <textarea class="aip-input" id="aipInput" rows="2" placeholder="Ask me to change something across your contact centers…"></textarea>
+      </div>
+      <div class="aip-dock-row">
+        <span class="aip-dock-hint">Enter to run · Shift+Enter for new line</span>
+        <div class="aip-dock-actions">
+          <button class="aip-sim-btn" onclick="aipRunSimulate()">Simulate</button>
+          <button class="aip-send" onclick="aipRun()">Run ✦</button>
         </div>
       </div>
     </div>
 
-  </div><!-- /drawer-body -->
+  </aside>
 
-  <div class="drawer-footer hidden" id="drawerFooter">
-    <button class="btn-apply" id="btnApply" onclick="apply()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span id="applyLabel">Apply to</span>&nbsp;<span id="applyCount">23</span>&nbsp;<span id="applyLabel2">contact centers</span>
-    </button>
-    <div class="footer-row">
-      <button class="btn-secondary-action"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download batch plan</button>
-      <button class="btn-secondary-action" onclick="reset()">Cancel</button>
-    </div>
-  </div>
 </div>
 
 <div class="toast" id="toast">
@@ -930,83 +1199,167 @@
 </div>
 
 <script>
-  let activeTab = 'cmd';
   let isSimulate = false;
+  let isEmergency = false;
+  let lastCmd = '';
+  let activeTab = 'cmd';
 
-  function openDrawer() {
-    document.getElementById('drawer').classList.add('open');
-    document.getElementById('overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function openWithCmd(text) {
-    openDrawer(); switchTab('cmd');
-    setTimeout(() => { document.getElementById('cmdInput').value = text; document.getElementById('cmdInput').focus(); }, 80);
-  }
-  function closeDrawer() {
-    document.getElementById('drawer').classList.remove('open');
-    document.getElementById('overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
-
-  function toggleAllMain(master) {
-    document.querySelectorAll('.main-cb').forEach(cb => cb.checked = master.checked);
-    updateSelCount();
-  }
-  function updateSelCount() {
-    const n = document.querySelectorAll('.main-cb:checked').length;
-    const b = document.getElementById('selBadge');
-    const bb = document.getElementById('bulkBtn');
-    b.style.display = n > 0 ? '' : 'none';
-    b.textContent = n + ' selected';
-    bb.style.display = n > 0 ? '' : 'none';
-  }
-
-  function switchTab(tab) {
+  // ── Tab switching ──
+  function aipSwitchTab(tab) {
     activeTab = tab;
-    ['cmd','history','simulate'].forEach(t => {
-      document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+    ['cmd','history'].forEach(t => {
+      document.getElementById('atab-'+t).classList.toggle('active', t === tab);
+      document.getElementById('apanel-'+t).classList.toggle('hidden', t !== tab);
     });
-    document.getElementById('panel-cmd').classList.toggle('hidden', tab !== 'cmd');
-    document.getElementById('panel-history').classList.toggle('hidden', tab !== 'history');
-    document.getElementById('panel-simulate').classList.toggle('hidden', tab !== 'simulate');
-    const chat = document.getElementById('chatPane');
-    chat.style.display = 'none'; chat.classList.remove('visible');
-    document.getElementById('successPane').classList.remove('visible');
-    document.getElementById('drawerFooter').classList.add('hidden');
-    document.getElementById('parseSteps').classList.remove('visible');
-    isSimulate = (tab === 'simulate');
-    document.getElementById('simNotice').style.display = isSimulate ? 'block' : 'none';
   }
 
-  function fill(text) { document.getElementById('cmdInput').value = text; document.getElementById('cmdInput').focus(); }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('cmdInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runCmd(); }
-    });
-    syncRows();
-  });
-
-  function runCmd() { const t = document.getElementById('cmdInput').value.trim(); if (t) submitCommand(t, false); }
-  function runSimulate() {
-    const t = document.getElementById('simInput').value.trim() || document.getElementById('cmdInput').value.trim();
-    if (t) submitCommand(t, true);
+  // ── Fill input without running ──
+  function aipFill(text) {
+    aipSwitchTab('cmd');
+    document.getElementById('aipInput').value = text;
+    document.getElementById('aipInput').focus();
   }
 
-  function submitCommand(text, sim) {
+  // ── Run from input ──
+  function aipRun() {
+    const t = document.getElementById('aipInput').value.trim();
+    if (t) aipSubmit(t, false);
+  }
+  function aipRunSimulate() {
+    const t = document.getElementById('aipInput').value.trim();
+    if (t) aipSubmit(t, true);
+  }
+
+  // ── Submit a command ──
+  function aipSubmit(text, sim) {
     isSimulate = sim;
-    ['panel-cmd','panel-simulate','panel-history'].forEach(id => document.getElementById(id).classList.add('hidden'));
-    const chat = document.getElementById('chatPane');
-    chat.style.display = 'flex'; chat.classList.add('visible');
-    document.getElementById('userMsg').textContent = text;
-    document.getElementById('agentMsg').style.display = 'none';
+    lastCmd = text;
+    aipSwitchTab('cmd');
+
+    // Hide idle + success, show chat
+    document.getElementById('aipIdle').classList.add('hidden');
+    document.getElementById('aipSuccess').classList.add('hidden');
+    document.getElementById('aipChat').classList.remove('hidden');
+    document.getElementById('aipResponse').classList.add('hidden');
+    document.getElementById('aipSteps').style.display = '';
+
+    document.getElementById('aipUserMsg').textContent = text;
+    document.getElementById('aipInput').value = '';
+
+    // Show "New chat" button
+    document.getElementById('aipResetBtn').classList.add('visible');
+
     setEntityContext(text);
-    document.getElementById('parseSteps').classList.add('visible');
     resetStepIcons();
+
+    // Scroll to top of panel body
+    document.getElementById('aipBody').scrollTop = 0;
+
     animStep(1, 750, () => animStep(2, 650, () => animStep(3, 550, showResponse)));
   }
 
+  // ── Simulate inline (from response panel) ──
+  function aipSimulate() {
+    isSimulate = true;
+    updateApplyBtn();
+    document.getElementById('aipSimNote').style.display = 'block';
+    document.getElementById('aipSimNote').innerHTML = '<strong>Simulate mode:</strong> This plan will be submitted to an admin for review. No changes apply until approved.';
+    document.getElementById('aipCard').classList.add('simulate-card');
+    document.getElementById('aipModeTag').className = 'entity-mode-tag sim';
+    document.getElementById('aipModeTag').textContent = 'Simulate · draft plan';
+    document.querySelectorAll('.diff-new').forEach(el => el.classList.add('sim'));
+    document.querySelectorAll('.chip-update').forEach(el => el.classList.add('sim'));
+  }
+
+  // ── Apply / submit ──
+  function aipApply() {
+    const count = document.getElementById('aipApplyCount').textContent;
+    document.getElementById('aipSuccessUserMsg').textContent = lastCmd;
+
+    const icon = document.getElementById('aipSuccessIcon');
+    const isRestore = lastCmd.toLowerCase().includes('restore') || lastCmd.toLowerCase().includes('normal operation');
+    if (isEmergency) {
+      icon.className = 'aip-success-icon emergency';
+      icon.textContent = '⚠';
+      document.getElementById('aipSuccessTitle').textContent = isRestore ? 'Emergency Mode Deactivated' : 'Emergency Mode Activated';
+      document.getElementById('aipSuccessSub').textContent = isRestore
+        ? 'Contact centers restored to normal hours, routing, and greetings.'
+        : '5 coordinated changes applied — IVR, hours, routing, recording, and after-hours message updated.';
+      const stat = document.getElementById('aipSuccessStat');
+      stat.className = 'aip-success-stat emergency';
+      document.getElementById('aipSuccessNum').textContent = count;
+      document.getElementById('aipSuccessNum').className = 'aip-success-num emergency';
+      document.getElementById('aipSuccessNumLabel').textContent = isRestore ? 'CCs restored to normal' : 'CCs in emergency mode';
+    } else {
+      icon.className = 'aip-success-icon ' + (isSimulate ? 'simulated' : 'applied');
+      icon.textContent = isSimulate ? '👁' : '✓';
+      document.getElementById('aipSuccessTitle').textContent = isSimulate ? 'Plan submitted for review' : 'Changes applied';
+      document.getElementById('aipSuccessSub').textContent = isSimulate
+        ? 'Your draft plan has been sent to an admin for approval.'
+        : 'Settings updated successfully across your contact centers.';
+      const stat = document.getElementById('aipSuccessStat');
+      stat.className = 'aip-success-stat ' + (isSimulate ? 'simulated' : 'applied');
+      document.getElementById('aipSuccessNum').textContent = count;
+      document.getElementById('aipSuccessNum').className = 'aip-success-num ' + (isSimulate ? 'simulated' : 'applied');
+      document.getElementById('aipSuccessNumLabel').textContent = isSimulate ? 'contact centers in plan' : 'contact centers updated';
+    }
+
+    const c = lastCmd.toLowerCase();
+    const action = c.includes('recording') ? 'Call recording → Enabled' :
+                   c.includes('holiday') || c.includes('dec') ? 'Holiday hours → Closed' :
+                   c.includes('routing') ? 'Routing method updated' :
+                   c.includes('greeting') || c.includes('mp3') ? 'Greeting updated' :
+                   c.includes('wrap') ? 'Wrap-up time → 90s' :
+                   c.includes('agent') ? 'Agent roster updated' :
+                   c.includes('ai') ? 'AI features → Enabled' : 'Settings updated';
+    document.getElementById('aipAeAction').textContent = isSimulate ? 'Simulate plan submitted · pending admin approval' : action;
+    document.getElementById('aipAeSub').textContent = isSimulate ? count + ' CCs in draft · submitted by you' : 'Applied to ' + count + ' CCs · Revert available for 30 min';
+
+    document.getElementById('aipChat').classList.add('hidden');
+    document.getElementById('aipSuccess').classList.remove('hidden');
+    document.getElementById('aipBody').scrollTop = 0;
+
+    // Toast
+    const td = document.getElementById('toastDot');
+    td.className = 'toast-dot ' + (isSimulate ? 'simulated' : 'applied');
+    td.textContent = isSimulate ? '👁' : '✓';
+    document.getElementById('toastNum').textContent = count;
+    document.getElementById('toastText').innerHTML = isSimulate
+      ? 'Plan submitted for <strong>'+count+'</strong> contact centers'
+      : action + ' · <strong>'+count+'</strong> CCs';
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4500);
+  }
+
+  // ── Reset to idle ──
+  function aipReset() {
+    isSimulate = false;
+    isEmergency = false;
+    lastCmd = '';
+    document.getElementById('aipIdle').classList.remove('hidden');
+    document.getElementById('aipChat').classList.add('hidden');
+    document.getElementById('aipSuccess').classList.add('hidden');
+    document.getElementById('aipResponse').classList.add('hidden');
+    document.getElementById('aipInput').value = '';
+    document.getElementById('aipResetBtn').classList.remove('visible');
+    document.querySelectorAll('.prev-row').forEach(r => r.classList.remove('show'));
+    document.querySelectorAll('.pcb').forEach((cb, i) => { cb.checked = i !== 2; });
+    resetStepIcons(); syncRows(); computeCount();
+    // Reset emergency plan styles
+    const ep = document.getElementById('emergencyPlan');
+    ep.style.borderColor = '';
+    document.getElementById('epBadge').style.background = '';
+    document.getElementById('epScope').style.color = '';
+    document.getElementById('epGuard').style.color = '';
+    document.getElementById('epGuard').style.background = '';
+    document.getElementById('epGuard').style.borderColor = '';
+    document.getElementById('epChanges').style.background = '';
+    document.getElementById('diffPreview').classList.remove('hidden');
+    document.getElementById('aipBody').scrollTop = 0;
+  }
+
+  // ── Entity context logic ──
   function setEntityContext(cmd) {
     const c = cmd.toLowerCase();
     const t = document.getElementById('eTarget');
@@ -1014,13 +1367,127 @@
     const ch = document.getElementById('eChange');
     const g = document.getElementById('eGuard');
     const dt = document.getElementById('diffTitle');
-    const mt = document.getElementById('modeTag');
-    mt.className = 'entity-mode-tag ' + (isSimulate ? 'sim' : 'admin');
-    mt.textContent = isSimulate ? 'Simulate · draft plan' : 'Admin · will apply';
+    const mt = document.getElementById('aipModeTag');
+    mt.className = 'entity-mode-tag admin';
+    mt.textContent = 'Admin · will apply';
+    document.getElementById('aipCard').classList.remove('simulate-card');
+    document.getElementById('aipSimNote').style.display = 'none';
 
-    // Step labels
-    const step2 = document.getElementById('ps2t');
-    const step3 = document.getElementById('ps3t');
+    const step2 = document.getElementById('as2t');
+    const step3 = document.getElementById('as3t');
+    step2.textContent = 'Parsing intent & settings…';
+    step3.textContent = 'Building change preview…';
+
+    // ── Emergency detection ──
+    const isRestore = c.includes('restore') || c.includes('normal operation');
+    if (c.includes('hurricane') || c.includes('emergency mode') || c.includes('disaster routing') || c.includes('emergency ivr') || (c.includes('emergency') && c.includes('florida')) || isRestore) {
+      isEmergency = true;
+      step2.textContent = 'Identifying affected contact centers…';
+      step3.textContent = isRestore ? 'Building restore plan…' : 'Building emergency activation plan…';
+
+      if (c.includes('hurricane')) {
+        // Hurricane / full emergency plan — check before IVR so chip text with "IVR" still hits this
+        document.getElementById('epBadge').textContent = 'Emergency Mode';
+        document.getElementById('epBadge').style.background = 'var(--emergency)';
+        document.getElementById('epScope').textContent = '4 Florida contact centers';
+        document.getElementById('epScope').style.color = 'var(--emergency)';
+        document.getElementById('epTitle').textContent = 'Hurricane activation plan';
+        document.getElementById('epSubtitle').textContent = '5 coordinated changes · activates immediately';
+        document.getElementById('ep1val').textContent = '→ hurricane_emergency_2026.mp3';
+        document.getElementById('ep1note').textContent = 'replaces standard welcome on all affected CCs';
+        document.getElementById('ep2val').textContent = '→ Closed · next 72 hours';
+        document.getElementById('ep2note').textContent = 'override through Apr 26 · auto-restores after';
+        document.getElementById('ep3val').textContent = '→ Overflow to Austin TX backup';
+        document.getElementById('ep3note').textContent = 'Sales East TX · Support Central TX · Enterprise TX';
+        document.getElementById('ep4val').textContent = '→ Enabled (forced)';
+        document.getElementById('ep4note').textContent = 'compliance requirement during declared emergency';
+        document.getElementById('ep5val').textContent = '→ hurricane_afterhours_2026.mp3';
+        document.getElementById('ep5note').textContent = 'plays when closed or no agents available';
+        document.getElementById('epGuard').textContent = 'Affects all inbound calls to 4 CCs · revert anytime with "restore normal operations" · admin confirmation required';
+        document.getElementById('epGuard').style.color = 'var(--emergency)';
+        document.getElementById('epGuard').style.background = 'var(--emergency-surface)';
+        document.getElementById('epGuard').style.borderColor = 'var(--emergency-border)';
+        document.getElementById('emergencyPlan').style.borderColor = 'var(--emergency-border)';
+        document.getElementById('epChanges').style.background = 'var(--surface)';
+        document.getElementById('aipApplyCount').textContent = '4';
+      } else if (isRestore) {
+        document.getElementById('epBadge').textContent = 'Restore Mode';
+        document.getElementById('epBadge').style.background = 'var(--success)';
+        document.getElementById('epScope').textContent = '4 Florida contact centers';
+        document.getElementById('epScope').style.color = 'var(--success)';
+        document.getElementById('emergencyPlan').style.borderColor = 'var(--success-border)';
+        document.getElementById('epTitle').textContent = 'Restore to normal operations plan';
+        document.getElementById('epSubtitle').textContent = '5 coordinated changes · activates immediately';
+        document.getElementById('ep1val').textContent = '→ welcome_standard.mp3';
+        document.getElementById('ep1note').textContent = 'reinstates standard welcome greeting';
+        document.getElementById('ep2val').textContent = '→ Normal business hours restored';
+        document.getElementById('ep2note').textContent = 'Mon–Fri 8am–6pm · emergency override removed';
+        document.getElementById('ep3val').textContent = '→ Direct routing restored';
+        document.getElementById('ep3note').textContent = 'calls route directly to FL CCs, TX overflow removed';
+        document.getElementById('ep4val').textContent = '→ Standard recording rules';
+        document.getElementById('ep4note').textContent = 'forced emergency recording lifted';
+        document.getElementById('ep5val').textContent = '→ afterhours_standard.mp3';
+        document.getElementById('ep5note').textContent = 'standard after-hours message restored';
+        document.getElementById('epGuard').textContent = 'Removes all emergency overrides · Florida CCs return to normal immediately';
+        document.getElementById('epGuard').style.color = 'var(--success)';
+        document.getElementById('epGuard').style.background = 'var(--success-surface)';
+        document.getElementById('epGuard').style.borderColor = 'var(--success-border)';
+        document.getElementById('emergencyPlan').style.borderColor = 'var(--success-border)';
+        document.getElementById('epChanges').style.background = 'var(--surface)';
+      } else if (c.includes('ivr') || (c.includes('emergency') && c.includes('message'))) {
+        document.getElementById('epBadge').textContent = 'Emergency IVR';
+        document.getElementById('epScope').textContent = 'All 47 contact centers';
+        document.getElementById('epTitle').textContent = 'Emergency IVR deployment';
+        document.getElementById('epSubtitle').textContent = '2 coordinated changes · activates immediately';
+        document.getElementById('ep1val').textContent = '→ emergency_reduced_capacity.mp3';
+        document.getElementById('ep1note').textContent = '"We are operating at reduced capacity due to severe weather…"';
+        document.getElementById('ep2val').textContent = '→ Queue message updated';
+        document.getElementById('ep2note').textContent = 'hold message updated to acknowledge delays';
+        document.getElementById('ep3val').textContent = '→ No change';
+        document.getElementById('ep3note').textContent = 'routing unchanged';
+        document.getElementById('ep4val').textContent = '→ No change';
+        document.getElementById('ep4note').textContent = 'recording unchanged';
+        document.getElementById('ep5val').textContent = '→ emergency_afterhours_all.mp3';
+        document.getElementById('ep5note').textContent = 'all CCs updated with emergency after-hours message';
+        document.getElementById('epGuard').textContent = 'Affects all inbound callers immediately · revert with "restore standard IVR"';
+        document.getElementById('aipApplyCount').textContent = '47';
+      } else if (c.includes('routing') || c.includes('reroute')) {
+        document.getElementById('epBadge').textContent = 'Disaster Routing';
+        document.getElementById('epScope').textContent = '4 Florida contact centers';
+        document.getElementById('epTitle').textContent = 'Disaster routing activation';
+        document.getElementById('epSubtitle').textContent = '3 coordinated changes · activates immediately';
+        document.getElementById('ep1val').textContent = '→ No change';
+        document.getElementById('ep1note').textContent = 'greeting unchanged';
+        document.getElementById('ep2val').textContent = '→ No change';
+        document.getElementById('ep2note').textContent = 'hours unchanged';
+        document.getElementById('ep3val').textContent = '→ 100% overflow to Austin TX CCs';
+        document.getElementById('ep3note').textContent = 'Sales East TX · Support Central TX · Enterprise TX standing by';
+        document.getElementById('ep4val').textContent = '→ Enabled (forced)';
+        document.getElementById('ep4note').textContent = 'compliance requirement during rerouting';
+        document.getElementById('ep5val').textContent = '→ disaster_routing_notice.mp3';
+        document.getElementById('ep5note').textContent = '"Your call is being handled by our backup team…"';
+        document.getElementById('epGuard').textContent = 'All FL inbound calls immediately rerouted to TX · revert with "restore normal routing"';
+        document.getElementById('aipApplyCount').textContent = '4';
+      } else {
+        // Generic emergency fallback
+        document.getElementById('epBadge').textContent = 'Emergency Mode';
+        document.getElementById('epBadge').style.background = 'var(--emergency)';
+        document.getElementById('epScope').textContent = 'All contact centers';
+        document.getElementById('epScope').style.color = 'var(--emergency)';
+        document.getElementById('epTitle').textContent = 'Emergency activation plan';
+        document.getElementById('epSubtitle').textContent = '5 coordinated changes · activates immediately';
+        document.getElementById('epGuard').textContent = 'Affects all inbound calls · revert anytime with "restore normal operations"';
+        document.getElementById('epGuard').style.color = 'var(--emergency)';
+        document.getElementById('epGuard').style.background = 'var(--emergency-surface)';
+        document.getElementById('epGuard').style.borderColor = 'var(--emergency-border)';
+        document.getElementById('emergencyPlan').style.borderColor = 'var(--emergency-border)';
+        document.getElementById('epChanges').style.background = 'var(--surface)';
+        document.getElementById('aipApplyCount').textContent = '47';
+      }
+      return; // Skip normal entity context
+    }
+
+    isEmergency = false;
 
     if (c.includes('recording') && (c.includes('enable') || c.includes('all') || c.includes('400'))) {
       t.innerHTML = c.includes('400') ? 'All <span class="e-code">400+ contact centers</span>' : '23 CCs with <span class="e-code">recording disabled</span>';
@@ -1028,10 +1495,9 @@
       ch.innerHTML = 'Auto call recording → <span class="e-code">Enabled</span>';
       g.innerHTML = 'Compliance change — affects ' + (c.includes('400') ? '<strong>all 400+ CCs</strong>' : '<strong>23 CCs</strong>') + ', confirmation required';
       dt.textContent = c.includes('400') ? 'Preview — 400+ contact centers' : 'Preview — 23 contact centers';
-      step2.textContent = 'Checking recording status…';
-      step3.textContent = 'Building enable batch…';
+      step2.textContent = 'Checking recording status…'; step3.textContent = 'Building enable batch…';
       setDiffVals('Enabled'); setDiffFrom('Off');
-      document.getElementById('applyCount').textContent = c.includes('400') ? '400+' : '23';
+      document.getElementById('aipApplyCount').textContent = c.includes('400') ? '400+' : '23';
     } else if (c.includes('recording') && (c.includes('disable') || c.includes('gdpr') || c.includes('germany'))) {
       t.innerHTML = 'CCs in <span class="e-code">Germany and France</span>';
       w.textContent = 'Immediate';
@@ -1059,8 +1525,7 @@
       ch.innerHTML = '<span class="e-code">covid_temp_greeting.mp3</span> → <span class="e-code">standard_welcome.mp3</span>';
       g.innerHTML = '<strong>Phase 2</strong> — requires greetings API';
       dt.textContent = 'Preview — 3 contact centers';
-      step2.textContent = 'Detecting outdated greetings…';
-      step3.textContent = 'Staging MP3 swap…';
+      step2.textContent = 'Detecting outdated greetings…'; step3.textContent = 'Staging MP3 swap…';
       setDiffVals('standard_welcome.mp3'); setDiffFrom('covid_temp.mp3');
     } else if (c.includes('emea') && (c.includes('mp3') || c.includes('greeting') || c.includes('spring'))) {
       t.innerHTML = '4 CCs matching <span class="e-code">EMEA sales queues</span>';
@@ -1069,13 +1534,7 @@
       g.innerHTML = '<strong>Phase 2</strong> — requires greetings API';
       dt.textContent = 'Preview — 4 contact centers';
       setDiffVals('spring_promo_2026.mp3'); setDiffFrom('emea_default.mp3');
-    } else if (c.includes('hold music')) {
-      t.innerHTML = 'All <span class="e-code">NA contact centers</span>';
-      w.textContent = 'Immediate';
-      ch.innerHTML = 'Hold music → <span class="e-code">jazz_lite.mp3</span>';
-      g.innerHTML = '<strong>Phase 2</strong> — requires audio API';
-      setDiffVals('jazz_lite.mp3'); setDiffFrom('Default');
-    } else if (c.includes('voicemail greeting')) {
+    } else if (c.includes('voicemail') || (c.includes('after-hours') && c.includes('greeting'))) {
       t.innerHTML = '8 CCs <span class="e-code">missing voicemail greeting</span>';
       w.textContent = 'Immediate';
       ch.innerHTML = 'Voicemail greeting → <span class="e-code">standard_voicemail.mp3</span>';
@@ -1086,8 +1545,7 @@
       w.textContent = 'Immediate · affects call distribution';
       ch.innerHTML = 'Routing method → <span class="e-code">Round robin</span>';
       g.innerHTML = 'Routing change — affects <strong>all incoming calls</strong>, confirmation required';
-      step2.textContent = 'Reading current routing config…';
-      step3.textContent = 'Staging routing update…';
+      step2.textContent = 'Reading current routing config…'; step3.textContent = 'Staging routing update…';
       setDiffVals('Round robin'); setDiffFrom('Various');
     } else if (c.includes('overflow') && c.includes('voicemail')) {
       t.innerHTML = 'All <span class="e-code">contact centers</span> when no agents available';
@@ -1101,39 +1559,25 @@
       ch.innerHTML = 'Timeout <span class="e-code">5min → 2min</span>, overflow → <span class="e-code">Support Tier 2</span>';
       g.innerHTML = '<strong>Phase 2</strong> — routing changes require review';
       setDiffVals('Timeout 2min'); setDiffFrom('Timeout 5min');
-    } else if (c.includes('skills-based') || (c.includes('skills') && c.includes('routing'))) {
-      t.innerHTML = 'All <span class="e-code">Enterprise contact centers</span>';
-      w.textContent = 'Immediate';
-      ch.innerHTML = 'Routing method → <span class="e-code">Skills-based</span>';
-      g.innerHTML = 'Requires agent skill profiles to be set first';
-      setDiffVals('Skills-based'); setDiffFrom('Longest idle');
     } else if (c.includes('sarah') || c.includes('marcus') || (c.includes('add') && c.includes('agent'))) {
       t.innerHTML = 'All <span class="e-code">EMEA contact centers</span>';
       w.textContent = 'Immediate';
       ch.innerHTML = 'Agents added: <span class="e-code">Sarah Chen</span>, <span class="e-code">Marcus Liu</span>';
       g.innerHTML = 'Affects <strong>agent roster</strong> for all EMEA CCs';
-      step2.textContent = 'Looking up agent profiles…';
-      step3.textContent = 'Staging roster changes…';
+      step2.textContent = 'Looking up agent profiles…'; step3.textContent = 'Staging roster changes…';
       setDiffVals('+2 agents'); setDiffFrom('Current roster');
-    } else if (c.includes('wrap-up') || c.includes('wrap up') || c.includes('wrapup')) {
+    } else if (c.includes('wrap-up') || c.includes('wrap up')) {
       t.innerHTML = 'All <span class="e-code">contact centers</span>';
       w.textContent = 'Immediate';
       ch.innerHTML = 'Wrap-up time → <span class="e-code">90 seconds</span>';
       g.innerHTML = 'Affects <strong>all agents</strong> post-call buffer';
       setDiffVals('90 seconds'); setDiffFrom('Varies (30–120s)');
-    } else if (c.includes('auto off-duty') || c.includes('missed call')) {
-      t.innerHTML = 'All <span class="e-code">agent groups</span>';
-      w.textContent = 'Immediate';
-      ch.innerHTML = 'Auto off-duty → <span class="e-code">On after 3 missed calls</span>';
-      g.innerHTML = 'Affects all agent status handling';
-      setDiffVals('On · 3 misses'); setDiffFrom('Off');
     } else if (c.includes('inactive agent')) {
       t.innerHTML = 'Agents inactive <span class="e-code">60+ days</span> across all CCs';
       w.textContent = 'After admin review';
       ch.innerHTML = 'Remove from <span class="e-code">all contact center rosters</span>';
       g.innerHTML = '<strong>Irreversible roster change</strong> — requires admin confirmation';
-      step2.textContent = 'Scanning agent activity logs…';
-      step3.textContent = 'Flagging inactive accounts…';
+      step2.textContent = 'Scanning agent activity logs…'; step3.textContent = 'Flagging inactive accounts…';
       setDiffVals('Removed'); setDiffFrom('Active');
     } else if (c.includes('max queue') || c.includes('wait time') || c.includes('10 minute')) {
       t.innerHTML = 'All <span class="e-code">contact centers</span>';
@@ -1147,19 +1591,12 @@
       ch.innerHTML = 'Callback → <span class="e-code">Enabled when queue > 10</span>';
       g.innerHTML = 'Adds callback option to hold queue IVR';
       setDiffVals('Enabled'); setDiffFrom('Disabled');
-    } else if (c.includes('queue position')) {
-      t.innerHTML = 'All <span class="e-code">contact centers</span>';
-      w.textContent = 'Immediate';
-      ch.innerHTML = 'Queue position announcement → <span class="e-code">Enabled</span>';
-      g.innerHTML = 'Callers hear estimated position in queue';
-      setDiffVals('Enabled'); setDiffFrom('Disabled');
-    } else if (c.includes('ai') && (c.includes('enable') || c.includes('transcription') || c.includes('all'))) {
+    } else if (c.includes('ai') && (c.includes('enable') || c.includes('transcription'))) {
       t.innerHTML = 'All <span class="e-code">contact centers</span>';
       w.textContent = 'Immediate';
       ch.innerHTML = 'AI → <span class="e-code">Enabled</span> (transcription, summaries, AI CSAT)';
       g.innerHTML = '<strong>Phase 3</strong> — requires AI feature entitlement';
-      step2.textContent = 'Checking AI entitlements…';
-      step3.textContent = 'Staging AI feature rollout…';
+      step2.textContent = 'Checking AI entitlements…'; step3.textContent = 'Staging AI feature rollout…';
       setDiffVals('AI On'); setDiffFrom('Off');
     } else if (c.includes('pii') || c.includes('redaction')) {
       t.innerHTML = 'All <span class="e-code">contact centers</span>';
@@ -1167,12 +1604,6 @@
       ch.innerHTML = 'PII redaction → <span class="e-code">Enabled</span> on transcripts + recordings';
       g.innerHTML = '<strong>Compliance change</strong> — affects all transcript data';
       setDiffVals('PII On'); setDiffFrom('Off');
-    } else if (c.includes('csat') || c.includes('sentiment')) {
-      t.innerHTML = 'All <span class="e-code">contact centers</span>';
-      w.textContent = 'Immediate';
-      ch.innerHTML = 'AI CSAT + Live Sentiment → <span class="e-code">Enabled</span>';
-      g.innerHTML = '<strong>Phase 3</strong> — requires AI entitlement';
-      setDiffVals('Enabled'); setDiffFrom('Off');
     } else if (c.includes('spam')) {
       t.innerHTML = 'All <span class="e-code">contact centers</span>';
       w.textContent = 'Immediate';
@@ -1185,24 +1616,17 @@
       ch.innerHTML = 'Data retention → <span class="e-code">1 year</span>';
       g.innerHTML = '<strong>Compliance setting</strong> — does not delete existing data';
       setDiffVals('1 year'); setDiffFrom('90 days');
-    } else if (c.includes('anonymous')) {
-      t.innerHTML = 'All <span class="e-code">contact centers</span>';
-      w.textContent = 'Immediate';
-      ch.innerHTML = 'Anonymous call blocking → <span class="e-code">Enabled</span>';
-      g.innerHTML = 'Blocks all callers with no caller ID';
-      setDiffVals('Blocked'); setDiffFrom('Allowed');
     } else if (c.includes('fix all') || c.includes('flagged issue')) {
       t.innerHTML = '<span class="e-code">42 CCs</span> with 3 detected issues';
       w.textContent = 'Immediate';
       ch.innerHTML = 'Recording + holiday hours + greetings <span class="e-code">→ Fixed</span>';
       g.innerHTML = '<strong>Bulk compliance fix</strong> — affects 42 CCs, confirmation required';
-      step2.textContent = 'Scanning all 47 CCs for issues…';
-      step3.textContent = 'Building remediation batch…';
+      step2.textContent = 'Scanning all 47 CCs for issues…'; step3.textContent = 'Building remediation batch…';
       setDiffVals('Fixed'); setDiffFrom('Issue');
-      document.getElementById('applyCount').textContent = '42';
+      document.getElementById('aipApplyCount').textContent = '42';
     } else if (c.includes('holiday') || c.includes('dec 25') || c.includes('jan 1')) {
       t.innerHTML = '18 CCs matching <span class="e-code">NA contact centers</span>';
-      w.textContent = 'Dec 25 &amp; Jan 1, 2026';
+      w.textContent = 'Dec 25 & Jan 1, 2026';
       ch.innerHTML = 'Holiday hours → <span class="e-code">Closed</span>';
       g.innerHTML = 'Affects <strong>18 CCs</strong> — confirmation required';
       dt.textContent = 'Preview — 18 contact centers';
@@ -1223,45 +1647,64 @@
     document.querySelectorAll('.diff-old').forEach(el => el.textContent = val);
   }
 
+  // ── Step animation (wired to as1/as2/as3) ──
   function animStep(n, ms, cb) {
-    const step = document.getElementById('ps'+n);
-    const spin = document.getElementById('ps'+n+'s');
-    const check = document.getElementById('ps'+n+'c');
-    step.style.opacity = '1';
+    const step = document.getElementById('as'+n);
+    const spin = document.getElementById('as'+n+'s');
+    const check = document.getElementById('as'+n+'c');
+    if (step) { step.classList.add('active'); }
     if (spin && spin.className === 'step-idle') spin.className = 'step-spinner';
     setTimeout(() => {
       if (spin) spin.style.display = 'none';
       if (check) check.style.display = 'flex';
-      step.classList.add('done');
-      const nxt = document.getElementById('ps'+(n+1));
-      if (nxt) nxt.style.opacity = '1';
+      if (step) step.classList.add('done');
+      const nxt = document.getElementById('as'+(n+1));
+      if (nxt) { nxt.classList.add('active'); nxt.style.opacity = '1'; }
       if (cb) cb();
     }, ms);
   }
 
   function resetStepIcons() {
     for (let n = 1; n <= 3; n++) {
-      const step = document.getElementById('ps'+n);
-      const spin = document.getElementById('ps'+n+'s');
-      const check = document.getElementById('ps'+n+'c');
-      if (step) { step.classList.remove('done'); step.style.opacity = n===1 ? '1' : '.35'; }
+      const step = document.getElementById('as'+n);
+      const spin = document.getElementById('as'+n+'s');
+      const check = document.getElementById('as'+n+'c');
+      if (step) { step.classList.remove('done','active'); step.style.opacity = n===1 ? '1' : '.35'; }
       if (spin) { spin.className = n===1 ? 'step-spinner' : 'step-idle'; spin.style.display = ''; }
       if (check) check.style.display = 'none';
     }
   }
 
   function showResponse() {
-    document.getElementById('parseSteps').classList.remove('visible');
-    const am = document.getElementById('agentMsg');
-    am.style.display = 'flex';
-    const card = document.getElementById('agentCard');
-    card.classList.toggle('simulate-card', isSimulate);
-    document.getElementById('simNote').style.display = isSimulate ? 'block' : 'none';
-    document.querySelectorAll('.diff-new').forEach(el => el.classList.toggle('sim', isSimulate));
-    document.querySelectorAll('.chip-update').forEach(el => el.classList.toggle('sim', isSimulate));
-    document.querySelectorAll('.prev-row').forEach((r, i) => setTimeout(() => r.classList.add('show'), i * 65));
-    document.getElementById('drawerFooter').classList.remove('hidden');
-    syncRows(); computeCount(); updateApplyBtn();
+    document.getElementById('aipSteps').style.display = 'none';
+    document.getElementById('aipResponse').classList.remove('hidden');
+
+    // Toggle between normal entity card and emergency plan
+    document.getElementById('aipCard').classList.toggle('hidden', isEmergency);
+    document.getElementById('emergencyPlan').classList.toggle('hidden', !isEmergency);
+    // Hide diff table for emergency (the plan card shows all changes)
+    document.getElementById('diffPreview').classList.toggle('hidden', isEmergency);
+    document.getElementById('aipSimNote').style.display = 'none';
+
+    if (!isEmergency) {
+      document.querySelectorAll('.diff-new').forEach(el => el.classList.remove('sim'));
+      document.querySelectorAll('.chip-update').forEach(el => el.classList.remove('sim'));
+      document.querySelectorAll('.prev-row').forEach((r, i) => setTimeout(() => r.classList.add('show'), i * 60));
+      syncRows(); computeCount();
+    }
+    updateApplyBtn();
+    setTimeout(() => { document.getElementById('aipBody').scrollTop = 9999; }, 50);
+  }
+
+  function toggleAllMain(master) {
+    document.querySelectorAll('.main-cb').forEach(cb => cb.checked = master.checked);
+    updateSelCount();
+  }
+  function updateSelCount() {
+    const n = document.querySelectorAll('.main-cb:checked').length;
+    document.getElementById('selBadge').style.display = n > 0 ? '' : 'none';
+    document.getElementById('selBadge').textContent = n + ' selected';
+    document.getElementById('bulkBtn').style.display = n > 0 ? '' : 'none';
   }
 
   function toggleAll(master) {
@@ -1290,76 +1733,40 @@
   function computeCount() {
     const checked = document.querySelectorAll('.pcb:checked').length;
     const total = checked + 18;
-    const ac = document.getElementById('applyCount');
-    if (!ac.textContent.includes('+')) ac.textContent = total;
-    document.getElementById('btnApply').disabled = total === 0;
+    const ac = document.getElementById('aipApplyCount');
+    if (ac && !ac.textContent.includes('+')) ac.textContent = total;
   }
 
   function updateApplyBtn() {
-    const btn = document.getElementById('btnApply');
-    btn.className = isSimulate ? 'btn-apply sim' : 'btn-apply';
-    document.getElementById('applyLabel').textContent = isSimulate ? 'Submit plan for' : 'Apply to';
-    document.getElementById('applyLabel2').textContent = isSimulate ? 'CCs to admin' : 'contact centers';
+    const btn = document.getElementById('aipApplyBtn');
+    if (isEmergency) {
+      btn.className = 'aip-btn-apply emergency';
+      document.getElementById('aipApplyLabel').textContent = 'Activate emergency mode for';
+      document.getElementById('aipApplyLabel2').textContent = 'contact centers';
+    } else {
+      btn.className = 'aip-btn-apply' + (isSimulate ? ' sim' : '');
+      document.getElementById('aipApplyLabel').textContent = isSimulate ? 'Submit plan for' : 'Apply to';
+      document.getElementById('aipApplyLabel2').textContent = isSimulate ? 'CCs to admin' : 'contact centers';
+    }
   }
 
-  function apply() {
-    const count = document.getElementById('applyCount').textContent;
-    const chat = document.getElementById('chatPane');
-    chat.classList.remove('visible'); chat.style.display = 'none';
-    document.getElementById('drawerFooter').classList.add('hidden');
-    document.getElementById('parseSteps').classList.remove('visible');
-
-    const icon = document.getElementById('successIcon');
-    icon.className = 'success-icon-wrap ' + (isSimulate ? 'simulated' : 'applied');
-    icon.textContent = isSimulate ? '👁' : '✓';
-    document.getElementById('successTitle').textContent = isSimulate ? 'Plan submitted for review' : 'Changes applied';
-    document.getElementById('successSub').textContent = isSimulate
-      ? 'Your draft plan has been sent to an admin for approval.'
-      : 'Settings updated successfully across your contact centers.';
-    const stat = document.getElementById('successStat');
-    stat.className = 'success-stat ' + (isSimulate ? 'simulated' : 'applied');
-    document.getElementById('successNum').textContent = count;
-    document.getElementById('successNum').className = 'success-num ' + (isSimulate ? 'simulated' : 'applied');
-    document.getElementById('successLabel').textContent = isSimulate ? 'contact centers in plan' : 'contact centers updated';
-
-    const cmd = document.getElementById('cmdInput').value.toLowerCase();
-    const action = cmd.includes('recording') ? 'Call recording → Enabled' :
-                   cmd.includes('holiday') || cmd.includes('dec') ? 'Holiday hours → Closed' :
-                   cmd.includes('routing') ? 'Routing method updated' :
-                   cmd.includes('greeting') || cmd.includes('mp3') ? 'Greeting updated' :
-                   cmd.includes('wrap') ? 'Wrap-up time → 90s' :
-                   cmd.includes('agent') ? 'Agent roster updated' :
-                   cmd.includes('ai') ? 'AI features → Enabled' :
-                   'Settings updated';
-    document.getElementById('aeAction').textContent = isSimulate ? 'Simulate plan submitted · pending admin approval' : action;
-    document.getElementById('aeSub').textContent = isSimulate ? count + ' CCs in draft · submitted by you' : 'Applied to ' + count + ' CCs · Revert available for 30 min';
-    document.getElementById('successPane').classList.add('visible');
-
-    const td = document.getElementById('toastDot');
-    td.className = 'toast-dot ' + (isSimulate ? 'simulated' : 'applied');
-    td.textContent = isSimulate ? '👁' : '✓';
-    document.getElementById('toastNum').textContent = count;
-    document.getElementById('toastText').innerHTML = isSimulate
-      ? 'Plan submitted for <strong>'+count+'</strong> contact centers'
-      : action + ' · <strong>'+count+'</strong> CCs';
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4500);
+  // ── Panel collapse/expand ──
+  function togglePanel() {
+    const panel = document.querySelector('.ai-panel');
+    const collapsed = panel.classList.toggle('collapsed');
+    const icon = document.getElementById('aipToggleIcon');
+    // Point chevron right when collapsed (to signal "expand"), left when open
+    icon.style.transform = collapsed ? 'rotate(180deg)' : '';
+    document.getElementById('aipToggle').title = collapsed ? 'Expand' : 'Collapse';
   }
 
-  function reset() {
-    const chat = document.getElementById('chatPane');
-    chat.style.display = 'none'; chat.classList.remove('visible');
-    document.getElementById('agentMsg').style.display = 'none';
-    document.getElementById('parseSteps').classList.remove('visible');
-    document.getElementById('drawerFooter').classList.add('hidden');
-    document.getElementById('successPane').classList.remove('visible');
-    document.getElementById('simNote').style.display = 'none';
-    document.getElementById('cmdInput').value = '';
-    document.querySelectorAll('.prev-row').forEach(r => r.classList.remove('show'));
-    document.querySelectorAll('.pcb').forEach((cb, i) => cb.checked = i !== 2);
-    switchTab('cmd'); resetStepIcons(); syncRows(); computeCount();
-  }
+  // ── Keyboard shortcut ──
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('aipInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aipRun(); }
+    });
+    syncRows();
+  });
 </script>
 </body>
 </html>
