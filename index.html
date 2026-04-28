@@ -108,12 +108,12 @@
     .cc-table td:last-child { padding-right: 20px; text-align: right; }
     .cc-name { font-weight: 600; font-size: var(--fs-sm); }
     .cc-sub { font-size: var(--fs-xs); color: var(--text-3); margin-top: 1px; }
-    .badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; border-radius: 100px; padding: 2px 8px; white-space: nowrap; gap: 3px; }
+    .badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; border-radius: 4px; padding: 2px 7px; white-space: nowrap; gap: 3px; line-height: 1.4; }
     .badge-on  { background: var(--success-surface); color: var(--success); }
     .badge-off { background: var(--danger-surface); color: var(--danger); }
     .badge-neu { background: var(--bg); color: var(--text-3); border: 1px solid var(--border); }
     .badge-warn{ background: var(--warning-surface); color: var(--warning); }
-    .issue-ct { font-size: var(--fs-xs); font-weight: 600; color: var(--danger); }
+    .issue-ct { font-size: var(--fs-xs); font-weight: 600; color: var(--danger); display: inline-flex; align-items: center; }
     .issue-ct.ok { color: var(--text-3); font-weight: 400; }
     input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--purple); cursor: pointer; }
     .btn-row { font-family: var(--font); font-size: 11px; font-weight: 600; color: var(--purple-text); background: var(--purple-surface); border: 1px solid var(--purple-border); border-radius: 5px; padding: 3px 9px; cursor: pointer; transition: background .1s; }
@@ -416,7 +416,7 @@ function renderTable() {
       <td style="color:var(--text-2);font-size:var(--fs-xs)">${cc.agents}</td>
       <td><span class="badge ${cc.rec ? 'badge-on' : 'badge-off'}">${cc.rec ? '✓ On' : '✕ Off'}</span></td>
       <td><span class="badge ${cc.greeting ? 'badge-on' : 'badge-off'}">${cc.greeting ? '✓ Set' : '✕ Missing'}</span></td>
-      <td style="color:var(--text-2);font-size:var(--fs-xs)">${cc.hours}</td>
+      <td><span style="font-size:var(--fs-xs);color:var(--text-2);vertical-align:middle">${cc.hours}</span></td>
       <td><span class="issue-ct ${issues === 0 ? 'ok' : ''}">${issues === 0 ? '✓ Healthy' : `⚠ ${issues} issue${issues > 1 ? 's' : ''}`}</span></td>
       <td><button class="btn-row" onclick="viewCC(${cc.id}, event)">View</button></td>
     </tr>`;
