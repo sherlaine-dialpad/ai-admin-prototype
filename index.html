@@ -456,6 +456,40 @@
     .page-meta-tag { font-size: var(--fs-xs); color: var(--text-3); }
     .page-meta-sep { color: var(--border-md); }
 
+    /* ── Section label (shared) ── */
+    .section-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+
+    /* ── Call simulation panel ── */
+    .call-sim-wrap { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 8px 0; }
+    .call-sim-hd { padding: 7px 12px; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .call-sim-hd-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
+    .call-sim-body { display: grid; grid-template-columns: 1fr 1fr; }
+    .call-sim-col { padding: 10px 11px; }
+    .call-sim-col + .call-sim-col { border-left: 1px solid var(--border); background: hsl(252 100% 65% / 0.03); }
+    .call-sim-col-hd { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); margin-bottom: 8px; }
+    .call-sim-col-hd.after { color: var(--success); }
+    .csim-step { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 4px; }
+    .csim-icon-wrap { width: 20px; height: 20px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; margin-top: 1px; }
+    .csim-icon-wrap.changed { background: var(--success-surface); border-color: var(--success-border); }
+    .csim-content { flex: 1; min-width: 0; }
+    .csim-label { font-size: 11px; font-weight: 500; color: var(--text-1); line-height: 1.3; }
+    .csim-label.changed { color: var(--success); }
+    .csim-detail { font-size: 10px; color: var(--text-3); line-height: 1.3; margin-top: 1px; }
+    .csim-arrow { font-size: 9px; color: var(--text-3); margin: 1px 0 3px 7px; }
+
+    /* ── Greeting methods picker ── */
+    .greeting-methods { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 8px 0; }
+    .gm-header { padding: 8px 12px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
+    .gm-options { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .gm-option { padding: 10px 10px; cursor: pointer; transition: background .1s; border-right: 1px solid var(--border); text-align: center; }
+    .gm-option:last-child { border-right: none; }
+    .gm-option:hover { background: var(--bg); }
+    .gm-option.selected { background: var(--purple-surface); border-color: var(--purple-border); }
+    .gm-option-icon { font-size: 16px; margin-bottom: 4px; }
+    .gm-option-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-1); }
+    .gm-option-desc { font-size: 10px; color: var(--text-3); margin-top: 2px; line-height: 1.3; }
+    .gm-selected-note { padding: 8px 12px; font-size: var(--fs-xs); color: var(--purple-text); background: var(--purple-surface); border-top: 1px solid var(--purple-border); display: none; }
+
     /* ── View toggle ── */
     .view-hidden { display: none !important; }
     .bc-clickable { cursor: pointer; }
@@ -634,6 +668,47 @@
             <div class="stat-label">Missing Greeting</div>
             <div class="stat-val warn">8</div>
             <div class="stat-ai">✦ Review needed</div>
+          </div>
+        </div>
+
+        <!-- Quick Bulk Actions -->
+        <div class="section-label">Quick Bulk Actions</div>
+        <div class="quick-grid">
+          <div class="qa-card" onclick="aipFill('Update greetings across all contact centers — set welcome, after-hours, and holiday messages')">
+            <div class="qa-icon">🔊</div>
+            <div class="qa-title">Update Greetings</div>
+            <div class="qa-desc">Welcome, after-hours, and holiday messages</div>
+            <div class="qa-footer">
+              <span class="qa-count warn">8 missing</span>
+              <span class="qa-arrow">Go →</span>
+            </div>
+          </div>
+          <div class="qa-card" onclick="aipFill('Apply holiday schedule to all contact centers — close Dec 25 and Jan 1 for NA, and apply relevant dates for EMEA and APAC')">
+            <div class="qa-icon">📅</div>
+            <div class="qa-title">Holiday Schedule</div>
+            <div class="qa-desc">Apply holiday closures across all CCs</div>
+            <div class="qa-footer">
+              <span class="qa-count warn">11 not set</span>
+              <span class="qa-arrow">Go →</span>
+            </div>
+          </div>
+          <div class="qa-card" onclick="aipFill('Enable automatic call recording on all contact centers that have it disabled')">
+            <div class="qa-icon">⏺</div>
+            <div class="qa-title">Enable Recording</div>
+            <div class="qa-desc">Turn on auto recording across all CCs</div>
+            <div class="qa-footer">
+              <span class="qa-count warn">23 off</span>
+              <span class="qa-arrow">Go →</span>
+            </div>
+          </div>
+          <div class="qa-card" onclick="aipFill('Update call routing for all contact centers — set overflow, queue timeout, and after-hours routing rules')">
+            <div class="qa-icon">↗</div>
+            <div class="qa-title">Update Routing</div>
+            <div class="qa-desc">Queue rules, overflow, after-hours routing</div>
+            <div class="qa-footer">
+              <span class="qa-count neutral">all CCs</span>
+              <span class="qa-arrow">Go →</span>
+            </div>
           </div>
         </div>
 
@@ -1284,6 +1359,48 @@
 
             <div style="height:6px"></div>
             <div class="sim-note" id="aipSimNote"></div>
+
+            <!-- Greeting method picker (greeting commands only) -->
+            <div class="greeting-methods hidden" id="greetingMethods">
+              <div class="gm-header">How would you like to update the greeting?</div>
+              <div class="gm-options">
+                <div class="gm-option" id="gmo-tts" onclick="selectGreetingMethod('tts')">
+                  <div class="gm-option-icon">✨</div>
+                  <div class="gm-option-label">Text-to-speech</div>
+                  <div class="gm-option-desc">AI generates voice from your text</div>
+                </div>
+                <div class="gm-option" id="gmo-record" onclick="selectGreetingMethod('record')">
+                  <div class="gm-option-icon">🎙</div>
+                  <div class="gm-option-label">Self-record</div>
+                  <div class="gm-option-desc">Record via phone or microphone</div>
+                </div>
+                <div class="gm-option" id="gmo-upload" onclick="selectGreetingMethod('upload')">
+                  <div class="gm-option-icon">📤</div>
+                  <div class="gm-option-label">Upload audio</div>
+                  <div class="gm-option-desc">Use a professional branded .mp3</div>
+                </div>
+              </div>
+              <div class="gm-selected-note" id="gmNote"></div>
+            </div>
+
+            <!-- Call simulation panel -->
+            <div class="call-sim-wrap hidden" id="callSimWrap">
+              <div class="call-sim-hd">
+                <span class="call-sim-hd-title">📞 Call simulation</span>
+                <span style="font-size:10px;color:var(--text-3)">What callers experience</span>
+              </div>
+              <div class="call-sim-body">
+                <div class="call-sim-col">
+                  <div class="call-sim-col-hd">Current</div>
+                  <div id="csimBefore"></div>
+                </div>
+                <div class="call-sim-col">
+                  <div class="call-sim-col-hd after">After change</div>
+                  <div id="csimAfter"></div>
+                </div>
+              </div>
+            </div>
+
             <div style="height:8px"></div>
 
             <div class="aip-actions">
@@ -1555,6 +1672,11 @@
     document.getElementById('epGuard').style.borderColor = '';
     document.getElementById('epChanges').style.background = '';
     document.getElementById('diffPreview').classList.remove('hidden');
+    const csWrap = document.getElementById('callSimWrap');
+    if (csWrap) csWrap.classList.add('hidden');
+    const gmEl = document.getElementById('greetingMethods');
+    if (gmEl) gmEl.classList.add('hidden');
+    callSimType = 'generic';
     document.getElementById('aipBody').scrollTop = 0;
   }
 
@@ -1683,10 +1805,12 @@
         document.getElementById('epChanges').style.background = 'var(--surface)';
         document.getElementById('aipApplyCount').textContent = '47';
       }
+      callSimType = 'emergency';
       return; // Skip normal entity context
     }
 
     isEmergency = false;
+    callSimType = 'generic';
 
     if (c.includes('recording') && (c.includes('enable') || c.includes('all') || c.includes('400'))) {
       t.innerHTML = c.includes('400') ? 'All <span class="e-code">400+ contact centers</span>' : '23 CCs with <span class="e-code">recording disabled</span>';
@@ -1837,6 +1961,12 @@
       g.innerHTML = 'Review changes below — confirmation required';
       setDiffVals('Updated'); setDiffFrom('Previous');
     }
+
+    // Unified call sim type detection
+    if (c.includes('recording') || c.includes('record')) callSimType = 'recording';
+    else if (c.includes('greeting') || c.includes('mp3') || c.includes('voicemail') || c.includes('welcome') || c.includes('audio') || c.includes('message'))  callSimType = 'greeting';
+    else if (c.includes('holiday') || c.includes('hour') || c.includes('friday') || c.includes('thanksgiving') || c.includes('jan') || c.includes('dec') || c.includes('schedule') || c.includes('closed')) callSimType = 'holiday';
+    else if (c.includes('routing') || c.includes('route') || c.includes('overflow') || c.includes('queue') || c.includes('round robin') || c.includes('timeout')) callSimType = 'routing';
   }
 
   function setDiffVals(val) {
@@ -1891,6 +2021,27 @@
       document.querySelectorAll('.prev-row').forEach((r, i) => setTimeout(() => r.classList.add('show'), i * 60));
       syncRows(); computeCount();
     }
+
+    // Greeting methods — show only for greeting commands
+    const isGreetingCmd = callSimType === 'greeting';
+    const gmEl = document.getElementById('greetingMethods');
+    if (gmEl) {
+      gmEl.classList.toggle('hidden', !isGreetingCmd);
+      if (isGreetingCmd) {
+        // Reset selection
+        ['tts','record','upload'].forEach(m => document.getElementById('gmo-'+m).classList.remove('selected'));
+        const note = document.getElementById('gmNote');
+        if (note) note.style.display = 'none';
+      }
+    }
+
+    // Call simulation
+    const csWrap = document.getElementById('callSimWrap');
+    if (csWrap) {
+      csWrap.classList.remove('hidden');
+      renderCallSim(callSimType);
+    }
+
     updateApplyBtn();
     setTimeout(() => { document.getElementById('aipBody').scrollTop = 9999; }, 50);
   }
@@ -1936,6 +2087,141 @@
       document.getElementById('aipApplyLabel').textContent = isSimulate ? 'Submit plan for' : 'Apply to';
       document.getElementById('aipApplyLabel2').textContent = isSimulate ? 'CCs to admin' : 'contact centers';
     }
+  }
+
+  // ── Call simulation data ──
+  const CALL_SIM = {
+    holiday: {
+      before: [
+        ['📞','Caller dials','Sales East · ext. 1200'],
+        ['🔊','Welcome greeting','"Welcome to Sales East…"'],
+        ['⏳','Hold queue','Up to 5 min wait'],
+        ['👤','Agent answers','Available agent']
+      ],
+      after: [
+        ['📞','Caller dials','Sales East · ext. 1200', false],
+        ['🔊','Holiday closed message','"We\'re closed Dec 25–Jan 1…"', true],
+        ['📬','Leave voicemail','After message plays', true]
+      ]
+    },
+    recording: {
+      before: [
+        ['📞','Caller dials','Call connects'],
+        ['🔊','Welcome greeting','Plays normally'],
+        ['⏳','Hold queue','Waiting for agent'],
+        ['👤','Agent answers','No recording']
+      ],
+      after: [
+        ['📞','Caller dials','Call connects', false],
+        ['📣','Recording notice','"This call may be recorded…"', true],
+        ['⏳','Hold queue','Waiting for agent', false],
+        ['👤','Agent answers','Call recorded ⏺', true]
+      ]
+    },
+    greeting: {
+      before: [
+        ['📞','Caller dials','Connects to queue'],
+        ['🔊','Old greeting plays','welcome_standard.mp3'],
+        ['⏳','Hold queue','Waiting'],
+        ['👤','Agent answers','']
+      ],
+      after: [
+        ['📞','Caller dials','Connects to queue', false],
+        ['🔊','New greeting plays','Updated branded message', true],
+        ['⏳','Hold queue','Waiting', false],
+        ['👤','Agent answers','', false]
+      ]
+    },
+    routing: {
+      before: [
+        ['📞','Caller dials','Connects'],
+        ['🔀','First available','Any available agent'],
+        ['⏳','Queue timeout','5 min → voicemail'],
+        ['👤','Agent answers','']
+      ],
+      after: [
+        ['📞','Caller dials','Connects', false],
+        ['🔀','Round robin routing','Evenly distributed', true],
+        ['⏳','Queue timeout','2 min → Tier 2 overflow', true],
+        ['👤','Agent answers','', false]
+      ]
+    },
+    emergency: {
+      before: [
+        ['📞','Caller dials','FL Sales East'],
+        ['🔊','Standard greeting','"Welcome to Sales East…"'],
+        ['⏳','FL queue','Wait for FL agent'],
+        ['👤','FL agent answers','']
+      ],
+      after: [
+        ['📞','Caller dials','FL Sales East', false],
+        ['🔊','Emergency message','"Due to the hurricane…"', true],
+        ['↗','Rerouted to TX backup','Austin contact center', true],
+        ['👤','TX agent answers','Backup coverage', true]
+      ]
+    },
+    generic: {
+      before: [
+        ['📞','Caller dials','Connects'],
+        ['🔊','Current settings','Apply normally'],
+        ['⏳','Queue','Wait for agent'],
+        ['👤','Agent answers','']
+      ],
+      after: [
+        ['📞','Caller dials','Connects', false],
+        ['⚙','Updated settings','New config applies', true],
+        ['⏳','Queue','Wait for agent', false],
+        ['👤','Agent answers','', false]
+      ]
+    }
+  };
+
+  let callSimType = 'generic';
+
+  function renderCallSim(type) {
+    const data = CALL_SIM[type] || CALL_SIM.generic;
+    const beforeEl = document.getElementById('csimBefore');
+    const afterEl  = document.getElementById('csimAfter');
+    if (!beforeEl || !afterEl) return;
+
+    function renderSteps(steps, container) {
+      container.innerHTML = '';
+      steps.forEach((s, i) => {
+        const changed = s[3] === true;
+        const div = document.createElement('div');
+        div.className = 'csim-step';
+        div.innerHTML = `
+          <div class="csim-icon-wrap${changed ? ' changed' : ''}"><span>${s[0]}</span></div>
+          <div class="csim-content">
+            <div class="csim-label${changed ? ' changed' : ''}">${s[1]}</div>
+            ${s[2] ? `<div class="csim-detail">${s[2]}</div>` : ''}
+          </div>`;
+        container.appendChild(div);
+        if (i < steps.length - 1) {
+          const arrow = document.createElement('div');
+          arrow.className = 'csim-arrow';
+          arrow.textContent = '↓';
+          container.appendChild(arrow);
+        }
+      });
+    }
+
+    renderSteps(data.before, beforeEl);
+    renderSteps(data.after, afterEl);
+  }
+
+  // ── Greeting method picker ──
+  function selectGreetingMethod(method) {
+    ['tts','record','upload'].forEach(m => {
+      document.getElementById('gmo-'+m).classList.toggle('selected', m === method);
+    });
+    const notes = {
+      tts: '✨ Type your message — AI will generate a natural-sounding voice for all selected CCs.',
+      record: '🎙 You\'ll receive a callback to record the greeting via phone, or record in-browser.',
+      upload: '📤 Upload your branded .mp3 file. Recommended: 44.1kHz, 128kbps or higher.'
+    };
+    const note = document.getElementById('gmNote');
+    if (note) { note.textContent = notes[method]; note.style.display = 'block'; }
   }
 
   // ── View switching (All CCs ↔ Sales East detail) ──
