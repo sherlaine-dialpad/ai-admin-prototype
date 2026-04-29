@@ -459,23 +459,28 @@
     /* ── Section label (shared) ── */
     .section-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
 
-    /* ── Call simulation panel ── */
+    /* ── Call simulation player ── */
     .call-sim-wrap { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 8px 0; }
     .call-sim-hd { padding: 7px 12px; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
     .call-sim-hd-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
-    .call-sim-body { display: grid; grid-template-columns: 1fr 1fr; }
-    .call-sim-col { padding: 10px 11px; }
-    .call-sim-col + .call-sim-col { border-left: 1px solid var(--border); background: hsl(252 100% 65% / 0.03); }
-    .call-sim-col-hd { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); margin-bottom: 8px; }
-    .call-sim-col-hd.after { color: var(--success); }
-    .csim-step { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 4px; }
-    .csim-icon-wrap { width: 20px; height: 20px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; margin-top: 1px; }
-    .csim-icon-wrap.changed { background: var(--success-surface); border-color: var(--success-border); }
-    .csim-content { flex: 1; min-width: 0; }
-    .csim-label { font-size: 11px; font-weight: 500; color: var(--text-1); line-height: 1.3; }
-    .csim-label.changed { color: var(--success); }
-    .csim-detail { font-size: 10px; color: var(--text-3); line-height: 1.3; margin-top: 1px; }
-    .csim-arrow { font-size: 9px; color: var(--text-3); margin: 1px 0 3px 7px; }
+    .csim-player-body { padding: 12px 13px 10px; }
+    .csim-idle-label { font-size: var(--fs-xs); color: var(--text-3); margin-top: 5px; text-align: center; }
+    .csim-play-btn { font-family: var(--font); font-size: var(--fs-sm); font-weight: 600; background: var(--purple); color: white; border: none; border-radius: 6px; padding: 7px 16px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .1s; width: 100%; justify-content: center; margin-bottom: 6px; }
+    .csim-play-btn:hover { background: var(--purple-hover); }
+    .csim-steps-list { display: flex; flex-direction: column; }
+    .csim-live-step { display: flex; align-items: flex-start; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--border); opacity: 0; transform: translateY(5px); transition: opacity .3s, transform .3s; }
+    .csim-live-step:last-child { border-bottom: none; }
+    .csim-live-step.appear { opacity: 1; transform: translateY(0); }
+    .csim-live-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px; transition: background .2s, border-color .2s; }
+    .csim-live-icon.active { background: var(--purple-surface); border-color: var(--purple-border); }
+    .csim-live-icon.done { background: var(--success-surface); border-color: var(--success-border); }
+    .csim-live-body { flex: 1; min-width: 0; }
+    .csim-live-label { font-size: var(--fs-sm); font-weight: 500; color: var(--text-1); }
+    .csim-live-detail { font-size: var(--fs-xs); color: var(--text-3); margin-top: 2px; line-height: 1.4; }
+    .csim-live-detail.speaking { color: var(--text-2); font-style: italic; }
+    .csim-complete { display: none; align-items: center; gap: 7px; padding: 8px 0 2px; font-size: var(--fs-sm); color: var(--success); font-weight: 500; }
+    .csim-again-btn { font-family: var(--font); font-size: var(--fs-xs); font-weight: 500; background: none; color: var(--text-3); border: 1px solid var(--border-md); border-radius: 5px; padding: 3px 9px; cursor: pointer; margin-left: auto; }
+    .csim-again-btn:hover { background: var(--bg); color: var(--text-2); }
 
     /* ── Greeting methods picker ── */
     .greeting-methods { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 8px 0; }
@@ -1383,20 +1388,19 @@
               <div class="gm-selected-note" id="gmNote"></div>
             </div>
 
-            <!-- Call simulation panel -->
+            <!-- Call simulation player -->
             <div class="call-sim-wrap hidden" id="callSimWrap">
               <div class="call-sim-hd">
                 <span class="call-sim-hd-title">📞 Call simulation</span>
-                <span style="font-size:10px;color:var(--text-3)">What callers experience</span>
+                <span style="font-size:10px;color:var(--text-3)">After changes apply</span>
               </div>
-              <div class="call-sim-body">
-                <div class="call-sim-col">
-                  <div class="call-sim-col-hd">Current</div>
-                  <div id="csimBefore"></div>
-                </div>
-                <div class="call-sim-col">
-                  <div class="call-sim-col-hd after">After change</div>
-                  <div id="csimAfter"></div>
+              <div class="csim-player-body">
+                <button class="csim-play-btn" id="csimPlayBtn" onclick="runCallSim()">▶&nbsp; Simulate this call</button>
+                <div class="csim-idle-label" id="csimIdleLabel">See what callers experience after this change is applied</div>
+                <div class="csim-steps-list" id="csimStepsList"></div>
+                <div class="csim-complete" id="csimComplete">
+                  <span>✓</span> Simulation complete
+                  <button class="csim-again-btn" onclick="resetCallSim()">Run again</button>
                 </div>
               </div>
             </div>
@@ -1677,6 +1681,7 @@
     const gmEl = document.getElementById('greetingMethods');
     if (gmEl) gmEl.classList.add('hidden');
     callSimType = 'generic';
+    resetCallSim();
     document.getElementById('aipBody').scrollTop = 0;
   }
 
@@ -2035,11 +2040,11 @@
       }
     }
 
-    // Call simulation
+    // Call simulation player — show and reset to idle state
     const csWrap = document.getElementById('callSimWrap');
     if (csWrap) {
       csWrap.classList.remove('hidden');
-      renderCallSim(callSimType);
+      resetCallSim();
     }
 
     updateApplyBtn();
@@ -2089,125 +2094,105 @@
     }
   }
 
-  // ── Call simulation data ──
-  const CALL_SIM = {
-    holiday: {
-      before: [
-        ['📞','Caller dials','Sales East · ext. 1200'],
-        ['🔊','Welcome greeting','"Welcome to Sales East…"'],
-        ['⏳','Hold queue','Up to 5 min wait'],
-        ['👤','Agent answers','Available agent']
-      ],
-      after: [
-        ['📞','Caller dials','Sales East · ext. 1200', false],
-        ['🔊','Holiday closed message','"We\'re closed Dec 25–Jan 1…"', true],
-        ['📬','Leave voicemail','After message plays', true]
-      ]
-    },
-    recording: {
-      before: [
-        ['📞','Caller dials','Call connects'],
-        ['🔊','Welcome greeting','Plays normally'],
-        ['⏳','Hold queue','Waiting for agent'],
-        ['👤','Agent answers','No recording']
-      ],
-      after: [
-        ['📞','Caller dials','Call connects', false],
-        ['📣','Recording notice','"This call may be recorded…"', true],
-        ['⏳','Hold queue','Waiting for agent', false],
-        ['👤','Agent answers','Call recorded ⏺', true]
-      ]
-    },
-    greeting: {
-      before: [
-        ['📞','Caller dials','Connects to queue'],
-        ['🔊','Old greeting plays','welcome_standard.mp3'],
-        ['⏳','Hold queue','Waiting'],
-        ['👤','Agent answers','']
-      ],
-      after: [
-        ['📞','Caller dials','Connects to queue', false],
-        ['🔊','New greeting plays','Updated branded message', true],
-        ['⏳','Hold queue','Waiting', false],
-        ['👤','Agent answers','', false]
-      ]
-    },
-    routing: {
-      before: [
-        ['📞','Caller dials','Connects'],
-        ['🔀','First available','Any available agent'],
-        ['⏳','Queue timeout','5 min → voicemail'],
-        ['👤','Agent answers','']
-      ],
-      after: [
-        ['📞','Caller dials','Connects', false],
-        ['🔀','Round robin routing','Evenly distributed', true],
-        ['⏳','Queue timeout','2 min → Tier 2 overflow', true],
-        ['👤','Agent answers','', false]
-      ]
-    },
-    emergency: {
-      before: [
-        ['📞','Caller dials','FL Sales East'],
-        ['🔊','Standard greeting','"Welcome to Sales East…"'],
-        ['⏳','FL queue','Wait for FL agent'],
-        ['👤','FL agent answers','']
-      ],
-      after: [
-        ['📞','Caller dials','FL Sales East', false],
-        ['🔊','Emergency message','"Due to the hurricane…"', true],
-        ['↗','Rerouted to TX backup','Austin contact center', true],
-        ['👤','TX agent answers','Backup coverage', true]
-      ]
-    },
-    generic: {
-      before: [
-        ['📞','Caller dials','Connects'],
-        ['🔊','Current settings','Apply normally'],
-        ['⏳','Queue','Wait for agent'],
-        ['👤','Agent answers','']
-      ],
-      after: [
-        ['📞','Caller dials','Connects', false],
-        ['⚙','Updated settings','New config applies', true],
-        ['⏳','Queue','Wait for agent', false],
-        ['👤','Agent answers','', false]
-      ]
-    }
+  // ── Call simulation player ──
+  const CALL_SIM_STEPS = {
+    holiday: [
+      { icon:'📞', label:'Caller dials ext. 1200', detail:'Connecting to Sales East…', ms:0 },
+      { icon:'🔊', label:'Holiday greeting plays', detail:'"We\'re closed Dec 25–Jan 1. Please call back after the holidays."', speaking:true, ms:1100 },
+      { icon:'📬', label:'Voicemail option offered', detail:'Caller can press 1 to leave a message', ms:2800 },
+      { icon:'✅', label:'Call handled', detail:'Voicemail recorded · team notification sent', ms:4000 }
+    ],
+    recording: [
+      { icon:'📞', label:'Caller dials', detail:'Connecting…', ms:0 },
+      { icon:'📣', label:'Recording notice plays', detail:'"This call may be recorded for quality and training purposes."', speaking:true, ms:1000 },
+      { icon:'⏳', label:'Caller enters queue', detail:'Estimated wait: 2 minutes', ms:2400 },
+      { icon:'👤', label:'Agent answers', detail:'Call is being recorded ⏺', ms:3700 }
+    ],
+    greeting: [
+      { icon:'📞', label:'Caller dials', detail:'Connecting to queue…', ms:0 },
+      { icon:'🔊', label:'New branded greeting plays', detail:'"Thank you for calling. Our team is ready to assist you."', speaking:true, ms:1000 },
+      { icon:'⏳', label:'Caller enters queue', detail:'Waiting for next available agent…', ms:2600 },
+      { icon:'👤', label:'Agent answers', detail:'Call connected', ms:3900 }
+    ],
+    routing: [
+      { icon:'📞', label:'Caller dials', detail:'Connecting…', ms:0 },
+      { icon:'🔊', label:'Welcome greeting plays', detail:'"Welcome, please hold for the next agent."', speaking:true, ms:900 },
+      { icon:'🔀', label:'Round robin assigns agent', detail:'Distributed to least-recent available agent', ms:2200 },
+      { icon:'👤', label:'Agent answers', detail:'Balanced distribution applied', ms:3400 }
+    ],
+    emergency: [
+      { icon:'📞', label:'Caller dials FL Sales East', detail:'Connecting…', ms:0 },
+      { icon:'🔊', label:'Emergency message plays', detail:'"Due to severe weather, we\'re operating through our backup team. Thank you for your patience."', speaking:true, ms:900 },
+      { icon:'↗', label:'Call rerouted to TX backup', detail:'Austin contact center — backup team standing by', ms:2600 },
+      { icon:'👤', label:'TX agent answers', detail:'Emergency coverage active', ms:3900 }
+    ],
+    generic: [
+      { icon:'📞', label:'Caller dials', detail:'Connecting…', ms:0 },
+      { icon:'🔊', label:'Greeting plays', detail:'Updated message heard by caller', speaking:true, ms:1000 },
+      { icon:'⏳', label:'Queue', detail:'Waiting for agent…', ms:2400 },
+      { icon:'👤', label:'Agent answers', detail:'Call handled with updated settings', ms:3600 }
+    ]
   };
 
   let callSimType = 'generic';
+  let simRunning = false;
 
-  function renderCallSim(type) {
-    const data = CALL_SIM[type] || CALL_SIM.generic;
-    const beforeEl = document.getElementById('csimBefore');
-    const afterEl  = document.getElementById('csimAfter');
-    if (!beforeEl || !afterEl) return;
+  function runCallSim() {
+    if (simRunning) return;
+    simRunning = true;
 
-    function renderSteps(steps, container) {
-      container.innerHTML = '';
-      steps.forEach((s, i) => {
-        const changed = s[3] === true;
-        const div = document.createElement('div');
-        div.className = 'csim-step';
-        div.innerHTML = `
-          <div class="csim-icon-wrap${changed ? ' changed' : ''}"><span>${s[0]}</span></div>
-          <div class="csim-content">
-            <div class="csim-label${changed ? ' changed' : ''}">${s[1]}</div>
-            ${s[2] ? `<div class="csim-detail">${s[2]}</div>` : ''}
-          </div>`;
-        container.appendChild(div);
-        if (i < steps.length - 1) {
-          const arrow = document.createElement('div');
-          arrow.className = 'csim-arrow';
-          arrow.textContent = '↓';
-          container.appendChild(arrow);
-        }
-      });
-    }
+    const steps = CALL_SIM_STEPS[callSimType] || CALL_SIM_STEPS.generic;
+    const listEl = document.getElementById('csimStepsList');
+    const completeEl = document.getElementById('csimComplete');
+    const playBtn = document.getElementById('csimPlayBtn');
+    const idleLabel = document.getElementById('csimIdleLabel');
 
-    renderSteps(data.before, beforeEl);
-    renderSteps(data.after, afterEl);
+    if (listEl) listEl.innerHTML = '';
+    if (completeEl) completeEl.style.display = 'none';
+    if (playBtn) playBtn.disabled = true;
+    if (idleLabel) idleLabel.style.display = 'none';
+
+    const stepEls = steps.map(s => {
+      const div = document.createElement('div');
+      div.className = 'csim-live-step';
+      div.innerHTML = `
+        <div class="csim-live-icon"><span>${s.icon}</span></div>
+        <div class="csim-live-body">
+          <div class="csim-live-label">${s.label}</div>
+          <div class="csim-live-detail${s.speaking ? ' speaking' : ''}">${s.detail}</div>
+        </div>`;
+      if (listEl) listEl.appendChild(div);
+      return div;
+    });
+
+    steps.forEach((s, i) => {
+      setTimeout(() => {
+        const el = stepEls[i];
+        el.classList.add('appear');
+        el.querySelector('.csim-live-icon').className = 'csim-live-icon active';
+        if (i > 0) stepEls[i-1].querySelector('.csim-live-icon').className = 'csim-live-icon done';
+        document.getElementById('aipBody').scrollTop = 9999;
+      }, s.ms);
+    });
+
+    const finishMs = steps[steps.length-1].ms + 1300;
+    setTimeout(() => {
+      if (stepEls.length) stepEls[stepEls.length-1].querySelector('.csim-live-icon').className = 'csim-live-icon done';
+      if (completeEl) completeEl.style.display = 'flex';
+      if (playBtn) playBtn.disabled = false;
+      simRunning = false;
+      document.getElementById('aipBody').scrollTop = 9999;
+    }, finishMs);
+  }
+
+  function resetCallSim() {
+    const listEl = document.getElementById('csimStepsList');
+    const completeEl = document.getElementById('csimComplete');
+    const idleLabel = document.getElementById('csimIdleLabel');
+    if (listEl) listEl.innerHTML = '';
+    if (completeEl) completeEl.style.display = 'none';
+    if (idleLabel) idleLabel.style.display = '';
+    simRunning = false;
   }
 
   // ── Greeting method picker ──
