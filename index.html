@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Admin — Dialpad Contact Centers</title>
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C52FF'/%3E%3Cpath d='M16 4Q17.8 12.2 24 16Q17.8 19.8 16 28Q14.2 19.8 8 16Q14.2 12.2 16 4Z' fill='white'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%237C52FF'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='18 19 56 56'%3E%3Crect x='18' y='19' width='56' height='56' rx='10' fill='%23FFFFFF'/%3E%3Cpath d='M67.3113 44.9586C67.9208 45.0949 68.0417 46.0897 67.4718 46.3489C56.4717 50.0934 47.8132 59.6668 43.2922 72.411C43.0448 73.0289 41.9593 72.8798 41.8573 72.2204C40.3108 62.2251 33.405 54.2445 24.5086 52.091C23.9191 51.9483 23.8077 51.0222 24.3565 50.76C35.6512 46.1128 44.1398 36.5799 48.0621 24.4006C48.3071 23.7651 49.4906 23.9256 49.5913 24.6007C51.112 34.7954 58.2031 42.9218 67.3113 44.9586Z' fill='%237C52FF'/%3E%3C/svg%3E">
 
   <meta name="title" content="AI Admin — Dialpad Contact Centers">
   <meta name="description" content="Prototype: Dialpad AI Admin lets you bulk-manage all your contact centers with a single natural-language command.">
@@ -1221,7 +1221,7 @@
 
           <div class="aip-sec-label">Greetings &amp; Audio <span class="phase-pip pip-2">Phase 2</span></div>
           <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Replace COVID temporary greeting with standard welcome on all affected CCs')">Replace COVID greeting</div>
+            <div class="aip-chip" onclick="aipFill('Replace outdated greetings with updated standard welcome on all affected CCs')">Replace outdated greetings</div>
             <div class="aip-chip" onclick="aipFill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">EMEA spring promo MP3</div>
             <div class="aip-chip" onclick="aipFill('Add a voicemail greeting to all 8 CCs that are missing one')">Add voicemail greeting</div>
           </div>
@@ -1475,7 +1475,7 @@
           </div>
           <div class="recent-row">
             <span class="recent-icon">🔊</span>
-            <div class="recent-body"><div class="recent-action">Replaced COVID greeting with standard welcome · 3 CCs</div><div class="recent-meta">Mar 31, 2026 · by you</div></div>
+            <div class="recent-body"><div class="recent-action">Replaced outdated greeting with standard welcome · 3 CCs</div><div class="recent-meta">Mar 31, 2026 · by you</div></div>
             <span class="recent-status rs-done">Done</span>
           </div>
           <div class="recent-row">
@@ -1847,14 +1847,14 @@
       g.textContent = 'Cloning template to 6 CCs · dates shifted';
       dt.textContent = 'Preview — 6 contact centers';
       setDiffVals('Closed Oct 13'); setDiffFrom('Not set');
-    } else if (c.includes('covid') || (c.includes('replace') && c.includes('greeting'))) {
-      t.innerHTML = '3 CCs using <span class="e-code">COVID temporary hours greeting</span>';
+    } else if (c.includes('replace') && c.includes('greeting')) {
+      t.innerHTML = '3 CCs using <span class="e-code">outdated temporary greeting</span>';
       w.textContent = 'Immediate / permanent';
-      ch.innerHTML = '<span class="e-code">covid_temp_greeting.mp3</span> → <span class="e-code">standard_welcome.mp3</span>';
+      ch.innerHTML = '<span class="e-code">temp_greeting.mp3</span> → <span class="e-code">standard_welcome.mp3</span>';
       g.innerHTML = '<strong>Phase 2</strong> — requires greetings API';
       dt.textContent = 'Preview — 3 contact centers';
       step2.textContent = 'Detecting outdated greetings…'; step3.textContent = 'Staging MP3 swap…';
-      setDiffVals('standard_welcome.mp3'); setDiffFrom('covid_temp.mp3');
+      setDiffVals('standard_welcome.mp3'); setDiffFrom('temp_greeting.mp3');
     } else if (c.includes('emea') && (c.includes('mp3') || c.includes('greeting') || c.includes('spring'))) {
       t.innerHTML = '4 CCs matching <span class="e-code">EMEA sales queues</span>';
       w.textContent = 'After-hours slot only';
