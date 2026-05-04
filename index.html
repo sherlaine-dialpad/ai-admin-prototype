@@ -358,6 +358,34 @@
     .aip-chip-em { font-size: 12px; font-weight: 500; background: white; color: var(--text-1); border: 1px solid var(--emergency-border); border-radius: 100px; padding: 4px 10px; cursor: pointer; transition: background .1s, border-color .1s; white-space: nowrap; }
     .aip-chip-em:hover { background: var(--emergency-surface); border-color: var(--emergency); }
 
+    /* ── Proactive AI insight card ── */
+    .aip-proactive-card { display: flex; gap: 11px; background: var(--info-surface); border: 1px solid var(--info-border); border-radius: 8px; padding: 13px 14px; margin-bottom: 14px; }
+    .aip-proactive-icon { font-size: 15px; flex-shrink: 0; color: var(--info); line-height: 1.2; margin-top: 1px; }
+    .aip-proactive-body { flex: 1; min-width: 0; }
+    .aip-proactive-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); line-height: 1.3; margin-bottom: 5px; }
+    .aip-proactive-desc { font-size: var(--fs-xs); color: var(--text-2); line-height: 1.5; margin-bottom: 10px; }
+    .aip-proactive-actions { display: flex; gap: 7px; }
+    .aip-proactive-cta { font-family: var(--font); font-size: 12px; font-weight: 600; background: var(--info); color: white; border: none; border-radius: 6px; padding: 5px 11px; cursor: pointer; transition: opacity .1s; }
+    .aip-proactive-cta:hover { opacity: .88; }
+    .aip-proactive-ghost { font-family: var(--font); font-size: 12px; font-weight: 500; background: transparent; color: var(--text-2); border: 1px solid var(--border-md); border-radius: 6px; padding: 4px 11px; cursor: pointer; transition: background .1s; }
+    .aip-proactive-ghost:hover { background: var(--hover-bg); }
+
+    /* ── Quick actions dropdown ── */
+    .aip-qa-wrap { position: relative; margin-bottom: 14px; }
+    .aip-qa-btn { font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--text-1); background: var(--surface); border: 1px solid var(--border-md); border-radius: 7px; padding: 7px 11px; cursor: pointer; display: flex; align-items: center; gap: 7px; width: 100%; transition: border-color .15s, box-shadow .15s; }
+    .aip-qa-btn:hover { border-color: var(--purple-border); box-shadow: 0 0 0 3px var(--purple-surface); }
+    .aip-qa-chevron { margin-left: auto; color: var(--text-3); transition: transform .15s; }
+    .aip-qa-btn.open .aip-qa-chevron { transform: rotate(180deg); }
+    .aip-qa-menu { display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--border-md); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.1); z-index: 200; max-height: 340px; overflow-y: auto; padding: 6px 0; }
+    .aip-qa-menu.open { display: block; }
+    .aip-qa-group { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); padding: 8px 13px 3px; }
+    .aip-qa-group-em { color: var(--emergency); }
+    .aip-qa-item { font-size: 13px; font-weight: 400; color: var(--text-1); padding: 6px 13px; cursor: pointer; transition: background .1s; }
+    .aip-qa-item:hover { background: var(--hover-bg); }
+    .aip-qa-item-em { color: var(--emergency); }
+    .aip-qa-item-em:hover { background: var(--emergency-surface); }
+    .aip-qa-divider { border: none; border-top: 1px solid var(--border); margin: 5px 0; }
+
     /* ── Emergency activation plan card ── */
     .emergency-plan { border: 1.5px solid var(--emergency-border); border-radius: 8px; overflow: hidden; }
     .ep-header { padding: 10px 13px 9px; background: var(--emergency-surface); border-bottom: 1px solid var(--emergency-border); }
@@ -652,70 +680,6 @@
           </div>
         </div>
 
-        <!-- Stats -->
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-label">Total Contact Centers</div>
-            <div class="stat-val">47</div>
-            <div class="stat-sub">NA · EMEA · APAC</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Recording Off</div>
-            <div class="stat-val danger">23</div>
-            <div class="stat-ai">✦ Compliance risk</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Missing Holiday Hours</div>
-            <div class="stat-val warn">11</div>
-            <div class="stat-ai">✦ Review needed</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Missing Greeting</div>
-            <div class="stat-val warn">8</div>
-            <div class="stat-ai">✦ Review needed</div>
-          </div>
-        </div>
-
-        <!-- Quick Bulk Actions -->
-        <div class="section-label">Quick Bulk Actions</div>
-        <div class="quick-grid">
-          <div class="qa-card" onclick="aipFill('Update greetings across all contact centers — set welcome, after-hours, and holiday messages')">
-            <div class="qa-icon">🔊</div>
-            <div class="qa-title">Update Greetings</div>
-            <div class="qa-desc">Welcome, after-hours, and holiday messages</div>
-            <div class="qa-footer">
-              <span class="qa-count warn">8 missing</span>
-              <span class="qa-arrow">Go →</span>
-            </div>
-          </div>
-          <div class="qa-card" onclick="aipFill('Apply holiday schedule to all contact centers — close Dec 25 and Jan 1 for NA, and apply relevant dates for EMEA and APAC')">
-            <div class="qa-icon">📅</div>
-            <div class="qa-title">Holiday Schedule</div>
-            <div class="qa-desc">Apply holiday closures across all CCs</div>
-            <div class="qa-footer">
-              <span class="qa-count warn">11 not set</span>
-              <span class="qa-arrow">Go →</span>
-            </div>
-          </div>
-          <div class="qa-card" onclick="aipFill('Enable automatic call recording on all contact centers that have it disabled')">
-            <div class="qa-icon">⏺</div>
-            <div class="qa-title">Enable Recording</div>
-            <div class="qa-desc">Turn on auto recording across all CCs</div>
-            <div class="qa-footer">
-              <span class="qa-count warn">23 off</span>
-              <span class="qa-arrow">Go →</span>
-            </div>
-          </div>
-          <div class="qa-card" onclick="aipFill('Update call routing for all contact centers — set overflow, queue timeout, and after-hours routing rules')">
-            <div class="qa-icon">↗</div>
-            <div class="qa-title">Update Routing</div>
-            <div class="qa-desc">Queue rules, overflow, after-hours routing</div>
-            <div class="qa-footer">
-              <span class="qa-count neutral">all CCs</span>
-              <span class="qa-arrow">Go →</span>
-            </div>
-          </div>
-        </div>
 
         <!-- Bulk action bar (appears on selection) -->
         <div class="bulk-bar" id="bulkBar">
@@ -749,9 +713,6 @@
                 <th><input type="checkbox" id="masterCb" onchange="toggleAllMain(this)"></th>
                 <th>Contact Center</th>
                 <th>Region</th>
-                <th>Recording</th>
-                <th>Holiday Hours</th>
-                <th>Greeting</th>
                 <th>Issues</th>
                 <th></th>
               </tr>
@@ -761,9 +722,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="showView('saleseast')">Sales East</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">NA</span></td>
-                <td><span class="badge badge-danger">Off</span></td>
-                <td><span class="badge badge-warn">Missing</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
                 <td><span class="badge badge-danger">2 issues</span></td>
                 <td><button class="btn-fix" onclick="aipSubmit('Fix all issues for Sales East: enable call recording and set Dec 25 and Jan 1 holiday closures', false)">Fix →</button></td>
               </tr>
@@ -771,9 +729,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for Support West contact center')">Support West</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">NA</span></td>
-                <td><span class="badge badge-danger">Off</span></td>
-                <td><span class="badge badge-warn">Missing</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
                 <td><span class="badge badge-danger">2 issues</span></td>
                 <td><button class="btn-fix" onclick="aipSubmit('Fix all issues for Support West: enable call recording and set Dec 25 and Jan 1 holiday closures', false)">Fix →</button></td>
               </tr>
@@ -781,9 +736,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for Enterprise Desk contact center')">Enterprise Desk</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">NA</span></td>
-                <td><span class="badge badge-danger">Off</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
                 <td><span class="badge badge-warn">1 issue</span></td>
                 <td><button class="btn-fix" onclick="aipSubmit('Enable call recording for Enterprise Desk contact center', false)">Fix →</button></td>
               </tr>
@@ -791,9 +743,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for Billing Team contact center')">Billing Team</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">NA</span></td>
-                <td><span class="badge badge-ok">On</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
                 <td><span class="badge badge-neutral" style="color:var(--text-3)">All good</span></td>
                 <td></td>
               </tr>
@@ -801,9 +750,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for Canada Support contact center')">Canada Support</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">NA</span></td>
-                <td><span class="badge badge-danger">Off</span></td>
-                <td><span class="badge badge-warn">Missing</span></td>
-                <td><span class="badge badge-warn">Missing</span></td>
                 <td><span class="badge badge-danger">3 issues</span></td>
                 <td><button class="btn-fix" onclick="aipSubmit('Fix all issues for Canada Support: enable recording, add Dec 25 and Jan 1 holiday hours, and add after-hours greeting', false)">Fix →</button></td>
               </tr>
@@ -811,9 +757,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for EMEA Sales contact center')">EMEA Sales</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">EU</span></td>
-                <td><span class="badge badge-danger">Off</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
                 <td><span class="badge badge-warn">1 issue</span></td>
                 <td><button class="btn-fix" onclick="aipSubmit('Enable call recording for EMEA Sales contact center — note EU GDPR compliance requirements', false)">Fix →</button></td>
               </tr>
@@ -821,9 +764,6 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for APAC Tech Support contact center')">APAC Tech Support</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">APAC</span></td>
-                <td><span class="badge badge-ok">On</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
-                <td><span class="badge badge-ok">Set</span></td>
                 <td><span class="badge badge-neutral" style="color:var(--text-3)">All good</span></td>
                 <td></td>
               </tr>
@@ -831,14 +771,11 @@
                 <td><input type="checkbox" class="main-cb" onchange="updateSelCount()"></td>
                 <td><span class="cc-link" onclick="aipFill('Show settings for UK Support contact center')">UK Support</span></td>
                 <td><span style="font-size:11px;color:var(--text-3)">EU</span></td>
-                <td><span class="badge badge-ok">On</span></td>
-                <td><span class="badge badge-warn">Missing</span></td>
-                <td><span class="badge badge-warn">Missing</span></td>
                 <td><span class="badge badge-warn">2 issues</span></td>
                 <td><button class="btn-fix" onclick="aipSubmit('Fix UK Support contact center: add bank holiday hours and add an after-hours greeting', false)">Fix →</button></td>
               </tr>
               <tr>
-                <td colspan="8" style="padding:10px 13px;color:var(--text-3);font-size:13px">
+                <td colspan="5" style="padding:10px 13px;color:var(--text-3);font-size:13px">
                   + 39 more contact centers &middot; <span style="color:var(--purple);cursor:pointer;font-weight:500" onclick="aipFill('Show me all contact centers with issues detected')">show all with issues →</span>
                 </td>
               </tr>
@@ -1170,82 +1107,68 @@
       <!-- ASK AI tab -->
       <div id="apanel-cmd">
 
-        <!-- IDLE: proactive insights + chip suggestions -->
+        <!-- IDLE: single proactive insight + quick actions dropdown -->
         <div id="aipIdle" class="aip-suggestions">
 
-          <!-- Emergency scenarios -->
-          <div class="aip-emergency-wrap">
-            <div class="aip-emergency-hd">
-              <span class="aip-emergency-label">Emergency &amp; Disaster</span>
-              <span class="aip-emergency-pill">Try it</span>
-            </div>
-            <div class="aip-chips" style="gap:5px">
-              <div class="aip-chip-em" onclick="aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup CCs, and close offices for the next 72 hours')">Hurricane mode · FL CCs</div>
-              <div class="aip-chip-em" onclick="aipFill('Deploy emergency IVR message to all contact centers: we are operating at reduced capacity due to severe weather, please hold or call back later')">Emergency IVR · all CCs</div>
-              <div class="aip-chip-em" onclick="aipFill('Restore all Florida contact centers to normal operations after hurricane — standard hours, routing, and greetings')">Restore normal · FL CCs</div>
-              <div class="aip-chip-em" onclick="aipFill('Reroute all Florida inbound calls to Austin Texas backup contact centers until further notice')">Disaster routing · TX backup</div>
-            </div>
-          </div>
-
-          <!-- Proactive issues block -->
-          <div class="aip-insights">
-            <div class="aip-insights-hd">✦ I noticed 3 things</div>
-            <div class="aip-issue" onclick="showView('allccs'); highlightRows('recording'); aipSubmit('Enable automatic call recording on all 23 contact centers that have it disabled', false)">
-              <div class="aip-issue-text"><div class="aip-issue-dot danger"></div><span>23 CCs have call recording off</span></div>
-              <span class="aip-fix">Fix →</span>
-            </div>
-            <div class="aip-issue" onclick="showView('allccs'); highlightRows('holiday'); aipSubmit('Set all NA contact centers closed on Dec 25 and Jan 1', false)">
-              <div class="aip-issue-text"><div class="aip-issue-dot warn"></div><span>11 CCs missing holiday hours</span></div>
-              <span class="aip-fix">Fix →</span>
-            </div>
-            <div class="aip-issue" onclick="showView('allccs'); highlightRows('greeting'); aipSubmit('Add after-hours greeting to the 8 contact centers that are missing one', false)">
-              <div class="aip-issue-text"><div class="aip-issue-dot warn"></div><span>8 CCs missing after-hours greeting</span></div>
-              <span class="aip-fix">Fix →</span>
+          <!-- Proactive AI insight card -->
+          <div class="aip-proactive-card">
+            <div class="aip-proactive-icon">✦</div>
+            <div class="aip-proactive-body">
+              <div class="aip-proactive-title">23 contact centers have recording off</div>
+              <div class="aip-proactive-desc">This creates a compliance risk across your NA and EU teams. I can enable automatic recording on all affected CCs in one step.</div>
+              <div class="aip-proactive-actions">
+                <button class="aip-proactive-cta" onclick="showView('allccs'); highlightRows('recording'); aipSubmit('Enable automatic call recording on all 23 contact centers that have it disabled', false)">Fix now →</button>
+                <button class="aip-proactive-ghost" onclick="showView('allccs'); highlightRows('recording')">Show me</button>
+              </div>
             </div>
           </div>
 
-          <!-- Suggestion chips by category -->
-          <div class="aip-sec-label">Hours &amp; Holidays <span class="phase-pip pip-1">Phase 1</span></div>
-          <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')">Dec 25 + Jan 1 · NA</div>
-            <div class="aip-chip" onclick="aipFill('Shorten Friday hours by 1hr for NA support centers next quarter')">Shorten Friday hours</div>
-            <div class="aip-chip" onclick="aipFill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')">Clone US → CA Thanksgiving</div>
+          <!-- Quick actions dropdown -->
+          <div class="aip-qa-wrap">
+            <button class="aip-qa-btn" onclick="toggleQADropdown(event)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+              Quick actions
+              <svg class="aip-qa-chevron" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path fill-rule="evenodd" d="M2.22 4.47a.75.75 0 0 1 1.06 0L6 7.19l2.72-2.72a.75.75 0 1 1 1.06 1.06L6.53 8.78a.75.75 0 0 1-1.06 0L2.22 5.53a.75.75 0 0 1 0-1.06Z"/></svg>
+            </button>
+            <div class="aip-qa-menu" id="qaMenu">
+              <div class="aip-qa-group">Hours &amp; Holidays</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')">Set NA holiday closures · Dec 25 + Jan 1</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Shorten Friday hours by 1hr for NA support centers next quarter')">Shorten Friday hours · NA support</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')">Clone US → CA Thanksgiving hours</div>
+
+              <div class="aip-qa-group">Call Recording</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable automatic call recording on all 23 contact centers that have it disabled')">Enable recording · 23 CCs with issues</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable automatic call recording on all 400+ contact centers')">Enable recording · all CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable recording · EU GDPR</div>
+
+              <div class="aip-qa-group">Greetings &amp; Audio</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Add after-hours greeting to the 8 contact centers that are missing one')">Add missing greetings · 8 CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Replace outdated greetings with updated standard welcome on all affected CCs')">Replace outdated greetings · all affected</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">Update EMEA greeting · spring promo</div>
+
+              <div class="aip-qa-group">Call Routing</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Change routing method to round robin for all NA contact centers')">Set round robin routing · NA</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set overflow routing to voicemail for all CCs when no agents are available')">Set overflow → voicemail · all CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')">APAC queue timeout + overflow</div>
+
+              <div class="aip-qa-group">Agent Management</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Remove inactive agents from all contact centers — last active 60+ days')">Remove inactive agents · all CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up time 90s · all CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">Add agents · EMEA CCs</div>
+
+              <div class="aip-qa-group">AI Features</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable Dialpad AI · all CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable PII redaction on all contact center transcripts and recordings')">Enable PII redaction · all</div>
+
+              <div class="aip-qa-divider"></div>
+              <div class="aip-qa-group aip-qa-group-em">Emergency &amp; Disaster</div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup CCs, and close offices for the next 72 hours')">Hurricane mode · FL contact centers</div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Deploy emergency IVR message to all contact centers: we are operating at reduced capacity due to severe weather, please hold or call back later')">Emergency IVR · all contact centers</div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Restore all Florida contact centers to normal operations after hurricane — standard hours, routing, and greetings')">Restore normal · FL contact centers</div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Reroute all Florida inbound calls to Austin Texas backup contact centers until further notice')">Disaster routing → TX backup</div>
+            </div>
           </div>
 
-          <div class="aip-sec-label">Call Recording <span class="phase-pip pip-1">Phase 1</span></div>
-          <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Enable automatic call recording on all 23 contact centers that have it disabled')">Enable recording · 23 CCs</div>
-            <div class="aip-chip" onclick="aipFill('Enable automatic call recording on all 400+ contact centers')">Enable recording · all CCs</div>
-            <div class="aip-chip" onclick="aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable · EU GDPR</div>
-          </div>
-
-          <div class="aip-sec-label">Greetings &amp; Audio <span class="phase-pip pip-2">Phase 2</span></div>
-          <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Replace outdated greetings with updated standard welcome on all affected CCs')">Replace outdated greetings</div>
-            <div class="aip-chip" onclick="aipFill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">EMEA spring promo MP3</div>
-            <div class="aip-chip" onclick="aipFill('Add a voicemail greeting to all 8 CCs that are missing one')">Add voicemail greeting</div>
-          </div>
-
-          <div class="aip-sec-label">Call Routing <span class="phase-pip pip-2">Phase 2</span></div>
-          <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Change routing method to round robin for all NA contact centers')">Round robin · NA</div>
-            <div class="aip-chip" onclick="aipFill('Set overflow routing to voicemail for all CCs when no agents are available')">Overflow → voicemail</div>
-            <div class="aip-chip" onclick="aipFill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')">APAC timeout + overflow</div>
-          </div>
-
-          <div class="aip-sec-label">Agent Management <span class="phase-pip pip-2">Phase 2</span></div>
-          <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">Add agents · EMEA</div>
-            <div class="aip-chip" onclick="aipFill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up 90s</div>
-            <div class="aip-chip" onclick="aipFill('Remove inactive agents from all contact centers — last active 60+ days')">Remove inactive agents</div>
-          </div>
-
-          <div class="aip-sec-label">AI Features <span class="phase-pip pip-3">Phase 3</span></div>
-          <div class="aip-chips">
-            <div class="aip-chip" onclick="aipFill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable AI · all CCs</div>
-            <div class="aip-chip" onclick="aipFill('Enable PII redaction on all contact center transcripts and recordings')">PII redaction · all</div>
-            <div class="aip-chip" onclick="aipFill('Enable spam call blocking at high sensitivity on all contact centers')">Spam blocking · all</div>
-          </div>
         </div>
 
         <!-- CHAT: user message → thinking → response -->
@@ -1539,6 +1462,26 @@
     document.getElementById('aipInput').value = text;
     document.getElementById('aipInput').focus();
   }
+
+  // ── Quick actions dropdown ──
+  function toggleQADropdown(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('qaMenu');
+    const btn = e.currentTarget;
+    const isOpen = menu.classList.contains('open');
+    menu.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+  }
+  function closeQADropdown() {
+    const menu = document.getElementById('qaMenu');
+    if (!menu) return;
+    menu.classList.remove('open');
+    const btn = document.querySelector('.aip-qa-btn');
+    if (btn) btn.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.aip-qa-wrap')) closeQADropdown();
+  });
 
   // ── Run from input ──
   function aipRun() {
