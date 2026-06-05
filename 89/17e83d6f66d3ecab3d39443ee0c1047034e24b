@@ -1,0 +1,21 @@
+docs/superpowers/specs/2026-06-05-cc-bulk-admin-templates-design.md
+  s_6394e98370b2ae::t_38a4753c9ce9c6 53
+  s_6394e98370b2ae::t_ce765916a64183 59
+  s_6394e98370b2ae::t_ec5b44ee4dc096 1-52,54-58,60-254
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "8917e83d6f66d3ecab3d39443ee0c1047034e24b",
+  "prompts": {},
+  "sessions": {
+    "s_6394e98370b2ae": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "23feb498-3bbc-418e-adf5-6b069866ec52",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Sherlaine Lau <sherlaine.lau@dialpad.com>"
+    }
+  }
+}
