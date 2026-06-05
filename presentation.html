@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Admin — CC Bulk Templates · EM Design Review</title>
+<style>
+  :root {
+    --purple: #7C52FF; --purple-dark: #5023DD; --purple-light: #F5F0FF; --purple-border: #D3BCFF;
+    --green: #008E52; --green-light: #F6FCF5; --green-border: #D1FF76;
+    --yellow: #815008; --yellow-light: #FFFAE5; --yellow-border: #FFDB80;
+    --red: #D90A45; --red-light: #FFF2F3; --red-border: #FF716F;
+    --text-1: #1C1C1C; --text-2: #3A3A3A; --text-3: #535353;
+    --border: rgba(0,0,0,.11); --surface: #fff; --bg: #F9F9F9;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); font-size: 14px; background: var(--bg); color: var(--text-1); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  /* ── Nav ── */
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(249,249,249,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; align-items: center; height: 52px; gap: 0; }
+  .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-1); margin-right: 24px; }
+  .nav-logo svg { width: 22px; height: 22px; }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-link { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; text-decoration: none; transition: background .1s, color .1s; white-space: nowrap; }
+  .nav-link:hover { background: rgba(0,0,0,.06); color: var(--text-1); }
+  .nav-link.active { background: var(--purple-light); color: var(--purple-dark); }
+  .nav-tag { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .tag-pill { background: var(--purple-light); color: var(--purple-dark); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+  /* ── Page sections ── */
+  .page { max-width: 960px; margin: 0 auto; padding: 48px 32px; }
+  .page + .page { border-top: 1px solid var(--border); }
+
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 64px 32px 48px; max-width: 780px; margin: 0 auto; }
+  .hero-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--purple-dark); margin-bottom: 14px; }
+  .hero-title { font-size: 36px; font-weight: 800; line-height: 1.15; margin-bottom: 14px; letter-spacing: -.02em; }
+  .hero-title span { color: var(--purple); }
+  .hero-sub { font-size: 16px; color: var(--text-3); max-width: 600px; margin: 0 auto 28px; line-height: 1.6; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .hero-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: var(--text-2); }
+
+  /* ── Section headers ── */
+  .sec-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--purple); margin-bottom: 6px; }
+  .sec-title { font-size: 24px; font-weight: 800; letter-spacing: -.015em; margin-bottom: 6px; }
+  .sec-sub { font-size: 14px; color: var(--text-3); margin-bottom: 28px; }
+
+  /* ── Cards ── */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .card-purple { border-color: var(--purple-border); background: var(--purple-light); }
+
+  /* ── Grid helpers ── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .g-flow { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; align-items: start; gap: 0; }
+  .g-flow-arrow { display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 18px; padding-top: 22px; }
+
+  /* ── Typography ── */
+  h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); margin-bottom: 10px; }
+  .note { background: var(--purple-light); border-left: 3px solid var(--purple); border-radius: 0 6px 6px 0; padding: 8px 12px; font-size: 12px; color: var(--text-2); }
+  .warn { background: var(--yellow-light); border-left: 3px solid var(--yellow-border); border-radius: 0 6px 6px 0; padding: 8px 12px; font-size: 12px; color: var(--yellow); }
+
+  /* ── Tags / pills ── */
+  .pill { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .pill-purple { background: var(--purple-light); color: var(--purple-dark); }
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-yellow { background: var(--yellow-light); color: var(--yellow); }
+  .pill-red { background: var(--red-light); color: var(--red); }
+  .pill-gray { background: #f0f0f0; color: var(--text-3); }
+
+  /* ── Template card ── */
+  .template-card { background: var(--surface); border: 1.5px solid var(--purple-border); border-radius: 12px; padding: 16px; }
+  .t-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .t-meta { font-size: 12px; color: var(--text-3); margin-bottom: 12px; }
+  .t-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,.06); font-size: 12px; }
+  .t-row:last-child { border-bottom: none; }
+  .t-val { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+  .locked { background: var(--red-light); color: var(--red); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; }
+  .adj { background: var(--yellow-light); color: var(--yellow); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; }
+
+  /* ── Inheritance diagram ── */
+  .inherit { display: flex; flex-direction: column; align-items: center; }
+  .inherit-master { background: var(--purple-dark); color: #fff; border-radius: 8px; padding: 8px 20px; font-size: 12px; font-weight: 700; }
+  .inherit-line { width: 1px; height: 20px; background: var(--purple-border); }
+  .inherit-children { display: flex; gap: 8px; }
+  .inherit-child { border: 1.5px solid var(--purple-border); background: var(--purple-light); color: var(--purple-dark); border-radius: 8px; padding: 6px 10px; font-size: 11px; text-align: center; min-width: 88px; }
+  .inherit-child.drift { border-color: var(--red-border); background: var(--red-light); color: var(--red); }
+  .inherit-child.none { border-color: #ddd; background: #f5f5f5; color: var(--text-3); }
+
+  /* ── CC rows ── */
+  .cc-list { display: flex; flex-direction: column; gap: 5px; }
+  .cc-row { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+  .cc-row.sel { background: var(--purple-light); border-color: var(--purple-border); }
+  .cb { width: 16px; height: 16px; border-radius: 4px; background: var(--purple); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .cb-empty { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid #ccc; flex-shrink: 0; }
+
+  /* ── Bulk bar ── */
+  .bulk-bar { background: var(--purple-dark); color: #fff; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; border-radius: 8px 8px 0 0; }
+  .apply-btn { background: #fff; color: var(--purple-dark); border: none; border-radius: 6px; padding: 5px 14px; font-size: 12px; font-weight: 700; cursor: default; }
+
+  /* ── Preview ── */
+  .preview-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 14px; border-bottom: 1px solid rgba(0,0,0,.06); font-size: 12px; }
+  .preview-row:last-child { border-bottom: none; }
+  .pdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .pdot-y { background: #FFDB80; }
+  .pdot-g { background: #D1FF76; }
+  .pdot-o { background: #F9B185; }
+  .prev-val { color: var(--red); text-decoration: line-through; }
+  .next-val { color: var(--green); font-weight: 600; }
+
+  /* ── Result rows ── */
+  .result-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; border-bottom: 1px solid rgba(0,0,0,.06); font-size: 13px; }
+  .result-row:last-child { border-bottom: none; }
+
+  /* ── Screen wrapper ── */
+  .screen { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .screen-hdr { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg); }
+  .screen-hdr-title { font-size: 13px; font-weight: 600; }
+
+  /* ── Chat ── */
+  .chat-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 280px; }
+  .msg { display: flex; gap: 8px; align-items: flex-start; }
+  .msg.user { flex-direction: row-reverse; }
+  .av { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+  .av-ai { background: linear-gradient(135deg, var(--purple), var(--purple-dark)); color: #fff; }
+  .av-user { background: var(--green); color: #fff; }
+  .bubble { padding: 8px 12px; border-radius: 12px; font-size: 12px; max-width: 80%; line-height: 1.5; }
+  .bubble-ai { background: var(--purple-light); border-radius: 4px 12px 12px 12px; }
+  .bubble-user { background: var(--purple); color: #fff; border-radius: 12px 4px 12px 12px; }
+  .chat-input-row { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--border); background: var(--bg); }
+  .chat-input-box { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: var(--text-3); }
+  .send { width: 30px; height: 30px; background: var(--purple); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+
+  /* ── AI card inside chat ── */
+  .ai-card { background: var(--surface); border: 1px solid var(--purple-border); border-radius: 10px; padding: 12px; margin-top: 8px; }
+  .ai-card-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,.06); font-size: 12px; }
+  .ai-card-row:last-of-type { border-bottom: none; }
+  .ai-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .ai-btn-p { background: var(--purple); color: #fff; border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 700; cursor: default; }
+  .ai-btn-g { background: var(--purple-light); color: var(--purple-dark); border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 700; cursor: default; }
+
+  /* ── Query result ── */
+  .qr { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 8px; }
+  .qr-hdr { background: var(--bg); padding: 6px 12px; font-size: 11px; font-weight: 700; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .qr-row { display: flex; justify-content: space-between; padding: 6px 12px; border-bottom: 1px solid rgba(0,0,0,.06); font-size: 12px; }
+  .qr-row:last-child { border-bottom: none; }
+
+  /* ── Layer stack ── */
+  .layer-stack { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+  .layer { display: flex; align-items: center; gap: 12px; border-radius: 8px; padding: 10px 16px; font-size: 13px; }
+  .layer-q { font-size: 11px; font-weight: 700; color: #fff; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+  .layer-desc { font-size: 12px; color: var(--text-3); margin-left: auto; text-align: right; }
+  .layer-1 { background: var(--purple-light); border: 1px solid var(--purple-border); }
+  .layer-2 { background: var(--green-light); border: 1px solid var(--green-border); }
+  .layer-3 { background: var(--yellow-light); border: 1px solid var(--yellow-border); }
+
+  /* ── Work table ── */
+  .work-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,.06); font-size: 12px; }
+  .work-item:last-child { border-bottom: none; }
+  .eff { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
+  .eff-s { background: var(--green-light); color: var(--green); }
+  .eff-m { background: var(--yellow-light); color: var(--yellow); }
+  .eff-l { background: var(--red-light); color: var(--red); }
+
+  /* ── API table ── */
+  .api-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .api-table th { text-align: left; font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; padding: 8px 12px; border-bottom: 1px solid rgba(0,0,0,.1); background: var(--bg); }
+  .api-table td { padding: 9px 12px; border-bottom: 1px solid rgba(0,0,0,.06); vertical-align: top; }
+  .api-table tr:last-child td { border-bottom: none; }
+
+  /* ── Coverage bar ── */
+  .cov-bar { height: 10px; border-radius: 10px; background: #f0f0f0; display: flex; overflow: hidden; margin: 8px 0; }
+  .cov-g { background: var(--green); }
+  .cov-y { background: #FFDB80; }
+  .cov-r { background: #FF716F; }
+  .cov-legend { display: flex; gap: 16px; font-size: 11px; flex-wrap: wrap; }
+  .cov-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Ask box ── */
+  .ask-box { background: #1a0a4d; border-radius: 14px; padding: 24px 28px; color: #fff; }
+  .ask-title { font-size: 16px; font-weight: 800; margin-bottom: 16px; }
+  .ask-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; }
+  .ask-item:last-child { margin-bottom: 0; }
+  .ask-num { width: 24px; height: 24px; border-radius: 50%; background: var(--purple); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ask-text { color: rgba(255,255,255,.8); line-height: 1.6; }
+  .ask-text strong { color: #fff; }
+
+  /* ── Vision card ── */
+  .vision { background: linear-gradient(135deg, #1a0a4d, #2d1570); border-radius: 14px; padding: 22px 24px; color: #fff; }
+  .vision-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--purple-border); margin-bottom: 8px; }
+  .vision-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+  .vision-desc { font-size: 13px; color: rgba(255,255,255,.7); margin-bottom: 16px; line-height: 1.6; }
+  .vision-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .vision-chip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: rgba(255,255,255,.85); }
+
+  /* ── Quarter cards ── */
+  .q3-card { background: var(--purple-light); border: 1.5px solid var(--purple-border); border-radius: 12px; padding: 18px 20px; }
+  .q4-card { background: var(--bg); border: 1.5px solid #ddd; border-radius: 12px; padding: 18px 20px; }
+  .q-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--purple-dark); margin-bottom: 6px; }
+  .q-label.muted { color: #999; }
+  .q-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .q-item { display: flex; gap: 7px; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
+  .q-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ── Approach table ── */
+  .approach-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: start; padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .approach-row:last-child { border-bottom: none; }
+  .approach-row.selected { background: var(--purple-light); }
+
+  button { font-family: var(--font); }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-logo">
+    <svg viewBox="18 19 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="19" width="56" height="56" rx="10" fill="#fff"/><path d="M67.3113 44.9586C67.9208 45.0949 68.0417 46.0897 67.4718 46.3489C56.4717 50.0934 47.8132 59.6668 43.2922 72.411C43.0448 73.0289 41.9593 72.8798 41.8573 72.2204C40.3108 62.2251 33.405 54.2445 24.5086 52.091C23.9191 51.9483 23.8077 51.0222 24.3565 50.76C35.6512 46.1128 44.1398 36.5799 48.0621 24.4006C48.3071 23.7651 49.4906 23.9256 49.5913 24.6007C51.112 34.7954 58.2031 42.9218 67.3113 44.9586Z" fill="#7C52FF"/></svg>
+    AI Admin
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#overview">Overview</a>
+    <a class="nav-link" href="#template-model">1 · Template model</a>
+    <a class="nav-link" href="#bulk-apply">2 · Bulk apply</a>
+    <a class="nav-link" href="#ai-layer">3 · AI layer</a>
+    <a class="nav-link" href="#eng-delta">4 · Engineering delta</a>
+    <a class="nav-link" href="#ask">The ask</a>
+  </div>
+  <div class="nav-tag">
+    <span class="tag-pill">EM Design Review</span>
+  </div>
+</nav>
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- HERO -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="overview">
+<div class="page" style="padding-top:64px;padding-bottom:56px;">
+  <div style="max-width:720px;">
+    <div class="sec-num">AI Admin · Contact Centers</div>
+    <div class="sec-title">Template-based bulk administration</div>
+    <div class="sec-sub">Enterprise admins managing 50–500+ contact centers have no scalable way to enforce consistent settings. One policy change today requires touching each CC individually. This design fixes that.</div>
+
+    <div class="g3" style="margin-bottom:24px;">
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="font-size:28px;font-weight:800;color:var(--purple);">62%</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">of CC settings covered by existing public API — can build Q3</div>
+      </div>
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="font-size:28px;font-weight:800;color:var(--yellow);">5</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">new public API endpoints needed to reach full coverage in Q4</div>
+      </div>
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="font-size:28px;font-weight:800;color:var(--text-1);">3</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">pillars: templates + AI analytics chat + AI agent (sequenced Q3→Q4)</div>
+      </div>
+    </div>
+
+    <div class="label">Approach selected</div>
+    <div class="screen">
+      <div class="approach-row selected">
+        <span class="pill pill-purple">✅ Q3</span>
+        <div><strong>A — Template-first</strong><div style="font-size:12px;color:var(--text-3);margin-top:2px;">Master template → child CCs. AI agent + analytics layer on top as accelerators. Familiar from RingCentral — minimal ramp-up.</div></div>
+        <span style="font-size:12px;color:var(--purple-dark);font-weight:600;">Selected</span>
+      </div>
+      <div class="approach-row">
+        <span class="pill pill-gray">Q4/Q5</span>
+        <div><strong>B — AI-first (future vision)</strong><div style="font-size:12px;color:var(--text-3);margin-top:2px;">Chat is the primary model. Templates become saved prompts. Analytics and admin live in one conversation.</div></div>
+        <span style="font-size:12px;color:var(--text-3);">Future</span>
+      </div>
+      <div class="approach-row">
+        <span class="pill pill-gray">Rejected</span>
+        <div><strong>C — Settings dashboard first, AI deferred</strong><div style="font-size:12px;color:var(--text-3);margin-top:2px;">No AI in Q3. Loses the narrative the EM wants to tell.</div></div>
+        <span style="font-size:12px;color:var(--text-3);">Rejected</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- SECTION 1 — TEMPLATE MODEL -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="template-model">
+<div class="page">
+  <div class="sec-num">Section 1</div>
+  <div class="sec-title">The template model</div>
+  <div class="sec-sub">A template is a named configuration profile. Settings are either 🔒 Locked (CCs can't change it) or ✎ Adjustable (template sets the default, CC can override).</div>
+
+  <div class="g2" style="margin-bottom:20px;">
+    <!-- Template card -->
+    <div>
+      <div class="label">What a template looks like</div>
+      <div class="template-card">
+        <div class="pill pill-purple" style="margin-bottom:10px;">📋 Template</div>
+        <div class="t-name">Enterprise Sales — NA</div>
+        <div class="t-meta">14 contact centers · Last updated Jun 4 by S. Lau</div>
+        <div class="t-row"><span>Call recording</span><span class="t-val">Always on <span class="locked">🔒 Locked</span></span></div>
+        <div class="t-row"><span>Business hours</span><span class="t-val">Mon–Fri 9–5 PT <span class="locked">🔒 Locked</span></span></div>
+        <div class="t-row"><span>Holiday schedule</span><span class="t-val">US Federal <span class="locked">🔒 Locked</span></span></div>
+        <div class="t-row"><span>Call routing</span><span class="t-val">Round robin <span class="adj">✎ Adjustable</span></span></div>
+        <div class="t-row"><span>AI summaries</span><span class="t-val">Enabled <span class="adj">✎ Adjustable</span></span></div>
+        <div class="t-row"><span>CSAT survey</span><span class="t-val">Post-call <span class="locked">🔒 Locked</span></span></div>
+        <div class="t-row"><span>Overflow routing</span><span class="t-val">Voicemail <span class="adj">✎ Adjustable</span></span></div>
+      </div>
+      <div class="note" style="margin-top:10px;">🔒 Locked = CCs cannot change this. ✎ Adjustable = template sets the default but each CC can change it locally.</div>
+    </div>
+
+    <!-- Inheritance -->
+    <div>
+      <div class="label">Inheritance and drift detection</div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="inherit">
+          <div class="inherit-master">Enterprise Sales — NA template</div>
+          <div class="inherit-line"></div>
+          <div class="inherit-children">
+            <div class="inherit-child">Sales East<br><span style="font-size:10px;opacity:.7;">✓ In sync</span></div>
+            <div class="inherit-child">Sales West<br><span style="font-size:10px;opacity:.7;">✓ In sync</span></div>
+            <div class="inherit-child drift">Sales Central<br><span style="font-size:10px;">⚠ Drifted</span></div>
+            <div class="inherit-child none">LATAM Support<br><span style="font-size:10px;">No template</span></div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text-3);text-align:center;margin-top:12px;">"Drift" = a CC whose local value deviates from a Locked setting</div>
+      </div>
+
+      <div class="label">CC grid view</div>
+      <div class="cc-list">
+        <div class="cc-row"><span style="font-weight:500;flex:1;">Sales East</span><span style="font-size:11px;color:var(--text-3);margin-right:8px;">NA · 12 agents</span><span class="pill pill-green">✓ In sync</span></div>
+        <div class="cc-row"><span style="font-weight:500;flex:1;">Sales West</span><span style="font-size:11px;color:var(--text-3);margin-right:8px;">NA · 9 agents</span><span class="pill pill-green">✓ In sync</span></div>
+        <div class="cc-row" style="border-color:var(--red-border);"><span style="font-weight:500;flex:1;">Sales Central</span><span style="font-size:11px;color:var(--text-3);margin-right:8px;">NA · 7 agents</span><span class="pill pill-red">⚠ Drifted</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- SECTION 2 — BULK APPLY -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="bulk-apply">
+<div class="page">
+  <div class="sec-num">Section 2</div>
+  <div class="sec-title">Bulk apply flow</div>
+  <div class="sec-sub">3 steps. Human stays in the loop — nothing applies without an explicit confirmation.</div>
+
+  <!-- Step flow -->
+  <div class="g-flow" style="margin-bottom:28px;">
+    <div class="card card-purple">
+      <div class="pill pill-purple" style="margin-bottom:8px;">Step 1</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Select CCs</div>
+      <div style="font-size:12px;color:var(--text-3);">Pick from the grid — filter by region, template, or issue</div>
+    </div>
+    <div class="g-flow-arrow">→</div>
+    <div class="card card-purple">
+      <div class="pill pill-purple" style="margin-bottom:8px;">Step 2</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Preview changes</div>
+      <div style="font-size:12px;color:var(--text-3);">See exactly what will change per CC before applying</div>
+    </div>
+    <div class="g-flow-arrow">→</div>
+    <div class="card card-purple">
+      <div class="pill pill-purple" style="margin-bottom:8px;">Step 3</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">Confirm &amp; apply</div>
+      <div style="font-size:12px;color:var(--text-3);">Results shown immediately with an undo option</div>
+    </div>
+  </div>
+
+  <div class="g2" style="align-items:start;">
+    <!-- Step 1 + 2 combined -->
+    <div>
+      <div class="label">Step 1 — Select contact centers</div>
+      <div class="screen" style="margin-bottom:16px;">
+        <div class="bulk-bar"><span>3 selected</span><button class="apply-btn">Apply template →</button></div>
+        <div class="cc-row sel"><div class="cb"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div><span style="font-weight:500;flex:1;">Sales East</span><span class="pill pill-red">⚠ Recording off</span></div>
+        <div class="cc-row sel"><div class="cb"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div><span style="font-weight:500;flex:1;">Sales West</span><span class="pill pill-green">✓ Healthy</span></div>
+        <div class="cc-row sel"><div class="cb"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div><span style="font-weight:500;flex:1;">Sales Central</span><span class="pill pill-red">⚠ 2 issues</span></div>
+        <div class="cc-row"><div class="cb-empty"></div><span style="font-weight:500;flex:1;">LATAM Support</span><span class="pill pill-green">✓ Healthy</span></div>
+      </div>
+
+      <div class="label">Step 3 — Results</div>
+      <div class="screen">
+        <div class="screen-hdr"><span class="screen-hdr-title">✅ Template applied to 3 contact centers</span><button style="background:none;border:1px solid var(--border);color:var(--text-3);border-radius:6px;padding:3px 10px;font-size:11px;cursor:default;">Undo</button></div>
+        <div class="result-row"><span style="font-weight:500;">Sales East</span><span style="font-size:12px;color:var(--green);font-weight:600;">✓ 3 settings updated</span></div>
+        <div class="result-row"><span style="font-weight:500;">Sales West</span><span style="font-size:12px;color:var(--text-3);">Already compliant — no changes</span></div>
+        <div class="result-row"><span style="font-weight:500;">Sales Central</span><span style="font-size:12px;color:var(--yellow);font-weight:600;">⚠ 2 updated · 1 skipped</span></div>
+      </div>
+    </div>
+
+    <!-- Step 2 preview -->
+    <div>
+      <div class="label">Step 2 — Preview changes for Sales East</div>
+      <div class="screen">
+        <div class="screen-hdr"><span class="screen-hdr-title">Applying "Enterprise Sales — NA"</span><span style="font-size:12px;color:var(--text-3);">3 CCs · 8 changes</span></div>
+        <div class="preview-row"><div class="pdot pdot-y"></div><div><div style="font-weight:500;font-size:12px;">Call recording</div><div style="font-size:12px;"><span class="prev-val">Off</span> → <span class="next-val">Always on 🔒</span></div></div></div>
+        <div class="preview-row"><div class="pdot pdot-y"></div><div><div style="font-weight:500;font-size:12px;">Business hours</div><div style="font-size:12px;"><span class="prev-val">24/7</span> → <span class="next-val">Mon–Fri 9–5 PT 🔒</span></div></div></div>
+        <div class="preview-row"><div class="pdot pdot-y"></div><div><div style="font-weight:500;font-size:12px;">Call routing</div><div style="font-size:12px;"><span class="prev-val">Fixed order</span> → <span class="next-val">Round robin ✎</span></div></div></div>
+        <div class="preview-row"><div class="pdot pdot-g"></div><div style="font-size:12px;color:var(--green);font-weight:500;">AI summaries — already matches, no change</div></div>
+        <div class="preview-row" style="background:var(--yellow-light);"><div class="pdot pdot-o"></div><div><div style="font-weight:500;font-size:12px;color:var(--yellow);">Holiday schedule — skipped</div><div style="font-size:11px;color:var(--yellow);">API not available yet — will apply when supported</div></div></div>
+        <div style="padding:12px 16px;border-top:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;color:var(--text-3);">8 changes · 1 skipped</span>
+          <button style="background:var(--purple);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:13px;font-weight:700;cursor:default;">Apply to 3 contact centers</button>
+        </div>
+      </div>
+      <div class="warn" style="margin-top:10px;">The "skipped" state surfaces API gaps honestly — the rest of the template still applies cleanly. Admins see exactly what did and didn't apply, and why.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- SECTION 3 — AI LAYER -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="ai-layer">
+<div class="page">
+  <div class="sec-num">Section 3</div>
+  <div class="sec-title">The AI layer</div>
+  <div class="sec-sub">AI analytics chat ships Q3 (read-only, reuses existing Dialpad AI pattern). AI agent ships Q4 (write actions via natural language, built on the Q3 template foundation).</div>
+
+  <div class="layer-stack">
+    <div class="layer layer-3"><span class="layer-q" style="background:var(--yellow);">Q4+</span><span style="font-weight:600;">AI agent — natural language commands</span><span class="layer-desc">"Apply Enterprise template to all NA CCs with recording off"</span></div>
+    <div class="layer layer-2"><span class="layer-q" style="background:var(--green);">Q3</span><span style="font-weight:600;">AI analytics chat — ask questions about settings</span><span class="layer-desc">"Which CCs have no template?" → list → act on it</span></div>
+    <div class="layer layer-1"><span class="layer-q" style="background:var(--purple);">Q3</span><span style="font-weight:600;">Template bulk apply — the foundation</span><span class="layer-desc">Select → preview → confirm. Everything else builds on this.</span></div>
+  </div>
+
+  <div class="g2">
+    <!-- Analytics chat -->
+    <div>
+      <div class="label">AI analytics chat — Q3 (read-only)</div>
+      <div class="screen">
+        <div class="screen-hdr"><div style="display:flex;align-items:center;gap:6px;"><div class="av av-ai" style="width:22px;height:22px;font-size:9px;">✦</div><span class="screen-hdr-title">AI Admin</span></div></div>
+        <div class="chat-body">
+          <div class="msg user"><div class="av av-user">SL</div><div class="bubble bubble-user">Which CCs don't have a template assigned?</div></div>
+          <div class="msg"><div class="av av-ai">✦</div><div class="bubble bubble-ai">Found <strong>9 contact centers</strong> without a template.
+            <div class="qr"><div class="qr-hdr"><span>Contact center</span><span>Region</span></div>
+              <div class="qr-row"><span>Sales East</span><span style="color:var(--text-3);">NA</span></div>
+              <div class="qr-row"><span>Sales Central</span><span style="color:var(--text-3);">NA</span></div>
+              <div class="qr-row"><span>Tier 1 Support</span><span style="color:var(--text-3);">EMEA</span></div>
+              <div class="qr-row" style="justify-content:center;color:var(--text-3);font-size:11px;">+6 more</div>
+            </div>
+            <div class="ai-actions"><button class="ai-btn-p">Apply a template →</button><button class="ai-btn-g">Export list</button></div>
+          </div></div>
+          <div class="msg user"><div class="av av-user">SL</div><div class="bubble bubble-user">Which ones have recording off?</div></div>
+          <div class="msg"><div class="av av-ai">✦</div><div class="bubble bubble-ai"><strong>4 of the 9</strong> also have recording disabled. Want me to apply the Enterprise Sales template to fix those?</div></div>
+        </div>
+        <div class="chat-input-row"><div class="chat-input-box">Ask about your contact center settings…</div><div class="send"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M6 1l5 5-5 5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+      </div>
+    </div>
+
+    <!-- AI agent -->
+    <div>
+      <div class="label">AI agent — Q4 (write actions)</div>
+      <div class="screen">
+        <div class="screen-hdr"><div style="display:flex;align-items:center;gap:6px;"><div class="av av-ai" style="width:22px;height:22px;font-size:9px;">✦</div><span class="screen-hdr-title">AI Admin</span></div></div>
+        <div class="chat-body">
+          <div class="msg user"><div class="av av-user">SL</div><div class="bubble bubble-user">Apply Enterprise Sales to all NA CCs that don't have recording on</div></div>
+          <div class="msg"><div class="av av-ai">✦</div><div class="bubble bubble-ai">Found <strong>4 NA CCs</strong> with recording off. Here's what will change:
+            <div class="ai-card">
+              <div style="font-weight:700;font-size:12px;margin-bottom:8px;">Applying "Enterprise Sales — NA"</div>
+              <div class="ai-card-row"><div><div style="font-weight:500;">Sales East</div><div style="font-size:11px;color:var(--text-3);">3 changes</div></div><span class="pill pill-yellow">3 changes</span></div>
+              <div class="ai-card-row"><div><div style="font-weight:500;">Sales Central</div><div style="font-size:11px;color:var(--text-3);">2 changes · 1 skipped</div></div><span class="pill pill-yellow">2 changes</span></div>
+              <div class="ai-card-row"><div><div style="font-weight:500;">Midwest Support</div><div style="font-size:11px;color:var(--text-3);">Already compliant otherwise</div></div><span class="pill pill-green">1 change</span></div>
+              <div class="ai-actions"><button class="ai-btn-p">Confirm &amp; apply</button><button class="ai-btn-g">Review full preview</button></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="chat-input-row"><div class="chat-input-box">Tell AI Admin what to do…</div><div class="send"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M6 1l5 5-5 5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Future vision -->
+  <div class="vision" style="margin-top:20px;">
+    <div class="vision-label">Option B — Future vision · Q4/Q5</div>
+    <div class="vision-title">One conversation for everything</div>
+    <div class="vision-desc">Today analytics lives in one chat, admin actions in another. The future collapses them — one AI Admin conversation where you ask questions, get insights, and make changes. Templates become the memory the AI uses to understand your intent.</div>
+    <div class="vision-chips">
+      <span class="vision-chip">Ask: "Which CCs are out of policy?"</span>
+      <span class="vision-chip">Act: "Fix all of them"</span>
+      <span class="vision-chip">Review: "What changed last week?"</span>
+      <span class="vision-chip">Schedule: "Apply holiday hours every Dec"</span>
+      <span class="vision-chip">Audit: "Who changed Sales East on Apr 3?"</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- SECTION 4 — ENGINEERING DELTA -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="eng-delta">
+<div class="page">
+  <div class="sec-num">Section 4</div>
+  <div class="sec-title">Engineering delta</div>
+  <div class="sec-sub">What's needed to build this, what's already possible, and what API gaps block full coverage.</div>
+
+  <!-- Q3 vs Q4 -->
+  <div class="g2" style="margin-bottom:20px;">
+    <div class="q3-card">
+      <div class="q-label">Q3 — Build this</div>
+      <div class="q-title">Template foundation + AI analytics</div>
+      <div class="q-item"><div class="q-dot" style="background:var(--purple);"></div>Template CRUD (create, name, configure, version)</div>
+      <div class="q-item"><div class="q-dot" style="background:var(--purple);"></div>Assign templates to contact centers</div>
+      <div class="q-item"><div class="q-dot" style="background:var(--purple);"></div>Bulk apply flow (select → preview → confirm)</div>
+      <div class="q-item"><div class="q-dot" style="background:var(--purple);"></div>Drift detection — surface CCs out of sync</div>
+      <div class="q-item"><div class="q-dot" style="background:var(--purple);"></div>Activity log (what changed, when, who)</div>
+      <div class="q-item"><div class="q-dot" style="background:var(--purple);"></div>AI analytics chat — read-only settings queries</div>
+    </div>
+    <div class="q4-card">
+      <div class="q-label muted">Q4 — After API gaps are closed</div>
+      <div class="q-title" style="color:var(--text-3);">AI agent + full settings coverage</div>
+      <div class="q-item" style="color:var(--text-3);"><div class="q-dot" style="background:#bbb;"></div>AI agent — natural language → template apply</div>
+      <div class="q-item" style="color:var(--text-3);"><div class="q-dot" style="background:#bbb;"></div>Holiday schedule in templates</div>
+      <div class="q-item" style="color:var(--text-3);"><div class="q-dot" style="background:#bbb;"></div>CSAT configuration in templates</div>
+      <div class="q-item" style="color:var(--text-3);"><div class="q-dot" style="background:#bbb;"></div>AI settings (coaching, PII redaction) in templates</div>
+      <div class="q-item" style="color:var(--text-3);"><div class="q-dot" style="background:#bbb;"></div>Batch API for scalable bulk operations</div>
+    </div>
+  </div>
+
+  <!-- Coverage bar -->
+  <div class="card" style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Settings coverage in Q3 templates</div>
+    <div class="cov-bar"><div class="cov-g" style="width:62%;"></div><div class="cov-y" style="width:14%;"></div><div class="cov-r" style="width:24%;"></div></div>
+    <div class="cov-legend">
+      <div style="display:flex;align-items:center;gap:6px;"><div class="cov-dot" style="background:var(--green);"></div><span><strong>62%</strong> — Supported by existing public API</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><div class="cov-dot" style="background:#FFDB80;"></div><span><strong>14%</strong> — Fields exist but undocumented</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><div class="cov-dot" style="background:#FF716F;"></div><span><strong>24%</strong> — No public API yet — Q4 dependency</span></div>
+    </div>
+  </div>
+
+  <!-- Work breakdown -->
+  <div class="label">Work breakdown</div>
+  <div class="g3" style="margin-bottom:6px;">
+    <div class="card">
+      <h3 style="margin-bottom:12px;">🖥️ Frontend</h3>
+      <div class="work-item"><span>Template library page</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>Template editor</span><span class="eff eff-l">L</span></div>
+      <div class="work-item"><span>CC grid — template + drift badge</span><span class="eff eff-s">S</span></div>
+      <div class="work-item"><span>Bulk select + apply flow</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>Preview / diff view</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>Activity log</span><span class="eff eff-s">S</span></div>
+      <div class="work-item"><span>AI analytics chat surface</span><span class="eff eff-m">M</span></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:12px;">⚙️ Backend</h3>
+      <div class="work-item"><span>Template data model + storage</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>Template → CC assignment</span><span class="eff eff-s">S</span></div>
+      <div class="work-item"><span>Drift detection engine</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>Bulk apply orchestration</span><span class="eff eff-l">L</span></div>
+      <div class="work-item"><span>Settings query API</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>Activity log service</span><span class="eff eff-s">S</span></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:12px;">🔌 New public APIs needed</h3>
+      <div class="work-item"><span>Holiday schedule CRUD</span><span class="eff eff-l">L</span></div>
+      <div class="work-item"><span>CC recording policy</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>AI / voice intelligence fields</span><span class="eff eff-m">M</span></div>
+      <div class="work-item"><span>CSAT survey config</span><span class="eff eff-l">L</span></div>
+      <div class="work-item"><span>Batch / async update endpoint</span><span class="eff eff-l">L</span></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--text-3);">S = small · M = medium · L = large effort</p>
+
+  <!-- API gaps table -->
+  <div class="label" style="margin-top:24px;">Top 5 API gaps to unblock Q4</div>
+  <div class="screen">
+    <table class="api-table">
+      <thead><tr><th>Endpoint</th><th>Why it matters</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><div style="font-weight:600;">Holiday schedule CRUD</div><div style="font-size:11px;color:var(--text-3);">/api/v2/callcenters/{id}/holidays</div></td><td style="font-size:12px;color:var(--text-2);">#1 setting enterprise admins want to bulk-manage. Currently internal-only.</td><td><span class="pill pill-red">High</span></td></tr>
+        <tr><td><div style="font-weight:600;">CC recording policy</div><div style="font-size:11px;color:var(--text-3);">/api/v2/callcenters/{id}/recording</div></td><td style="font-size:12px;color:var(--text-2);">Compliance teams need CC-level "always record." User-level toggle exists; CC-level policy does not.</td><td><span class="pill pill-red">High</span></td></tr>
+        <tr><td><div style="font-weight:600;">AI / voice intelligence fields</div><div style="font-size:11px;color:var(--text-3);">Document voice_intelligence sub-fields</div></td><td style="font-size:12px;color:var(--text-2);">Object already exists in public API — just needs sub-field documentation. Lowest-effort gap to close.</td><td><span class="pill pill-red">High</span></td></tr>
+        <tr><td><div style="font-weight:600;">CSAT survey config</div><div style="font-size:11px;color:var(--text-3);">/api/v2/callcenters/{id}/csat</div></td><td style="font-size:12px;color:var(--text-2);">Enterprises want consistent CSAT surveys across CCs. Zero public API coverage today.</td><td><span class="pill pill-yellow">Med</span></td></tr>
+        <tr><td><div style="font-weight:600;">Batch update endpoint</div><div style="font-size:11px;color:var(--text-3);">/api/v2/callcenters/batch</div></td><td style="font-size:12px;color:var(--text-2);">Without this, applying a template to 200 CCs = 200 sequential API calls. Needed for AI agent reliability at scale.</td><td><span class="pill pill-yellow">Med</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- THE ASK -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="ask">
+<div class="page" style="padding-bottom:64px;">
+  <div class="sec-num">The ask</div>
+  <div class="sec-title">What we need the EM to decide</div>
+  <div class="sec-sub" style="margin-bottom:20px;">Three decisions. The Q4 timeline is entirely determined by #3.</div>
+  <div class="ask-box">
+    <div class="ask-title">3 decisions from this meeting</div>
+    <div class="ask-item">
+      <div class="ask-num">1</div>
+      <div class="ask-text"><strong>Direction approval</strong> — green light on the template-first approach: master template → child CCs, Locked/Adjustable settings, drift detection, and bulk apply as the Q3 design direction.</div>
+    </div>
+    <div class="ask-item">
+      <div class="ask-num">2</div>
+      <div class="ask-text"><strong>Q3 scope agreement</strong> — template CRUD + bulk apply for the 62% of settings with existing API support + AI analytics chat (read-only). Holiday hours, CSAT, AI config, and CC recording policy are explicitly Q4.</div>
+    </div>
+    <div class="ask-item">
+      <div class="ask-num">3</div>
+      <div class="ask-text"><strong>API gap ownership</strong> — who owns the 5 new public API endpoints? Platform team, CC backend team, or dedicated API team? <strong>The Q4 start date is determined by when these APIs are available.</strong></div>
+    </div>
+  </div>
+</div>
+</section>
+
+</body>
+</html>
