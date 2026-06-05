@@ -1,0 +1,19 @@
+presentation.html
+  s_6394e98370b2ae::t_93997f07361bc4 1-621
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "bacc4d38ae308e6c8d5fa63022460701b1e2a61b",
+  "prompts": {},
+  "sessions": {
+    "s_6394e98370b2ae": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "23feb498-3bbc-418e-adf5-6b069866ec52",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Sherlaine Lau <sherlaine.lau@dialpad.com>"
+    }
+  }
+}
