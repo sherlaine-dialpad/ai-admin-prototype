@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Admin v2 — Dialpad Contact Centers (Templates)</title>
+  <title>AI Admin Agent — Dialpad Contact Centers</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='18 19 56 56'%3E%3Crect x='18' y='19' width='56' height='56' rx='10' fill='%23FFFFFF'/%3E%3Cpath d='M67.3113 44.9586C67.9208 45.0949 68.0417 46.0897 67.4718 46.3489C56.4717 50.0934 47.8132 59.6668 43.2922 72.411C43.0448 73.0289 41.9593 72.8798 41.8573 72.2204C40.3108 62.2251 33.405 54.2445 24.5086 52.091C23.9191 51.9483 23.8077 51.0222 24.3565 50.76C35.6512 46.1128 44.1398 36.5799 48.0621 24.4006C48.3071 23.7651 49.4906 23.9256 49.5913 24.6007C51.112 34.7954 58.2031 42.9218 67.3113 44.9586Z' fill='%237C52FF'/%3E%3C/svg%3E">
 
@@ -718,7 +718,6 @@
 
         <div class="nav-section" style="margin-top:4px">Contact Centers</div>
         <div class="nav-parent" id="navAllCCs" style="cursor:pointer" onclick="showView('allccs')"><span>All Contact Centers</span><span class="nav-parent-add">+</span></div>
-        <div class="nav-item" id="navTemplates" onclick="showView('templates')" style="cursor:pointer;display:flex;align-items:center;gap:6px"><span>Templates</span><span style="font-size:10px;font-weight:700;background:var(--purple);color:white;border-radius:100px;padding:1px 6px;letter-spacing:.03em">New</span></div>
         <div class="nav-item" id="navSalesEast" onclick="showView('saleseast')" style="display:flex;align-items:center;justify-content:space-between">
           <span>Sales East</span><span class="nav-dot"></span>
         </div>
@@ -750,11 +749,10 @@
         <div class="page-hd">
           <div class="page-hd-left">
             <h1>All Contact Centers</h1>
-            <p>47 contact centers · AI detected issues across 3 areas</p>
+            <p>47 contact centers · AI Admin Agent detected issues across 3 areas</p>
           </div>
           <div class="page-hd-right">
-            <button class="btn btn-base" style="font-size:13px" onclick="showView('templates')">Templates</button>
-            <button class="btn btn-primary" style="font-size:13px" onclick="openAgentModal()">Create AI Agent</button>
+            <button class="btn btn-primary" style="font-size:13px" onclick="openAgentModal()">+ New AI Agent</button>
           </div>
         </div>
         <div class="page-toolbar">
@@ -769,7 +767,6 @@
             </div>
           </div>
           <div class="page-toolbar-right">
-            <button class="btn btn-base" style="font-size:13px" onclick="showView('templates')">Browse templates</button>
           </div>
         </div>
 
@@ -779,8 +776,7 @@
             <span id="bulkSelCount">0</span> contact centers selected
           </div>
           <div class="bulk-bar-right">
-            <button class="btn-bulk-ghost" onclick="showApplyTemplatePanel()">Apply template</button>
-            <button class="btn-bulk" onclick="aipFill('Fix all issues for selected contact centers — enable recording and add missing holiday hours')">✦ Fix all issues</button>
+            <button class="btn-bulk" onclick="aipFill('Fix all issues for selected contact centers — enable recording and add missing holiday hours')">✦ Ask AI to fix all issues</button>
           </div>
         </div>
 
@@ -903,7 +899,7 @@
           </div>
         </div>
         <div class="page-hd-right">
-          <button class="btn btn-base" style="font-size:13px" onclick="aipFill('Save Sales East settings as a reusable template')">Save as template</button>
+          <button class="btn btn-base" style="font-size:13px" onclick="aipFill('What changes would you recommend for Sales East?')">✦ Ask AI</button>
           <button class="btn btn-base" style="font-size:13px">Edit</button>
         </div>
       </div>
@@ -1165,141 +1161,7 @@
 
       </div><!-- /viewSalesEast -->
 
-      <!-- ══ TEMPLATES VIEW ══ -->
-      <div id="viewTemplates" class="view-hidden">
-
-        <div class="page-hd">
-          <div class="page-hd-left">
-            <h1>Templates</h1>
-            <p>Reuse existing contact center configurations — apply to one CC or hundreds at once</p>
-          </div>
-          <div class="page-hd-right">
-            <button class="btn btn-base" style="font-size:13px" onclick="aipFill('Create a new blank template from scratch')">+ New template</button>
-          </div>
-        </div>
-
-        <!-- Template gallery -->
-        <div class="tmpl-grid">
-
-          <div class="tmpl-card" onclick="showTemplateDetail('enterprise-sales')">
-            <div class="tmpl-card-hd">
-              <div class="tmpl-icon tmpl-icon-purple">ES</div>
-              <div class="tmpl-card-meta">
-                <div class="tmpl-card-name">Enterprise Sales</div>
-                <div class="tmpl-card-source">Based on Sales East</div>
-              </div>
-              <div class="tmpl-card-badge">14 CCs</div>
-            </div>
-            <div class="tmpl-card-tags">
-              <span class="tmpl-tag">Recording on</span>
-              <span class="tmpl-tag">Holiday hours</span>
-              <span class="tmpl-tag">Welcome greeting</span>
-              <span class="tmpl-tag">Round robin</span>
-              <span class="tmpl-tag">AI summaries</span>
-            </div>
-            <div class="tmpl-card-ft">
-              <span class="tmpl-updated">Updated 3 days ago</span>
-              <button class="tmpl-apply-btn" onclick="event.stopPropagation(); showApplyTemplatePanel('enterprise-sales')">Apply →</button>
-            </div>
-          </div>
-
-          <div class="tmpl-card" onclick="showTemplateDetail('emea-compliance')">
-            <div class="tmpl-card-hd">
-              <div class="tmpl-icon tmpl-icon-green">EC</div>
-              <div class="tmpl-card-meta">
-                <div class="tmpl-card-name">EMEA Compliance</div>
-                <div class="tmpl-card-source">Based on EMEA Sales</div>
-              </div>
-              <div class="tmpl-card-badge">8 CCs</div>
-            </div>
-            <div class="tmpl-card-tags">
-              <span class="tmpl-tag">GDPR recording off</span>
-              <span class="tmpl-tag">EU holiday schedule</span>
-              <span class="tmpl-tag">PII redaction</span>
-              <span class="tmpl-tag">Skill-based routing</span>
-            </div>
-            <div class="tmpl-card-ft">
-              <span class="tmpl-updated">Updated 1 week ago</span>
-              <button class="tmpl-apply-btn" onclick="event.stopPropagation(); showApplyTemplatePanel('emea-compliance')">Apply →</button>
-            </div>
-          </div>
-
-          <div class="tmpl-card" onclick="showTemplateDetail('support-standard')">
-            <div class="tmpl-card-hd">
-              <div class="tmpl-icon tmpl-icon-blue">SS</div>
-              <div class="tmpl-card-meta">
-                <div class="tmpl-card-name">Support Standard</div>
-                <div class="tmpl-card-source">Based on Support West</div>
-              </div>
-              <div class="tmpl-card-badge">21 CCs</div>
-            </div>
-            <div class="tmpl-card-tags">
-              <span class="tmpl-tag">Recording on</span>
-              <span class="tmpl-tag">NA holiday hours</span>
-              <span class="tmpl-tag">After-hours voicemail</span>
-              <span class="tmpl-tag">Queue overflow</span>
-            </div>
-            <div class="tmpl-card-ft">
-              <span class="tmpl-updated">Updated 2 weeks ago</span>
-              <button class="tmpl-apply-btn" onclick="event.stopPropagation(); showApplyTemplatePanel('support-standard')">Apply →</button>
-            </div>
-          </div>
-
-          <div class="tmpl-card tmpl-card-new" onclick="aipFill('Create a new contact center template from scratch')">
-            <div class="tmpl-new-icon">+</div>
-            <div class="tmpl-new-label">Create new template</div>
-            <div class="tmpl-new-sub">Start from scratch or ask AI to build one</div>
-          </div>
-
-        </div>
-
-        <!-- Apply template panel (inline, shown on Apply click) -->
-        <div class="tmpl-apply-panel" id="tmplApplyPanel" style="display:none">
-          <div class="tmpl-apply-hd">
-            <div>
-              <div class="tmpl-apply-title">Apply <span id="tmplApplyName">Enterprise Sales</span> template</div>
-              <div class="tmpl-apply-sub">Select which contact centers should receive these settings</div>
-            </div>
-            <button class="tmpl-apply-close" onclick="document.getElementById('tmplApplyPanel').style.display='none'">✕</button>
-          </div>
-
-          <!-- What will change -->
-          <div class="tmpl-apply-changes">
-            <div class="tmpl-apply-changes-title">Settings that will be applied</div>
-            <div class="tmpl-apply-change-row"><span class="tmpl-chg-key">Recording</span><span class="tmpl-chg-val">Auto-on for all calls</span></div>
-            <div class="tmpl-apply-change-row"><span class="tmpl-chg-key">Holiday hours</span><span class="tmpl-chg-val">Dec 25, Jan 1 closed · NA</span></div>
-            <div class="tmpl-apply-change-row"><span class="tmpl-chg-key">Routing</span><span class="tmpl-chg-val">Round robin · 5 min queue</span></div>
-            <div class="tmpl-apply-change-row"><span class="tmpl-chg-key">Greeting</span><span class="tmpl-chg-val">Standard welcome + after-hours</span></div>
-            <div class="tmpl-apply-change-row"><span class="tmpl-chg-key">AI features</span><span class="tmpl-chg-val">Transcription + summaries on</span></div>
-          </div>
-
-          <!-- CC selection -->
-          <div class="tmpl-apply-changes-title" style="padding:0 0 8px">Apply to</div>
-          <div class="tmpl-cc-select">
-            <label class="tmpl-cc-opt">
-              <input type="radio" name="tmplTarget" value="all" checked> All 47 contact centers
-            </label>
-            <label class="tmpl-cc-opt">
-              <input type="radio" name="tmplTarget" value="issues"> Only CCs with issues (34 CCs)
-            </label>
-            <label class="tmpl-cc-opt">
-              <input type="radio" name="tmplTarget" value="region"> By region
-              <select class="tmpl-region-sel" style="margin-left:8px">
-                <option>NA</option><option>EU / EMEA</option><option>APAC</option>
-              </select>
-            </label>
-            <label class="tmpl-cc-opt">
-              <input type="radio" name="tmplTarget" value="selected"> Selected CCs only
-            </label>
-          </div>
-
-          <div class="tmpl-apply-footer">
-            <button class="btn btn-base" style="font-size:13px" onclick="document.getElementById('tmplApplyPanel').style.display='none'">Cancel</button>
-            <button class="btn btn-primary" style="font-size:13px" onclick="aipSubmit('Apply Enterprise Sales template to all contact centers — enable recording, set holiday hours for Dec 25 and Jan 1, update routing to round robin, and apply standard welcome greeting', false)">✦ Preview changes</button>
-          </div>
-        </div>
-
-      </div><!-- /viewTemplates -->
+      <!-- Templates view removed — templates are a capability of the AI Admin Agent, not a standalone UI surface -->
 
     </main>
   </div>
@@ -1312,7 +1174,7 @@
       <div class="aip-hd-left">
         <div class="aip-icon">✦</div>
         <div>
-          <div class="aip-title">AI Admin</div>
+          <div class="aip-title">AI Admin Agent</div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
@@ -1343,11 +1205,11 @@
           <div class="aip-proactive-card">
             <div class="aip-proactive-icon">✦</div>
             <div class="aip-proactive-body">
-              <div class="aip-proactive-title">3 contact centers don't match their template</div>
-              <div class="aip-proactive-desc">Sales East, Support West, and Canada Support have drifted from the <strong>Enterprise Sales</strong> template — recording is off and holiday hours are missing.</div>
+              <div class="aip-proactive-title">5 contact centers have settings issues</div>
+              <div class="aip-proactive-desc">Sales East, Support West, and Canada Support have recording off. UK Support and Canada Support are missing holiday hours.</div>
               <div class="aip-proactive-actions">
-                <button class="aip-proactive-cta" onclick="aipSubmit('Re-sync Sales East, Support West, and Canada Support with the Enterprise Sales template — enable recording and set Dec 25 and Jan 1 holiday closures', false)">Sync now →</button>
-                <button class="aip-proactive-ghost" onclick="showView('templates')">View templates</button>
+                <button class="aip-proactive-cta" onclick="aipSubmit('Fix all settings issues: enable recording on Sales East, Support West, and Canada Support, and add missing holiday hours for UK Support and Canada Support', false)">Fix all →</button>
+                <button class="aip-proactive-ghost" onclick="aipFill('Show me all contact centers with issues')">View issues</button>
               </div>
             </div>
           </div>
@@ -1388,14 +1250,6 @@
               <div class="aip-qa-group">AI Features</div>
               <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable Dialpad AI · all CCs</div>
               <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable PII redaction on all contact center transcripts and recordings')">Enable PII redaction · all</div>
-
-              <div class="aip-qa-divider"></div>
-              <div class="aip-qa-group">Templates</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); showView('templates')">Browse all templates</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); showApplyTemplatePanel('enterprise-sales')">Apply Enterprise Sales template</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); showApplyTemplatePanel('emea-compliance')">Apply EMEA Compliance template</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Save Sales East current settings as a new reusable template')">Save CC as template</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Create a new contact center using the Enterprise Sales template')">New CC from template</div>
 
               <div class="aip-qa-divider"></div>
               <div class="aip-qa-group aip-qa-group-em">Emergency &amp; Disaster</div>
@@ -2440,16 +2294,14 @@
   function showView(viewName) {
     const allCCs = document.getElementById('viewAllCCs');
     const salesEast = document.getElementById('viewSalesEast');
-    const templates = document.getElementById('viewTemplates');
     const bcSep2 = document.getElementById('bcSep2');
     const bcActive = document.getElementById('bcActive');
     const ctxChip = document.getElementById('aipCtxChip');
     const navAllCCs = document.getElementById('navAllCCs');
     const navSalesEast = document.getElementById('navSalesEast');
-    const navTemplates = document.getElementById('navTemplates');
 
-    [allCCs, salesEast, templates].forEach(v => v && v.classList.add('view-hidden'));
-    [navAllCCs, navSalesEast, navTemplates].forEach(n => n && (n.style.background = ''));
+    [allCCs, salesEast].forEach(v => v && v.classList.add('view-hidden'));
+    [navAllCCs, navSalesEast].forEach(n => n && (n.style.background = ''));
     if (navSalesEast) navSalesEast.classList.remove('active');
 
     if (viewName === 'allccs') {
@@ -2458,12 +2310,6 @@
       if (bcActive) bcActive.style.display = 'none';
       if (ctxChip) ctxChip.textContent = 'All CCs';
       if (navAllCCs) navAllCCs.style.background = 'hsl(0 0% 11% / 0.14)';
-    } else if (viewName === 'templates') {
-      templates.classList.remove('view-hidden');
-      if (bcSep2) bcSep2.style.display = '';
-      if (bcActive) { bcActive.textContent = 'Templates'; bcActive.style.display = ''; }
-      if (ctxChip) ctxChip.textContent = 'Templates';
-      if (navTemplates) navTemplates.style.background = 'hsl(0 0% 11% / 0.14)';
     } else {
       salesEast.classList.remove('view-hidden');
       if (bcSep2) bcSep2.style.display = '';
@@ -2472,28 +2318,6 @@
       if (navSalesEast) navSalesEast.classList.add('active');
       document.querySelectorAll('.cc-row').forEach(r => r.classList.remove('highlighted'));
     }
-  }
-
-  // ── Template helpers ──
-  const TEMPLATE_NAMES = {
-    'enterprise-sales': 'Enterprise Sales',
-    'emea-compliance': 'EMEA Compliance',
-    'support-standard': 'Support Standard'
-  };
-  function showApplyTemplatePanel(tmplId) {
-    const name = TEMPLATE_NAMES[tmplId] || 'Selected';
-    const panel = document.getElementById('tmplApplyPanel');
-    const nameEl = document.getElementById('tmplApplyName');
-    if (nameEl) nameEl.textContent = name;
-    showView('templates');
-    if (panel) { panel.style.display = 'block'; panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-  }
-  function showTemplatePickerForNew() {
-    aipFill('Create a new contact center — which template should I start from? Options: Enterprise Sales, EMEA Compliance, Support Standard, or start from scratch.');
-  }
-  function showTemplateDetail(tmplId) {
-    const name = TEMPLATE_NAMES[tmplId] || tmplId;
-    aipFill('Show me details for the ' + name + ' template — what settings does it include and which contact centers use it?');
   }
 
   let selectedAgentType = 'agentic';
