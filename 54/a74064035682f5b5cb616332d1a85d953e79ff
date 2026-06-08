@@ -1,0 +1,26 @@
+v2.html
+  s_6394e98370b2ae::t_94a945a63b6eb0 2303-2304
+  s_6394e98370b2ae::t_052d191713ebd2 779
+  s_6394e98370b2ae::t_8d0d9ae518c860 6
+  s_6394e98370b2ae::t_7ddc996d179aaa 902
+  s_6394e98370b2ae::t_d94e4a6592f5da 752,755
+  s_6394e98370b2ae::t_9fdd48e6098b15 1208-1209,1211-1212
+  s_6394e98370b2ae::t_6921b6d88983b4 1177
+  s_6394e98370b2ae::t_838d5d58c22234 1164
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "54a74064035682f5b5cb616332d1a85d953e79ff",
+  "prompts": {},
+  "sessions": {
+    "s_6394e98370b2ae": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "23feb498-3bbc-418e-adf5-6b069866ec52",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Sherlaine Lau <sherlaine.lau@dialpad.com>"
+    }
+  }
+}
