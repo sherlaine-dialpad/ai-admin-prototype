@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Admin Agent — Dialpad Admin</title>
+<style>
+:root {
+  --dp-red: #E5173F;
+  --dp-purple: #7C52FF;
+  --dp-purple-dark: #5023DD;
+  --dp-purple-light: #F5F0FF;
+  --dp-purple-border: #D3BCFF;
+  --dp-green: #008E52;
+  --dp-green-light: #F6FCF5;
+  --dp-yellow: #815008;
+  --dp-yellow-light: #FFFAE5;
+  --dp-yellow-border: #FFDB80;
+  --dp-red-danger: #D90A45;
+  --dp-red-light: #FFF2F3;
+  --dp-emergency: #C4400C;
+  --dp-emergency-surface: #FEF3EC;
+  --dp-emergency-border: #F9B185;
+  --nav-icon-w: 48px;
+  --nav-text-w: 208px;
+  --top-h: 48px;
+  --surface: #fff;
+  --bg: #F5F5F5;
+  --border: rgba(0,0,0,.1);
+  --text-1: #1A1A1A;
+  --text-2: #3A3A3A;
+  --text-3: #6B6B6B;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", sans-serif;
+  --drawer-w: 380px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--text-1);-webkit-font-smoothing:antialiased;line-height:1.5;height:100vh;overflow:hidden;}
+
+/* ── App shell ── */
+.app{display:flex;height:100vh;overflow:hidden;}
+
+/* ── Icon nav ── */
+.icon-nav{width:var(--nav-icon-w);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:10px 0;z-index:20;}
+.dp-logo{width:30px;height:30px;border-radius:8px;background:var(--dp-red);display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;}
+.dp-logo svg{width:18px;height:18px;}
+.icon-nav-items{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.nav-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-3);cursor:pointer;transition:background .1s;}
+.nav-icon:hover{background:rgba(0,0,0,.07);color:var(--text-2);}
+.nav-icon.active{background:rgba(124,82,255,.12);color:var(--dp-purple);}
+.nav-icon svg{width:16px;height:16px;}
+.icon-nav-bottom{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:6px;padding-bottom:8px;}
+.avatar-sm{width:28px;height:28px;border-radius:50%;background:var(--dp-green);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;cursor:pointer;}
+
+/* ── Text nav ── */
+.text-nav{width:var(--nav-text-w);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
+.text-nav-top{padding:12px 12px 4px;border-bottom:1px solid var(--border);}
+.tn-office{display:flex;align-items:center;justify-content:space-between;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:12px;font-weight:500;cursor:pointer;color:var(--text-1);}
+.tn-chevron{color:var(--text-3);font-size:10px;}
+.tn-list{padding:8px 0;flex:1;}
+.tn-section{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);padding:8px 12px 3px;}
+.tn-item{display:flex;align-items:center;justify-content:space-between;padding:5px 12px;font-size:12px;color:var(--text-2);cursor:pointer;border-radius:5px;margin:0 4px;transition:background .1s;}
+.tn-item:hover{background:rgba(0,0,0,.05);}
+.tn-item.active{background:rgba(124,82,255,.1);color:var(--dp-purple);font-weight:600;}
+.tn-item-left{display:flex;align-items:center;gap:6px;}
+.tn-sub{font-size:11px;color:var(--text-3);padding:3px 12px 3px 24px;cursor:pointer;border-radius:5px;margin:0 4px;}
+.tn-sub:hover{background:rgba(0,0,0,.04);}
+.tn-add{width:18px;height:18px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:var(--text-3);font-size:14px;font-weight:300;}
+.tn-add:hover{background:rgba(0,0,0,.08);color:var(--text-1);}
+.cc-search{margin:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:6px;}
+.cc-search svg{width:11px;height:11px;flex-shrink:0;}
+.cc-list-item{display:flex;align-items:center;gap:6px;padding:4px 12px;font-size:11px;color:var(--text-2);cursor:pointer;}
+.cc-list-item:hover{background:rgba(0,0,0,.04);}
+.cc-list-item svg{width:12px;height:12px;color:var(--text-3);flex-shrink:0;}
+
+/* ── Main content area ── */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── Top bar ── */
+.top-bar{height:var(--top-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0;}
+.breadcrumb{flex:1;display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-3);font-weight:500;text-transform:uppercase;letter-spacing:.04em;overflow:hidden;}
+.bc-sep{color:var(--text-3);opacity:.5;margin:0 2px;}
+.bc-item{white-space:nowrap;cursor:pointer;}
+.bc-item:hover{color:var(--text-1);}
+.bc-item.active{color:var(--text-2);}
+.top-bar-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.search-hc{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--text-3);width:200px;cursor:text;}
+.search-hc svg{width:12px;height:12px;flex-shrink:0;}
+
+/* ── Page ── */
+.page-wrap{flex:1;overflow-y:auto;padding:28px 32px;}
+.page-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;}
+.page-hd-left h1{font-size:22px;font-weight:700;color:var(--text-1);margin-bottom:2px;}
+.page-hd-left p{font-size:12px;color:var(--text-3);}
+.page-hd-right{display:flex;gap:8px;align-items:center;}
+.btn-create{background:var(--dp-purple);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.btn-create:hover{background:var(--dp-purple-dark);}
+.btn-ai{display:flex;align-items:center;gap:6px;background:var(--dp-purple-light);color:var(--dp-purple-dark);border:1px solid var(--dp-purple-border);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);transition:background .1s;}
+.btn-ai:hover{background:#ede5ff;}
+.btn-ai-spark{font-size:14px;}
+
+/* ── Sub-tabs ── */
+.sub-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px;gap:0;}
+.sub-tab{padding:8px 16px;font-size:13px;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .1s;}
+.sub-tab:hover{color:var(--text-1);}
+.sub-tab.active{color:var(--dp-purple);border-bottom-color:var(--dp-purple);font-weight:600;}
+
+/* ── Settings content ── */
+.settings-view{display:none;}
+.settings-view.active{display:block;}
+.settings-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:16px;}
+.sb-title{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--text-1);}
+.sb-desc{font-size:12px;color:var(--text-3);margin-bottom:14px;}
+.sb-divider{border:none;border-top:1px solid var(--border);margin:14px 0;}
+.sb-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.sb-row:last-child{border-bottom:none;}
+.sb-row-text{flex:1;}
+.sb-row-label{font-size:13px;font-weight:500;color:var(--text-1);}
+.sb-row-desc{font-size:11px;color:var(--text-3);margin-top:1px;}
+.dp-checkbox{width:16px;height:16px;border-radius:4px;accent-color:var(--dp-purple);flex-shrink:0;margin-top:2px;}
+.dp-toggle{position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0;margin-top:2px;}
+.dp-toggle input{opacity:0;width:0;height:0;}
+.dp-track{position:absolute;inset:0;background:#CBD5E1;border-radius:20px;transition:background .2s;}
+.dp-track::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.dp-toggle input:checked + .dp-track{background:var(--dp-purple);}
+.dp-toggle input:checked + .dp-track::after{transform:translateX(16px);}
+.dp-radio{accent-color:var(--dp-purple);width:14px;height:14px;}
+.sb-label-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:13px;font-weight:600;}
+.sub-question{font-size:13px;color:var(--text-2);margin:10px 0 8px;}
+.dp-select{font-family:var(--font);font-size:12px;border:1px solid var(--border);border-radius:6px;padding:5px 10px;background:var(--surface);color:var(--text-1);cursor:pointer;min-width:200px;}
+.backup-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--dp-purple);background:none;border:none;cursor:pointer;padding:4px 0;font-family:var(--font);}
+
+/* ── Holiday view ── */
+.holiday-empty{text-align:center;padding:32px 0;color:var(--text-3);}
+.holiday-empty-icon{font-size:28px;margin-bottom:8px;}
+.holiday-empty-text{font-size:13px;}
+.holiday-empty-sub{font-size:12px;margin-top:4px;color:var(--text-3);}
+.add-holiday-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:var(--font);margin-top:12px;}
+.ai-suggest{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--dp-purple);cursor:pointer;font-weight:500;margin-top:8px;}
+
+/* ── AI drawer overlay ── */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:100;opacity:0;pointer-events:none;transition:opacity .2s;}
+.drawer-overlay.open{opacity:1;pointer-events:auto;}
+.ai-drawer{position:fixed;top:0;right:0;bottom:0;width:var(--drawer-w);background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:101;transform:translateX(100%);transition:transform .25s cubic-bezier(.25,.46,.45,.94);box-shadow:-4px 0 20px rgba(0,0,0,.1);}
+.ai-drawer.open{transform:translateX(0);}
+
+/* ── Drawer header ── */
+.drw-hd{padding:0 16px;height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.drw-hd-left{display:flex;align-items:center;gap:8px;}
+.drw-icon{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--dp-purple),var(--dp-purple-dark));display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;}
+.drw-title{font-size:14px;font-weight:700;color:var(--text-1);}
+.drw-ctx{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--dp-purple-dark);background:var(--dp-purple-light);padding:2px 7px;border-radius:10px;}
+.drw-close{width:28px;height:28px;border-radius:6px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:16px;}
+.drw-close:hover{background:rgba(0,0,0,.06);}
+
+/* ── Drawer tabs ── */
+.drw-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.drw-tab{flex:1;padding:8px 0;font-size:12px;font-weight:500;color:var(--text-3);cursor:pointer;text-align:center;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .1s;}
+.drw-tab:hover{color:var(--text-1);}
+.drw-tab.active{color:var(--dp-purple);border-bottom-color:var(--dp-purple);font-weight:600;}
+
+/* ── Drawer body ── */
+.drw-body{flex:1;overflow-y:auto;padding:14px;}
+
+/* ── Proactive card ── */
+.proactive-card{background:var(--dp-purple-light);border:1px solid var(--dp-purple-border);border-radius:10px;padding:13px 14px;margin-bottom:12px;}
+.pc-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.pc-spark{font-size:14px;color:var(--dp-purple);flex-shrink:0;margin-top:1px;}
+.pc-title{font-size:13px;font-weight:600;color:var(--text-1);}
+.pc-desc{font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:10px;}
+.pc-actions{display:flex;gap:7px;}
+.pc-cta{background:var(--dp-purple);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.pc-ghost{background:none;border:1px solid var(--dp-purple-border);color:var(--dp-purple-dark);border-radius:6px;padding:5px 10px;font-size:12px;font-weight:500;cursor:pointer;font-family:var(--font);}
+
+/* ── Quick actions ── */
+.qa-wrap{position:relative;margin-bottom:14px;}
+.qa-btn{display:flex;align-items:center;gap:6px;width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:var(--font);}
+.qa-btn:hover{background:#ebebeb;}
+.qa-chevron{margin-left:auto;font-size:10px;transition:transform .15s;}
+.qa-btn.open .qa-chevron{transform:rotate(180deg);}
+.qa-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:8px;z-index:50;box-shadow:0 4px 16px rgba(0,0,0,.1);max-height:320px;overflow-y:auto;}
+.qa-menu.open{display:block;}
+.qa-group{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);padding:8px 12px 3px;}
+.qa-item{padding:7px 12px;font-size:12px;color:var(--text-2);cursor:pointer;}
+.qa-item:hover{background:var(--bg);}
+.qa-divider{border:none;border-top:1px solid var(--border);margin:4px 0;}
+.qa-group-em{color:var(--dp-emergency);}
+.qa-item-em{color:var(--dp-emergency);}
+.qa-item-em:hover{background:var(--dp-emergency-surface);}
+
+/* ── Chat states ── */
+.drw-chat-hidden{display:none;}
+.user-bubble-wrap{display:flex;justify-content:flex-end;margin-bottom:12px;}
+.user-bubble{background:var(--dp-purple);color:#fff;border-radius:12px 3px 12px 12px;padding:9px 13px;font-size:12px;max-width:85%;line-height:1.5;}
+
+/* ── Steps ── */
+.drw-steps{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.drw-step{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);}
+.drw-step.active{color:var(--text-1);}
+.step-icon-wrap{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-spin{width:14px;height:14px;border:2px solid var(--dp-purple-border);border-top-color:var(--dp-purple);border-radius:50%;animation:spin .7s linear infinite;}
+.step-idle-dot{width:8px;height:8px;border-radius:50%;background:var(--border);display:block;}
+.step-check-mark{width:16px;height:16px;border-radius:50%;background:var(--dp-green);display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── Entity card ── */
+.entity-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px;font-size:12px;}
+.entity-hd{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--surface);}
+.entity-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);}
+.entity-mode{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.mode-admin{background:var(--dp-purple-light);color:var(--dp-purple-dark);}
+.mode-sim{background:var(--dp-yellow-light);color:var(--dp-yellow);}
+.entity-rows{padding:0;}
+.entity-row{display:flex;align-items:baseline;gap:8px;padding:7px 12px;border-bottom:1px solid var(--border);}
+.entity-row:last-child{border-bottom:none;}
+.e-key{font-weight:600;color:var(--text-3);width:56px;flex-shrink:0;font-size:11px;}
+.e-val{color:var(--text-1);}
+.e-code{background:rgba(124,82,255,.08);color:var(--dp-purple-dark);border-radius:4px;padding:1px 5px;font-family:monospace;font-size:11px;}
+
+/* ── Emergency plan ── */
+.ep-card{border:1.5px solid var(--dp-emergency-border);border-radius:8px;overflow:hidden;background:var(--dp-emergency-surface);margin-bottom:10px;}
+.ep-hd{padding:10px 12px;border-bottom:1px solid var(--dp-emergency-border);}
+.ep-badge-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.ep-badge{font-size:10px;font-weight:700;background:var(--dp-emergency);color:#fff;padding:2px 8px;border-radius:10px;}
+.ep-scope{font-size:11px;font-weight:600;color:var(--dp-emergency);}
+.ep-title{font-size:13px;font-weight:700;color:var(--text-1);}
+.ep-subtitle{font-size:11px;color:var(--text-3);margin-top:2px;}
+.ep-changes{padding:0;}
+.ep-change{display:flex;gap:10px;padding:7px 12px;border-bottom:1px solid rgba(196,64,12,.15);}
+.ep-change:last-of-type{border-bottom:none;}
+.ep-num{width:20px;height:20px;border-radius:50%;background:var(--dp-emergency);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.ep-change-key{font-size:12px;font-weight:600;color:var(--text-1);}
+.ep-change-val{font-size:12px;color:var(--dp-emergency);margin-top:1px;}
+.ep-change-note{font-size:10px;color:var(--text-3);}
+.ep-guard{font-size:11px;color:var(--dp-emergency);padding:8px 12px;background:rgba(196,64,12,.06);border-top:1px solid var(--dp-emergency-border);}
+
+/* ── Diff preview ── */
+.diff-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px;font-size:12px;}
+.diff-hd{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:var(--bg);border-bottom:1px solid var(--border);}
+.diff-hd-title{font-size:11px;font-weight:700;color:var(--text-2);}
+.diff-table{width:100%;border-collapse:collapse;}
+.diff-table th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);padding:6px 10px;border-bottom:1px solid var(--border);background:var(--bg);}
+.diff-row{border-bottom:1px solid var(--border);}
+.diff-row:last-child{border-bottom:none;}
+.diff-row td{padding:7px 10px;vertical-align:middle;}
+.diff-cc{font-weight:500;color:var(--text-1);}
+.diff-region{font-size:11px;color:var(--text-3);}
+.diff-change{display:flex;align-items:center;gap:4px;font-size:11px;}
+.diff-old{color:var(--dp-red-danger);text-decoration:line-through;opacity:.7;}
+.diff-arr{color:var(--text-3);}
+.diff-new{color:var(--dp-green);font-weight:500;}
+.diff-new.sim{color:var(--dp-yellow);}
+.chip{font-size:10px;font-weight:600;padding:1px 6px;border-radius:8px;}
+.chip-update{background:var(--dp-purple-light);color:var(--dp-purple-dark);}
+.chip-update.sim{background:var(--dp-yellow-light);color:var(--dp-yellow);}
+.chip-skip{background:rgba(0,0,0,.06);color:var(--text-3);}
+.diff-more{padding:7px 10px;font-size:11px;color:var(--text-3);}
+.sim-note{font-size:11px;color:var(--dp-yellow);background:var(--dp-yellow-light);border-left:3px solid var(--dp-yellow-border);padding:7px 10px;margin-bottom:10px;border-radius:0 6px 6px 0;display:none;}
+
+/* ── Actions ── */
+.drw-actions{display:flex;flex-direction:column;gap:7px;margin-bottom:10px;}
+.drw-btn-apply{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--dp-purple);color:#fff;border:none;border-radius:7px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);width:100%;}
+.drw-btn-apply:hover{background:var(--dp-purple-dark);}
+.drw-btn-row{display:flex;gap:7px;}
+.drw-btn-sec{flex:1;background:none;border:1px solid var(--border);border-radius:7px;padding:7px 12px;font-size:12px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:var(--font);}
+.drw-btn-sec:hover{background:var(--bg);}
+
+/* ── Success ── */
+.drw-success-wrap{padding:8px 0;}
+.drw-success-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 10px;}
+.s-applied{background:var(--dp-green-light);color:var(--dp-green);}
+.s-simulated{background:var(--dp-yellow-light);color:var(--dp-yellow);}
+.s-emergency{background:var(--dp-emergency-surface);color:var(--dp-emergency);}
+.drw-success-title{text-align:center;font-size:14px;font-weight:700;margin-bottom:4px;}
+.drw-success-sub{text-align:center;font-size:12px;color:var(--text-3);margin-bottom:12px;line-height:1.5;}
+.drw-success-stat{border-radius:8px;padding:12px;text-align:center;margin-bottom:12px;}
+.ss-applied{background:var(--dp-green-light);border:1px solid var(--dp-green-light);}
+.ss-simulated{background:var(--dp-yellow-light);}
+.ss-emergency{background:var(--dp-emergency-surface);}
+.drw-success-num{font-size:28px;font-weight:800;line-height:1;}
+.sn-applied{color:var(--dp-green);}
+.sn-simulated{color:var(--dp-yellow);}
+.sn-emergency{color:var(--dp-emergency);}
+.drw-success-num-label{font-size:11px;color:var(--text-3);margin-top:3px;}
+.activity-box{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:10px 12px;margin-bottom:10px;font-size:12px;}
+.activity-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin-bottom:6px;}
+.activity-action{font-weight:600;color:var(--text-1);margin-bottom:2px;}
+.activity-time{font-size:11px;color:var(--text-3);}
+.activity-sub{font-size:11px;color:var(--text-3);margin-top:3px;}
+.drw-link-row{display:flex;gap:12px;justify-content:center;margin-bottom:12px;}
+.drw-link{background:none;border:none;font-size:12px;color:var(--dp-purple);cursor:pointer;font-family:var(--font);}
+.drw-link.danger{color:var(--dp-red-danger);}
+.drw-btn-again{width:100%;background:var(--dp-purple-light);color:var(--dp-purple-dark);border:1px solid var(--dp-purple-border);border-radius:7px;padding:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);}
+
+/* ── History ── */
+.hist-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin-bottom:10px;}
+.hist-row{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--border);}
+.hist-row:last-child{border-bottom:none;}
+.hist-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.hist-body{flex:1;min-width:0;}
+.hist-action{font-size:12px;font-weight:500;color:var(--text-1);}
+.hist-meta{font-size:11px;color:var(--text-3);margin-top:1px;}
+.hist-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0;white-space:nowrap;margin-top:2px;}
+.hs-done{background:var(--dp-green-light);color:var(--dp-green);}
+.hs-pending{background:var(--dp-yellow-light);color:var(--dp-yellow);}
+
+/* ── Drawer dock ── */
+.drw-dock{padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0;}
+.drw-input-wrap{position:relative;}
+.drw-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);color:var(--text-1);resize:none;line-height:1.4;transition:border-color .15s;}
+.drw-input:focus{outline:none;border-color:var(--dp-purple);}
+.drw-dock-row{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+.drw-hint{font-size:10px;color:var(--text-3);}
+.drw-dock-btns{display:flex;gap:6px;}
+.drw-sim-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:11px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:var(--font);}
+.drw-run-btn{background:var(--dp-purple);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);}
+.drw-run-btn:hover{background:var(--dp-purple-dark);}
+
+/* ── Reset btn ── */
+.drw-reset-btn{display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--text-3);cursor:pointer;font-family:var(--font);}
+.drw-reset-btn.visible{display:block;}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text-1);color:#fff;border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;opacity:0;transition:opacity .2s,transform .2s;z-index:999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.td-applied{background:var(--dp-green);color:#fff;}
+.td-simulated{background:var(--dp-yellow);color:#fff;}
+.toast-sep{opacity:.4;}
+.toast-link{color:rgba(255,255,255,.7);cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Icon nav -->
+  <nav class="icon-nav">
+    <div class="dp-logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 12C5 8.13 8.13 5 12 5v3.5C9.97 8.5 8.5 9.97 8.5 12S9.97 15.5 12 15.5V19c-3.87 0-7-3.13-7-7Z" fill="#fff"/><path d="M12 5c3.87 0 7 3.13 7 7s-3.13 7-7 7v-3.5c2.03 0 3.5-1.47 3.5-3.5S14.03 8.5 12 8.5V5Z" fill="rgba(255,255,255,.6)"/></svg>
+    </div>
+    <div class="icon-nav-items">
+      <div class="nav-icon" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="nav-icon" title="People"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div class="nav-icon active" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <div class="nav-icon" title="Analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <div class="nav-icon" title="History"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></div>
+    </div>
+    <div class="icon-nav-bottom">
+      <div class="avatar-sm">SL</div>
+    </div>
+  </nav>
+
+  <!-- Text nav -->
+  <nav class="text-nav">
+    <div class="text-nav-top">
+      <div class="tn-office">Dialpadbeta <span class="tn-chevron">▾</span></div>
+    </div>
+    <div class="tn-list">
+      <div class="tn-item"><div class="tn-item-left">Office</div></div>
+      <div class="tn-item"><div class="tn-item-left">Departments</div><span class="tn-add">+</span></div>
+
+      <div class="tn-section">Contact Centers</div>
+      <div class="tn-item active"><div class="tn-item-left">Contact Centers</div><span class="tn-add">+</span></div>
+
+      <div class="cc-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Find a contact center
+      </div>
+
+      <div class="cc-list-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91"/></svg> !!! 18 Digital V</div>
+      <div class="cc-list-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91"/></svg> !!! 18 Digital V Version 3</div>
+      <div class="cc-list-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> !!! Digital 1 Vj</div>
+      <div class="cc-list-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> !!! Digital Vj 2</div>
+      <div class="cc-list-item" style="color:var(--text-3);font-style:italic;font-size:11px;padding-left:20px;">+ 43 more…</div>
+
+      <div class="tn-item"><div class="tn-item-left">Geo. Routing</div><span class="tn-add">+</span></div>
+      <div class="tn-item"><div class="tn-item-left">Coaching Teams</div><span class="tn-add">+</span></div>
+      <div class="tn-item"><div class="tn-item-left">Channels &amp; Workflows</div></div>
+      <div class="tn-item"><div class="tn-item-left">AI Scorecards</div></div>
+      <div class="tn-item"><div class="tn-item-left">Billing</div></div>
+      <div class="tn-item"><div class="tn-item-left">Dialpad AI</div></div>
+      <div class="tn-item"><div class="tn-item-left">Privacy and Legal</div></div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="breadcrumb">
+        <span class="bc-item">Admin</span>
+        <span class="bc-sep">/</span>
+        <span class="bc-item">Dialpad, Inc. (Beta)</span>
+        <span class="bc-sep">/</span>
+        <span class="bc-item">Dialpadbeta</span>
+        <span class="bc-sep">/</span>
+        <span class="bc-item">Contact Centers</span>
+        <span class="bc-sep">/</span>
+        <span class="bc-item active" id="bcActive">Agent and Call Settings</span>
+      </div>
+      <div class="top-bar-right">
+        <div class="search-hc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search Help Center
+        </div>
+      </div>
+    </div>
+
+    <!-- Page -->
+    <div class="page-wrap">
+      <div class="page-hd">
+        <div class="page-hd-left">
+          <h1>Contact Centers Settings</h1>
+          <p>Settings applied to all contact centers in this office</p>
+        </div>
+        <div class="page-hd-right">
+          <!-- AI Admin Agent entry point — next to primary CTA -->
+          <button class="btn-ai" onclick="openDrawer()">
+            <span class="btn-ai-spark">✦</span> AI Admin Agent
+          </button>
+          <button class="btn-create">Create Contact Center</button>
+        </div>
+      </div>
+
+      <!-- Sub-tabs -->
+      <div class="sub-tabs">
+        <div class="sub-tab active" onclick="switchTab('agents', this)" id="tab-agents">Agent and Call Settings</div>
+        <div class="sub-tab" onclick="switchTab('digital', this)" id="tab-digital">Digital Settings</div>
+        <div class="sub-tab" onclick="switchTab('holidays', this)" id="tab-holidays">Contact Center Holidays</div>
+        <div class="sub-tab" onclick="switchTab('groups', this)" id="tab-groups">Agent Groups</div>
+        <div class="sub-tab" onclick="switchTab('advanced', this)" id="tab-advanced">Advanced Settings</div>
+      </div>
+
+      <!-- Agent and Call Settings -->
+      <div id="view-agents" class="settings-view active">
+
+        <div class="settings-block">
+          <div class="sb-title">Access Control</div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox" checked>
+            <div class="sb-row-text">
+              <div class="sb-row-label">Restrict agents from viewing contact center settings.</div>
+              <div class="sb-row-desc">When enabled, agents would not be able to view their specific contact center settings.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="sb-title">Do not route contact center calls to agents if they're:</div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox" checked>
+            <div class="sb-row-text"><div class="sb-row-label">On a personal or coaching team calls</div></div>
+          </div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox">
+            <div class="sb-row-text"><div class="sb-row-label">In a meeting</div></div>
+          </div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox" checked>
+            <div class="sb-row-text"><div class="sb-row-label">On an office or department calls</div></div>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="sb-title">Agent Unavailable Timer <span style="font-size:12px;color:var(--text-3);font-weight:400;">ⓘ</span></div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox">
+            <div class="sb-row-text"><div class="sb-row-label">Enable Agent Unavailable Timer</div></div>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="sb-title">Agent Call Transfer <span style="font-size:12px;color:var(--text-3);font-weight:400;">ⓘ</span></div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox">
+            <div class="sb-row-text"><div class="sb-row-label">Allow transferring contact center calls to unavailable agents</div></div>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="sb-title">SMS/MMS auto reply</div>
+          <div class="sb-desc">Automatically send a ready-made response to incoming SMS/MMS messages.</div>
+          <div class="sub-question">Use a default setting for all contact centers?</div>
+          <div class="sb-row" style="border:none;padding:4px 0;">
+            <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer;"><input type="radio" name="sms" class="dp-radio" style="margin:0"> Yes</label>
+          </div>
+          <div class="sb-row" style="border:none;padding:4px 0;">
+            <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer;"><input type="radio" name="sms" class="dp-radio" checked style="margin:0"> No</label>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="sb-title">Call Recording Backup Rules</div>
+          <div class="sb-desc">This feature allows for call recordings to be backed up automatically after every call.</div>
+          <div class="sb-row">
+            <input type="checkbox" class="dp-checkbox" checked id="backupCheck">
+            <div class="sb-row-text">
+              <div class="sb-row-label">Enable automatic call recording backup</div>
+              <div class="sb-row-desc" style="margin-top:6px;">Choose which contact centers can use this feature.</div>
+              <select class="dp-select" style="margin-top:6px;">
+                <option>Contact centers (5)</option>
+                <option>All contact centers</option>
+              </select>
+            </div>
+          </div>
+          <div style="padding-top:10px;">
+            <button class="backup-btn">↻ Backup now</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Digital Settings -->
+      <div id="view-digital" class="settings-view">
+        <div class="settings-block">
+          <div class="sb-title">Digital Channel Settings</div>
+          <div class="sb-desc">Configure settings that apply to digital channels across all contact centers.</div>
+          <div class="sb-row">
+            <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"></span></label>
+            <div class="sb-row-text"><div class="sb-row-label">Enable live chat for contact centers</div><div class="sb-row-desc">Allows customers to initiate chats via web widget</div></div>
+          </div>
+          <div class="sb-row">
+            <label class="dp-toggle"><input type="checkbox"><span class="dp-track"></span></label>
+            <div class="sb-row-text"><div class="sb-row-label">Require agent availability for digital channels</div><div class="sb-row-desc">Offline message shown when no agents are available</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Center Holidays -->
+      <div id="view-holidays" class="settings-view">
+        <div class="settings-block">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div>
+              <div class="sb-title">Contact Center Holidays</div>
+              <div class="sb-desc" style="margin:0;">Configure holiday closures that apply across all contact centers in this office.</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn-ai" onclick="openDrawer(); aipFill('Set all contact centers closed on Dec 25 and Jan 1 for the holidays')">✦ Ask AI to set holidays</button>
+              <button class="add-holiday-btn">+ Add holiday</button>
+            </div>
+          </div>
+
+          <div class="holiday-empty">
+            <div class="holiday-empty-icon">📅</div>
+            <div class="holiday-empty-text">No holiday hours set for this office.</div>
+            <div class="holiday-empty-sub">Holiday closures apply globally to all contact centers unless overridden per CC.</div>
+            <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
+              <button class="add-holiday-btn">+ Add holiday manually</button>
+            </div>
+            <div style="margin-top:10px;">
+              <span class="ai-suggest" onclick="openDrawer(); aipFill('Add common US federal holidays for 2026 to all contact centers — include New Years, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas')">✦ Ask AI to add US federal holidays →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Groups -->
+      <div id="view-groups" class="settings-view">
+        <div class="settings-block">
+          <div class="sb-title">Agent Groups</div>
+          <div class="sb-desc">Group agents across contact centers by skill, team, or availability.</div>
+          <div style="padding:24px 0;text-align:center;color:var(--text-3);font-size:13px;">No agent groups configured. <span class="ai-suggest" onclick="openDrawer(); aipFill('Create an agent group for all senior agents across NA contact centers')">✦ Ask AI to create a group →</span></div>
+        </div>
+      </div>
+
+      <!-- Advanced Settings -->
+      <div id="view-advanced" class="settings-view">
+        <div class="settings-block">
+          <div class="sb-title">Advanced Settings</div>
+          <div class="sb-desc">Advanced configuration options for contact center behavior.</div>
+          <div class="sb-row">
+            <label class="dp-toggle"><input type="checkbox"><span class="dp-track"></span></label>
+            <div class="sb-row-text"><div class="sb-row-label">Enable contact center monitoring</div><div class="sb-row-desc">Allow supervisors to monitor and barge in on calls</div></div>
+          </div>
+          <div class="sb-row">
+            <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"></span></label>
+            <div class="sb-row-text"><div class="sb-row-label">Enable whisper coaching</div><div class="sb-row-desc">Supervisors can speak to agents without the caller hearing</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-wrap -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ── AI Admin Agent Drawer ── -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="ai-drawer" id="aiDrawer">
+
+  <div class="drw-hd">
+    <div class="drw-hd-left">
+      <div class="drw-icon">✦</div>
+      <div class="drw-title">AI Admin Agent</div>
+      <div class="drw-ctx" id="drwCtx">All CCs</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <button class="drw-reset-btn" id="drwResetBtn" onclick="aipReset()">New chat</button>
+      <button class="drw-close" onclick="closeDrawer()">✕</button>
+    </div>
+  </div>
+
+  <div class="drw-tabs">
+    <div class="drw-tab active" id="dtab-cmd" onclick="aipSwitchTab('cmd')">Ask AI</div>
+    <div class="drw-tab" id="dtab-history" onclick="aipSwitchTab('history')">History</div>
+  </div>
+
+  <div class="drw-body" id="drwBody">
+
+    <!-- ASK AI tab -->
+    <div id="dpanel-cmd">
+
+      <!-- IDLE -->
+      <div id="aipIdle">
+        <div class="proactive-card">
+          <div class="pc-top">
+            <div class="pc-spark">✦</div>
+            <div class="pc-title">5 contact centers have settings issues</div>
+          </div>
+          <div class="pc-desc">Sales East, Support West, and Canada Support have recording off. UK Support and Canada Support are missing holiday hours for Dec 25 and Jan 1.</div>
+          <div class="pc-actions">
+            <button class="pc-cta" onclick="aipSubmit('Fix all settings issues across contact centers: enable recording on Sales East, Support West, and Canada Support, and add Dec 25 and Jan 1 holiday closures for UK Support and Canada Support', false)">Fix all →</button>
+            <button class="pc-ghost" onclick="aipFill('Show me all contact centers with issues')">View issues</button>
+          </div>
+        </div>
+
+        <div class="qa-wrap">
+          <button class="qa-btn" onclick="toggleQA(event)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            Quick actions
+            <span class="qa-chevron">▾</span>
+          </button>
+          <div class="qa-menu" id="qaMenu">
+            <div class="qa-group">Hours &amp; Holidays</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')">Set NA holiday closures · Dec 25 + Jan 1</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Add US federal holidays for 2026 to all contact centers')">Add US federal holidays · all CCs</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Shorten Friday hours by 1 hour for NA support contact centers next quarter')">Shorten Friday hours · NA support</div>
+
+            <div class="qa-group">Call Recording</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable automatic call recording on all contact centers that have it disabled')">Enable recording · all CCs with issues</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable call recording backup for all contact centers')">Enable recording backup · all CCs</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable recording · EU GDPR</div>
+
+            <div class="qa-group">Agent Settings</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable agent unavailable timer set to 5 minutes for all contact centers')">Enable agent unavailable timer · 5 min</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Restrict agents from viewing contact center settings across all CCs')">Restrict agent settings visibility</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up time 90s · all CCs</div>
+
+            <div class="qa-group">Call Routing</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Change routing method to round robin for all NA contact centers')">Set round robin routing · NA</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Set overflow routing to voicemail for all contact centers when no agents available')">Set overflow → voicemail · all CCs</div>
+
+            <div class="qa-group">AI Features</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable Dialpad AI features — transcription, summaries, and AI CSAT — on all contact centers')">Enable Dialpad AI · all CCs</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable PII redaction on all contact center transcripts and recordings')">Enable PII redaction · all</div>
+
+            <div class="qa-divider"></div>
+            <div class="qa-group qa-group-em">Emergency &amp; Disaster</div>
+            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup, and close for 72 hours')">Hurricane mode · FL contact centers</div>
+            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Deploy emergency IVR message to all contact centers: operating at reduced capacity due to severe weather')">Emergency IVR · all contact centers</div>
+            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Restore all Florida contact centers to normal operations after hurricane')">Restore normal · FL contact centers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAT -->
+      <div id="aipChat" class="drw-chat-hidden">
+        <div class="user-bubble-wrap">
+          <div class="user-bubble" id="aipUserMsg">…</div>
+        </div>
+        <div id="aipSteps" class="drw-steps">
+          <div class="drw-step active" id="ds1"><div class="step-icon-wrap"><div class="step-spin" id="ds1s"></div><div class="step-check-mark" id="ds1c" style="display:none;">✓</div></div><span id="ds1t">Identifying contact centers…</span></div>
+          <div class="drw-step" id="ds2"><div class="step-icon-wrap"><span class="step-idle-dot" id="ds2s"></span><div class="step-check-mark" id="ds2c" style="display:none;">✓</div></div><span id="ds2t">Parsing intent &amp; settings…</span></div>
+          <div class="drw-step" id="ds3"><div class="step-icon-wrap"><span class="step-idle-dot" id="ds3s"></span><div class="step-check-mark" id="ds3c" style="display:none;">✓</div></div><span id="ds3t">Building change preview…</span></div>
+        </div>
+        <div id="aipResponse" style="display:none;">
+          <div class="sim-note" id="aipSimNote"></div>
+
+          <!-- Entity card -->
+          <div class="entity-card" id="aipCard">
+            <div class="entity-hd">
+              <span class="entity-label">AI understood</span>
+              <span class="entity-mode mode-admin" id="aipModeTag">Admin · will apply</span>
+            </div>
+            <div class="entity-rows">
+              <div class="entity-row"><span class="e-key">Target</span><span class="e-val" id="eTarget">23 CCs with <span class="e-code">recording disabled</span></span></div>
+              <div class="entity-row"><span class="e-key">When</span><span class="e-val" id="eWhen">Immediate</span></div>
+              <div class="entity-row"><span class="e-key">Change</span><span class="e-val" id="eChange">Recording → <span class="e-code">Enabled</span></span></div>
+              <div class="entity-row"><span class="e-key">Guard</span><span class="e-val" id="eGuard">Affects <strong>23 CCs</strong> — confirmation required</span></div>
+            </div>
+          </div>
+
+          <!-- Emergency plan -->
+          <div class="ep-card drw-chat-hidden" id="emergencyPlan">
+            <div class="ep-hd">
+              <div class="ep-badge-row"><span class="ep-badge" id="epBadge">Emergency Mode</span><span class="ep-scope" id="epScope">4 Florida CCs</span></div>
+              <div class="ep-title" id="epTitle">Hurricane activation plan</div>
+              <div class="ep-subtitle" id="epSubtitle">5 coordinated changes · activates immediately</div>
+            </div>
+            <div class="ep-changes">
+              <div class="ep-change"><div class="ep-num">1</div><div><div class="ep-change-key">IVR / Welcome Greeting</div><div class="ep-change-val" id="ep1val">→ hurricane_emergency_2026.mp3</div><div class="ep-change-note" id="ep1note">replaces standard welcome</div></div></div>
+              <div class="ep-change"><div class="ep-num">2</div><div><div class="ep-change-key">Business Hours</div><div class="ep-change-val" id="ep2val">→ Closed · 72 hours</div><div class="ep-change-note" id="ep2note">override through Apr 26</div></div></div>
+              <div class="ep-change"><div class="ep-num">3</div><div><div class="ep-change-key">Call Routing</div><div class="ep-change-val" id="ep3val">→ Overflow to Austin TX</div><div class="ep-change-note" id="ep3note">backup CCs standing by</div></div></div>
+              <div class="ep-change"><div class="ep-num">4</div><div><div class="ep-change-key">Call Recording</div><div class="ep-change-val" id="ep4val">→ Enabled (forced)</div><div class="ep-change-note" id="ep4note">compliance requirement</div></div></div>
+              <div class="ep-change"><div class="ep-num">5</div><div><div class="ep-change-key">After-hours Message</div><div class="ep-change-val" id="ep5val">→ hurricane_afterhours.mp3</div><div class="ep-change-note" id="ep5note">plays when closed</div></div></div>
+            </div>
+            <div class="ep-guard" id="epGuard">Affects all inbound calls · revert with "restore normal operations"</div>
+          </div>
+
+          <!-- Diff preview -->
+          <div class="diff-wrap" id="diffPreview">
+            <div class="diff-hd">
+              <span class="diff-hd-title" id="diffTitle">Preview — 23 contact centers</span>
+              <label style="font-size:11px;display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="checkbox" checked onchange="toggleAll(this)" style="accent-color:var(--dp-purple)"> All</label>
+            </div>
+            <table class="diff-table">
+              <thead><tr><th style="width:28px"></th><th>Contact center</th><th>Region</th><th>Change</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr class="diff-row"><td><input type="checkbox" class="pcb" checked style="accent-color:var(--dp-purple)" onchange="syncRows()"></td><td class="diff-cc">Sales East</td><td class="diff-region">NA</td><td><div class="diff-change"><span class="diff-old" id="from1">Off</span><span class="diff-arr">→</span><span class="diff-new" id="to1">On</span></div></td><td><span class="chip chip-update" id="chip1">Update</span></td></tr>
+                <tr class="diff-row"><td><input type="checkbox" class="pcb" checked style="accent-color:var(--dp-purple)" onchange="syncRows()"></td><td class="diff-cc">Support West</td><td class="diff-region">NA</td><td><div class="diff-change"><span class="diff-old" id="from2">Off</span><span class="diff-arr">→</span><span class="diff-new" id="to2">On</span></div></td><td><span class="chip chip-update" id="chip2">Update</span></td></tr>
+                <tr class="diff-row"><td><input type="checkbox" class="pcb" style="accent-color:var(--dp-purple)" onchange="syncRows()"></td><td class="diff-cc">EMEA Sales</td><td class="diff-region">EU</td><td><div class="diff-change"><span class="diff-old" id="from3">Off</span><span class="diff-arr">→</span><span class="diff-new" id="to3">On</span></div></td><td><span class="chip chip-skip" id="chip3">Excluded</span></td></tr>
+                <tr class="diff-row"><td><input type="checkbox" class="pcb" checked style="accent-color:var(--dp-purple)" onchange="syncRows()"></td><td class="diff-cc">Canada Support</td><td class="diff-region">NA</td><td><div class="diff-change"><span class="diff-old" id="from4">Off</span><span class="diff-arr">→</span><span class="diff-new" id="to4">On</span></div></td><td><span class="chip chip-update" id="chip4">Update</span></td></tr>
+                <tr class="diff-row"><td><input type="checkbox" class="pcb" checked style="accent-color:var(--dp-purple)" onchange="syncRows()"></td><td class="diff-cc">UK Support</td><td class="diff-region">EU</td><td><div class="diff-change"><span class="diff-old" id="from5">Off</span><span class="diff-arr">→</span><span class="diff-new" id="to5">On</span></div></td><td><span class="chip chip-update" id="chip5">Update</span></td></tr>
+                <tr><td colspan="5" class="diff-more">+ 18 more contact centers</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="drw-actions">
+            <button class="drw-btn-apply" onclick="aipApply()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Apply to <span id="aipApplyCount">23</span> contact centers
+            </button>
+            <div class="drw-btn-row">
+              <button class="drw-btn-sec" onclick="aipSimulate()">👁 Simulate</button>
+              <button class="drw-btn-sec" onclick="aipReset()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div id="aipSuccess" class="drw-chat-hidden">
+        <div class="user-bubble-wrap">
+          <div class="user-bubble" id="aipSuccessUserMsg">…</div>
+        </div>
+        <div class="drw-success-wrap">
+          <div class="drw-success-icon s-applied" id="aipSuccessIcon">✓</div>
+          <div class="drw-success-title" id="aipSuccessTitle">Changes applied</div>
+          <div class="drw-success-sub" id="aipSuccessSub">Settings updated across your contact centers.</div>
+          <div class="drw-success-stat ss-applied" id="aipSuccessStat">
+            <div class="drw-success-num sn-applied" id="aipSuccessNum">23</div>
+            <div class="drw-success-num-label" id="aipSuccessNumLabel">contact centers updated</div>
+          </div>
+          <div class="activity-box">
+            <div class="activity-label">Activity log</div>
+            <div class="activity-action" id="aipAeAction">Call recording → Enabled</div>
+            <div class="activity-time">Just now · you</div>
+            <div class="activity-sub" id="aipAeSub">Applied to 23 CCs · Revert available for 30 min</div>
+          </div>
+          <div class="drw-link-row">
+            <button class="drw-link">↗ View audit log</button>
+            <button class="drw-link danger">↩ Revert batch</button>
+          </div>
+          <button class="drw-btn-again" onclick="aipReset()">Make another change</button>
+        </div>
+      </div>
+
+    </div><!-- /dpanel-cmd -->
+
+    <!-- HISTORY tab -->
+    <div id="dpanel-history" style="display:none;">
+      <div class="hist-label">Recent bulk changes</div>
+      <div class="hist-row"><span class="hist-icon">⏺</span><div class="hist-body"><div class="hist-action">Enabled call recording on 23 contact centers</div><div class="hist-meta">Apr 16, 2026 · by you · 23 CCs</div></div><span class="hist-status hs-done">Done</span></div>
+      <div class="hist-row"><span class="hist-icon">🗓</span><div class="hist-body"><div class="hist-action">Set Easter holiday hours across 8 NA queues</div><div class="hist-meta">Apr 2, 2026 · by you · 8 CCs</div></div><span class="hist-status hs-done">Done</span></div>
+      <div class="hist-row" style="border-color:var(--dp-yellow-border)"><span class="hist-icon">👁</span><div class="hist-body"><div class="hist-action">Simulate: APAC routing overflow + timeout changes</div><div class="hist-meta">Apr 10, 2026 · J. Martinez · Pending review</div></div><span class="hist-status hs-pending">Pending</span></div>
+      <div class="hist-row"><span class="hist-icon">👥</span><div class="hist-body"><div class="hist-action">Added 3 agents to Sales East, Support West</div><div class="hist-meta">Mar 28, 2026 · by you · 2 CCs</div></div><span class="hist-status hs-done">Done</span></div>
+      <div class="hist-row"><span class="hist-icon">⏱</span><div class="hist-body"><div class="hist-action">Set wrap-up time to 60s across 12 NA CCs</div><div class="hist-meta">Mar 15, 2026 · by you</div></div><span class="hist-status hs-done">Done</span></div>
+    </div>
+
+  </div><!-- /drw-body -->
+
+  <div class="drw-dock">
+    <div class="drw-input-wrap">
+      <textarea class="drw-input" id="aipInput" rows="2" placeholder="Ask me to change settings across your contact centers…" onkeydown="handleKey(event)"></textarea>
+    </div>
+    <div class="drw-dock-row">
+      <span class="drw-hint">Enter to run · Shift+Enter for new line</span>
+      <div class="drw-dock-btns">
+        <button class="drw-sim-btn" onclick="aipRunSimulate()">Simulate</button>
+        <button class="drw-run-btn" onclick="aipRun()">Run ✦</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /ai-drawer -->
+
+<div class="toast" id="toast">
+  <div class="toast-dot td-applied" id="toastDot">✓</div>
+  <span id="toastMsg">Settings updated for <strong id="toastNum">23</strong> contact centers</span>
+  <span class="toast-sep">·</span>
+  <span class="toast-link">View audit log</span>
+</div>
+
+<script>
+let isSimulate = false, isEmergency = false, lastCmd = '', activeTab = 'cmd';
+
+// ── Drawer open/close ──
+function openDrawer() {
+  document.getElementById('aiDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  updateCtxFromTab();
+}
+function closeDrawer() {
+  document.getElementById('aiDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+}
+function updateCtxFromTab() {
+  const active = document.querySelector('.sub-tab.active');
+  if (active) document.getElementById('drwCtx').textContent = active.textContent;
+}
+
+// ── Sub-tab switching ──
+function switchTab(name, el) {
+  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.settings-view').forEach(v => v.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('view-' + name).classList.add('active');
+  document.getElementById('bcActive').textContent = el.textContent;
+  updateCtxFromTab();
+  const proactives = {
+    holidays: { title:'Holiday hours missing for most CCs', desc:'No holiday closures are configured. Add Dec 25, Jan 1, and other key dates — or ask AI to add US federal holidays automatically.', cta:'Add US holidays →', cmd:'Add US federal holidays for 2026 to all contact centers in this office — New Years, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas' },
+    agents: { title:'5 contact centers have settings issues', desc:'Sales East, Support West, and Canada Support have recording off. UK Support and Canada Support are missing holiday hours.', cta:'Fix all →', cmd:'Fix all settings issues: enable recording on Sales East, Support West, Canada Support, and add Dec 25 and Jan 1 holiday closures for UK Support and Canada Support' },
+    digital: { title:'Digital channel settings not configured', desc:'Live chat and digital routing settings haven\'t been customized. AI can apply standard settings across all CCs.', cta:'Apply defaults →', cmd:'Apply default digital channel settings across all contact centers — enable live chat and set offline message' },
+    groups: { title:'No agent groups configured', desc:'Agent groups let you route calls by skill and availability. AI can create standard groups based on your CC roster.', cta:'Create groups →', cmd:'Create agent groups for NA, EU, and APAC contact centers based on current agent rosters' },
+    advanced: { title:'Advanced settings at defaults', desc:'Monitoring and whisper coaching settings can be configured across all CCs in one command.', cta:'Configure →', cmd:'Enable supervisor monitoring and whisper coaching across all contact centers' }
+  };
+  const p = proactives[name] || proactives['agents'];
+  document.querySelector('.pc-title').textContent = p.title;
+  document.querySelector('.pc-desc').textContent = p.desc;
+  document.querySelector('.pc-cta').textContent = p.cta;
+  document.querySelector('.pc-cta').onclick = () => aipSubmit(p.cmd, false);
+  document.querySelector('.pc-ghost').onclick = () => aipFill(p.cmd);
+}
+
+// ── Tabs ──
+function aipSwitchTab(tab) {
+  activeTab = tab;
+  ['cmd','history'].forEach(t => {
+    document.getElementById('dtab-'+t).classList.toggle('active', t===tab);
+    const el = document.getElementById('dpanel-'+t);
+    if (el) el.style.display = t===tab ? 'block' : 'none';
+  });
+}
+
+// ── Quick actions ──
+function toggleQA(e) {
+  e.stopPropagation();
+  const m = document.getElementById('qaMenu'), b = e.currentTarget;
+  const open = m.classList.contains('open');
+  m.classList.toggle('open', !open); b.classList.toggle('open', !open);
+}
+function closeQA() {
+  document.getElementById('qaMenu').classList.remove('open');
+  document.querySelector('.qa-btn')?.classList.remove('open');
+}
+document.addEventListener('click', e => { if (!e.target.closest('.qa-wrap')) closeQA(); });
+
+// ── Fill ──
+function aipFill(text) {
+  if (!document.getElementById('aiDrawer').classList.contains('open')) openDrawer();
+  aipSwitchTab('cmd');
+  document.getElementById('aipInput').value = text;
+  document.getElementById('aipInput').focus();
+}
+
+// ── Run ──
+function aipRun() { const t = document.getElementById('aipInput').value.trim(); if (t) aipSubmit(t, false); }
+function aipRunSimulate() { const t = document.getElementById('aipInput').value.trim(); if (t) aipSubmit(t, true); }
+function handleKey(e) { if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); aipRun(); } }
+
+// ── Submit ──
+function aipSubmit(text, sim) {
+  isSimulate = sim; lastCmd = text;
+  if (!document.getElementById('aiDrawer').classList.contains('open')) openDrawer();
+  aipSwitchTab('cmd');
+  document.getElementById('aipIdle').style.display = 'none';
+  document.getElementById('aipSuccess').className = 'drw-chat-hidden';
+  document.getElementById('aipChat').className = '';
+  document.getElementById('aipResponse').style.display = 'none';
+  document.getElementById('aipSteps').style.display = '';
+  document.getElementById('aipUserMsg').textContent = text;
+  document.getElementById('aipInput').value = '';
+  document.getElementById('drwResetBtn').classList.add('visible');
+  setEntityCtx(text);
+  resetStepIcons();
+  document.getElementById('drwBody').scrollTop = 0;
+  animStep(1, 750, () => animStep(2, 650, () => animStep(3, 550, showResponse)));
+}
+
+// ── Step animation ──
+function resetStepIcons() {
+  [1,2,3].forEach(i => {
+    const s = document.getElementById('ds'+i+'s'), c = document.getElementById('ds'+i+'c');
+    if (i===1) { s.className='step-spin'; } else { s.outerHTML='<span class="step-idle-dot" id="ds'+i+'s"></span>'; }
+    if (c) c.style.display='none';
+    document.getElementById('ds'+i).classList.toggle('active', i===1);
+  });
+}
+function animStep(n, delay, cb) {
+  const s = document.getElementById('ds'+n+'s'), c = document.getElementById('ds'+n+'c');
+  if (n>1 && s) { const ns = document.createElement('div'); ns.className='step-spin'; ns.id='ds'+n+'s'; s.replaceWith(ns); }
+  document.getElementById('ds'+n).classList.add('active');
+  setTimeout(() => {
+    const fresh = document.getElementById('ds'+n+'s');
+    if (fresh) fresh.style.display='none';
+    if (c) c.style.display='flex';
+    if (n<3) document.getElementById('ds'+(n+1)).classList.add('active');
+    setTimeout(cb, 150);
+  }, delay);
+}
+function showResponse() {
+  document.getElementById('aipSteps').style.display='none';
+  document.getElementById('aipResponse').style.display='';
+  if (isEmergency) {
+    document.getElementById('aipCard').style.display='none';
+    document.getElementById('emergencyPlan').className='ep-card';
+    document.getElementById('diffPreview').style.display='none';
+  } else {
+    document.getElementById('aipCard').style.display='';
+    document.getElementById('emergencyPlan').className='ep-card drw-chat-hidden';
+    document.getElementById('diffPreview').style.display='';
+  }
+  syncRows(); computeCount();
+}
+
+// ── Simulate ──
+function aipSimulate() {
+  isSimulate=true;
+  document.getElementById('aipSimNote').style.display='block';
+  document.getElementById('aipSimNote').innerHTML='<strong>Simulate mode:</strong> Draft plan submitted for admin review. No changes apply until approved.';
+  document.getElementById('aipCard').style.background='var(--dp-yellow-light)';
+  document.getElementById('aipModeTag').className='entity-mode mode-sim';
+  document.getElementById('aipModeTag').textContent='Simulate · draft plan';
+  document.querySelectorAll('.diff-new').forEach(el=>el.classList.add('sim'));
+  document.querySelectorAll('.chip-update').forEach(el=>el.classList.add('sim'));
+}
+
+// ── Apply ──
+function aipApply() {
+  const count = document.getElementById('aipApplyCount').textContent;
+  document.getElementById('aipSuccessUserMsg').textContent = lastCmd;
+  const icon = document.getElementById('aipSuccessIcon');
+  const isRestore = lastCmd.toLowerCase().includes('restore');
+  if (isEmergency) {
+    icon.className='drw-success-icon s-emergency'; icon.textContent='⚠';
+    document.getElementById('aipSuccessTitle').textContent = isRestore?'Emergency Mode Deactivated':'Emergency Mode Activated';
+    document.getElementById('aipSuccessSub').textContent = isRestore?'Contact centers restored to normal.':'5 coordinated changes applied across affected CCs.';
+    document.getElementById('aipSuccessStat').className='drw-success-stat ss-emergency';
+    document.getElementById('aipSuccessNum').className='drw-success-num sn-emergency';
+  } else {
+    icon.className='drw-success-icon '+(isSimulate?'s-simulated':'s-applied'); icon.textContent=isSimulate?'👁':'✓';
+    document.getElementById('aipSuccessTitle').textContent=isSimulate?'Plan submitted for review':'Changes applied';
+    document.getElementById('aipSuccessSub').textContent=isSimulate?'Draft plan sent to admin for approval.':'Settings updated across your contact centers.';
+    document.getElementById('aipSuccessStat').className='drw-success-stat '+(isSimulate?'ss-simulated':'ss-applied');
+    document.getElementById('aipSuccessNum').className='drw-success-num '+(isSimulate?'sn-simulated':'sn-applied');
+  }
+  document.getElementById('aipSuccessNum').textContent=count;
+  const c=lastCmd.toLowerCase();
+  const action=c.includes('recording')?'Call recording → Enabled':c.includes('holiday')||c.includes('dec')?'Holiday hours set · Dec 25, Jan 1':c.includes('routing')?'Routing method updated':c.includes('agent')?'Agent settings updated':c.includes('ai')?'AI features → Enabled':'Settings updated';
+  document.getElementById('aipAeAction').textContent=isSimulate?'Simulate plan submitted · pending approval':action;
+  document.getElementById('aipAeSub').textContent=isSimulate?count+' CCs in draft · submitted by you':'Applied to '+count+' CCs · Revert available 30 min';
+  document.getElementById('aipSuccessNumLabel').textContent=isSimulate?'contact centers in plan':isEmergency&&!isRestore?'CCs in emergency mode':'contact centers updated';
+  document.getElementById('aipChat').className='drw-chat-hidden';
+  document.getElementById('aipSuccess').className='';
+  document.getElementById('drwBody').scrollTop=0;
+  const td=document.getElementById('toastDot');
+  td.className='toast-dot '+(isSimulate?'td-simulated':'td-applied');
+  td.textContent=isSimulate?'👁':'✓';
+  document.getElementById('toastNum').textContent=count;
+  document.getElementById('toastMsg').innerHTML=(isSimulate?'Plan submitted · ':'Settings updated · ')+'<strong id="toastNum">'+count+'</strong> contact centers';
+  const t=document.getElementById('toast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),4500);
+}
+
+// ── Reset ──
+function aipReset() {
+  isSimulate=false; isEmergency=false; lastCmd='';
+  document.getElementById('aipIdle').style.display='';
+  document.getElementById('aipChat').className='drw-chat-hidden';
+  document.getElementById('aipSuccess').className='drw-chat-hidden';
+  document.getElementById('aipResponse').style.display='none';
+  document.getElementById('aipInput').value='';
+  document.getElementById('drwResetBtn').classList.remove('visible');
+  document.querySelectorAll('.pcb').forEach((cb,i)=>{ cb.checked = i!==2; });
+  document.getElementById('aipCard').style.background='';
+  document.getElementById('aipSimNote').style.display='none';
+  document.querySelectorAll('.diff-new').forEach(el=>el.classList.remove('sim'));
+  document.querySelectorAll('.chip-update').forEach(el=>el.classList.remove('sim'));
+  syncRows(); computeCount();
+  document.getElementById('drwBody').scrollTop=0;
+}
+
+// ── Entity context ──
+function setEntityCtx(cmd) {
+  const c=cmd.toLowerCase();
+  const t=document.getElementById('eTarget'), w=document.getElementById('eWhen'), ch=document.getElementById('eChange'), g=document.getElementById('eGuard');
+  const mt=document.getElementById('aipModeTag');
+  mt.className='entity-mode mode-admin'; mt.textContent='Admin · will apply';
+  document.getElementById('aipCard').style.background='';
+  document.getElementById('aipSimNote').style.display='none';
+  document.getElementById('ds2t').textContent='Parsing intent & settings…';
+  document.getElementById('ds3t').textContent='Building change preview…';
+
+  const isRestore=c.includes('restore')||c.includes('normal operation');
+  if (c.includes('hurricane')||c.includes('emergency')&&c.includes('florida')||c.includes('disaster routing')||c.includes('emergency ivr')||(c.includes('emergency')&&c.includes('message'))||isRestore) {
+    isEmergency=true;
+    document.getElementById('ds2t').textContent='Identifying affected contact centers…';
+    document.getElementById('ds3t').textContent=isRestore?'Building restore plan…':'Building emergency activation plan…';
+    const eb=document.getElementById('epBadge'), es=document.getElementById('epScope');
+    if (isRestore) { eb.textContent='Restore Mode'; eb.style.background='var(--dp-green)'; es.textContent='4 Florida CCs'; es.style.color='var(--dp-green)'; document.getElementById('epTitle').textContent='Restore to normal operations'; document.getElementById('epSubtitle').textContent='5 coordinated changes · activates immediately'; document.getElementById('ep1val').textContent='→ welcome_standard.mp3'; document.getElementById('ep2val').textContent='→ Normal business hours restored'; document.getElementById('ep3val').textContent='→ Direct routing restored'; document.getElementById('ep4val').textContent='→ Standard recording rules'; document.getElementById('ep5val').textContent='→ afterhours_standard.mp3'; document.getElementById('epGuard').textContent='Removes all emergency overrides · CCs return to normal immediately'; document.getElementById('epGuard').style.color='var(--dp-green)'; document.getElementById('aipApplyCount').textContent='4'; }
+    else if (c.includes('hurricane')) { eb.textContent='Emergency Mode'; eb.style.background='var(--dp-emergency)'; es.textContent='4 Florida CCs'; es.style.color='var(--dp-emergency)'; document.getElementById('epTitle').textContent='Hurricane activation plan'; document.getElementById('epSubtitle').textContent='5 coordinated changes · activates immediately'; document.getElementById('ep1val').textContent='→ hurricane_emergency_2026.mp3'; document.getElementById('ep2val').textContent='→ Closed · next 72 hours'; document.getElementById('ep3val').textContent='→ Overflow to Austin TX backup'; document.getElementById('ep4val').textContent='→ Enabled (forced)'; document.getElementById('ep5val').textContent='→ hurricane_afterhours.mp3'; document.getElementById('epGuard').textContent='Affects all inbound calls · revert with "restore normal operations"'; document.getElementById('epGuard').style.color='var(--dp-emergency)'; document.getElementById('aipApplyCount').textContent='4'; }
+    else { eb.textContent='Emergency IVR'; eb.style.background='var(--dp-emergency)'; es.textContent='All 47 CCs'; es.style.color='var(--dp-emergency)'; document.getElementById('epTitle').textContent='Emergency IVR deployment'; document.getElementById('epSubtitle').textContent='2 coordinated changes · activates immediately'; document.getElementById('ep1val').textContent='→ emergency_reduced_capacity.mp3'; document.getElementById('ep2val').textContent='→ Queue hold message updated'; document.getElementById('ep3val').textContent='→ No change'; document.getElementById('ep4val').textContent='→ No change'; document.getElementById('ep5val').textContent='→ emergency_afterhours_all.mp3'; document.getElementById('epGuard').textContent='Affects all inbound callers · revert with "restore standard IVR"'; document.getElementById('epGuard').style.color='var(--dp-emergency)'; document.getElementById('aipApplyCount').textContent='47'; }
+    return;
+  }
+  isEmergency=false;
+
+  if (c.includes('recording')&&(c.includes('enable')||c.includes('backup')||c.includes('all'))) {
+    t.innerHTML=c.includes('backup')?'All <span class="e-code">contact centers</span>':'23 CCs with <span class="e-code">recording disabled</span>'; w.textContent='Immediate'; ch.innerHTML='Call recording → <span class="e-code">Enabled</span>'; g.innerHTML='Compliance change — affects <strong>'+(c.includes('backup')?'all':'23')+' CCs</strong>'; setDiff('Off','On'); document.getElementById('aipApplyCount').textContent=c.includes('backup')?'47':'23';
+  } else if (c.includes('recording')&&(c.includes('disable')||c.includes('gdpr'))) {
+    t.innerHTML='CCs in <span class="e-code">Germany and France</span>'; w.textContent='Immediate'; ch.innerHTML='Recording → <span class="e-code">Disabled</span>'; g.innerHTML='<strong>GDPR compliance</strong> — disables recording in EU'; setDiff('On','Off'); document.getElementById('aipApplyCount').textContent='6';
+  } else if (c.includes('holiday')||c.includes('dec 25')||c.includes('jan 1')||c.includes('christmas')) {
+    t.innerHTML=c.includes('all')||c.includes('federal')?'All <span class="e-code">47 contact centers</span>':'CCs with <span class="e-code">missing holiday hours</span>'; w.textContent=c.includes('federal')?'Recurring annually':'One-time · Dec 25 + Jan 1 2026'; ch.innerHTML='Holiday hours → <span class="e-code">Closed</span>'; g.innerHTML='Affects inbound calls on holiday dates — confirmation required'; setDiff('Not set','Closed'); document.getElementById('aipApplyCount').textContent=c.includes('federal')?'47':'8';
+    document.getElementById('ds2t').textContent='Checking existing holiday hours…'; document.getElementById('ds3t').textContent='Staging holiday schedule…';
+  } else if (c.includes('unavailable timer')) {
+    t.innerHTML='All <span class="e-code">47 contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='Agent Unavailable Timer → <span class="e-code">Enabled · 5 min</span>'; g.innerHTML='Agents unavailable after 5 min of inactivity'; setDiff('Disabled','5 minutes'); document.getElementById('aipApplyCount').textContent='47';
+  } else if (c.includes('restrict')&&c.includes('agent')) {
+    t.innerHTML='All <span class="e-code">47 contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='Access control → <span class="e-code">Agents restricted</span>'; g.innerHTML='Agents will not see their CC settings page'; setDiff('Unrestricted','Restricted'); document.getElementById('aipApplyCount').textContent='47';
+  } else if (c.includes('round robin')||c.includes('routing')&&c.includes('na')) {
+    t.innerHTML='All <span class="e-code">NA contact centers</span>'; w.textContent='Immediate · affects call distribution'; ch.innerHTML='Routing method → <span class="e-code">Round robin</span>'; g.innerHTML='Routing change affects all incoming calls'; setDiff('Various','Round robin'); document.getElementById('aipApplyCount').textContent='23';
+  } else if (c.includes('overflow')&&c.includes('voicemail')) {
+    t.innerHTML='All <span class="e-code">contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='Overflow routing → <span class="e-code">Voicemail</span>'; g.innerHTML='Affects calls when 0 agents available'; setDiff('No answer','→ Voicemail'); document.getElementById('aipApplyCount').textContent='47';
+  } else if (c.includes('wrap-up')||c.includes('wrap up')) {
+    t.innerHTML='All <span class="e-code">contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='Wrap-up time → <span class="e-code">90 seconds</span>'; g.innerHTML='Affects all agents post-call buffer'; setDiff('Varies','90s'); document.getElementById('aipApplyCount').textContent='47';
+  } else if (c.includes('ai')&&(c.includes('enable')||c.includes('transcription'))) {
+    t.innerHTML='All <span class="e-code">contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='Dialpad AI → <span class="e-code">Enabled</span>'; g.innerHTML='Requires AI feature entitlement per CC'; setDiff('Off','AI On'); document.getElementById('aipApplyCount').textContent='47';
+    document.getElementById('ds2t').textContent='Checking AI entitlements…'; document.getElementById('ds3t').textContent='Staging AI feature rollout…';
+  } else if (c.includes('pii')||c.includes('redaction')) {
+    t.innerHTML='All <span class="e-code">contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='PII redaction → <span class="e-code">Enabled</span>'; g.innerHTML='Transcripts and recordings will be redacted'; setDiff('Off','Enabled'); document.getElementById('aipApplyCount').textContent='47';
+  } else if (c.includes('agent group')||c.includes('create group')) {
+    t.innerHTML='All <span class="e-code">contact centers</span>'; w.textContent='After review'; ch.innerHTML='Agent groups created: <span class="e-code">NA</span>, <span class="e-code">EU</span>, <span class="e-code">APAC</span>'; g.innerHTML='New groups based on current CC rosters'; setDiff('No groups','3 groups'); document.getElementById('aipApplyCount').textContent='47';
+  } else {
+    t.innerHTML='All <span class="e-code">contact centers</span>'; w.textContent='Immediate'; ch.innerHTML='Settings → <span class="e-code">Updated</span>'; g.innerHTML='Affects <strong>47 CCs</strong> — confirmation required'; setDiff('Current','Updated'); document.getElementById('aipApplyCount').textContent='47';
+  }
+}
+
+function setDiff(from, to) {
+  ['from1','from2','from3','from4','from5'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=from; });
+  ['to1','to2','to3','to4','to5'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=to; });
+}
+
+// ── Diff checkboxes ──
+function toggleAll(cb) { document.querySelectorAll('.pcb').forEach(c=>{ c.checked=cb.checked; }); syncRows(); computeCount(); }
+function syncRows() { document.querySelectorAll('.pcb').forEach((cb,i)=>{ const n=i+1; const chip=document.getElementById('chip'+n); if(chip) { chip.className='chip '+(cb.checked?'chip-update':'chip-skip'); chip.textContent=cb.checked?'Update':'Excluded'; } }); computeCount(); }
+function computeCount() { const checked=document.querySelectorAll('.pcb:checked').length; const base=parseInt(document.getElementById('aipApplyCount').textContent)||23; const extra=Math.max(0,base-5); document.getElementById('aipApplyCount').textContent=checked+extra; }
+
+</script>
+</body>
+</html>
