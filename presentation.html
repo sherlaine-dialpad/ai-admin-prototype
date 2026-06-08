@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Admin — CC Bulk Templates · EM Design Review</title>
+<title>AI Admin Agent — Design Proposal</title>
 <style>
   :root {
     --purple: #7C52FF; --purple-dark: #5023DD; --purple-light: #F5F0FF; --purple-border: #D3BCFF;
@@ -224,15 +224,19 @@
     AI Admin
   </div>
   <div class="nav-links">
-    <a class="nav-link" href="#overview">Overview</a>
-    <a class="nav-link" href="#template-model">1 · Template model</a>
+    <a class="nav-link" href="#overview">Vision</a>
+    <a class="nav-link" href="#two-agents">Two agents</a>
+    <a class="nav-link" href="#template-model">1 · Templates</a>
     <a class="nav-link" href="#bulk-apply">2 · Bulk apply</a>
-    <a class="nav-link" href="#ai-layer">3 · AI layer</a>
-    <a class="nav-link" href="#eng-delta">4 · Engineering delta</a>
-    <a class="nav-link" href="#ask">The ask</a>
+    <a class="nav-link" href="#ai-layer">3 · Admin Agent</a>
+    <a class="nav-link" href="#global-ia">4 · Global Admin IA</a>
+    <a class="nav-link" href="#eng-delta">5 · Engineering delta</a>
+    <a class="nav-link" href="#ask">Open questions</a>
   </div>
   <div class="nav-tag">
-    <span class="tag-pill">EM Design Review</span>
+    <a href="api-inventory.html" style="color:var(--purple-dark);font-size:11px;font-weight:600;text-decoration:none;margin-right:8px;">API Inventory →</a>
+    <a href="qbr.html" style="color:var(--purple-dark);font-size:11px;font-weight:600;text-decoration:none;margin-right:12px;">QBR Slide →</a>
+    <span class="tag-pill">Updated · Abhi feedback</span>
   </div>
 </nav>
 
@@ -241,45 +245,107 @@
 <!-- ─────────────────────────────────────────────────────────────────── -->
 <section id="overview">
 <div class="page" style="padding-top:64px;padding-bottom:56px;">
-  <div style="max-width:720px;">
-    <div class="sec-num">AI Admin · Contact Centers</div>
-    <div class="sec-title">Template-based bulk administration</div>
-    <div class="sec-sub">Enterprise admins managing 50–500+ contact centers have no scalable way to enforce consistent settings. One policy change today requires touching each CC individually. This design fixes that.</div>
+  <div style="max-width:760px;">
+    <div class="sec-num">AI Admin Agent · Contact Centers</div>
+    <div class="sec-title">Manage any contact center<br>with natural language</div>
+    <div class="sec-sub">Enterprise admins managing 50–500+ contact centers have no scalable way to enforce consistent settings. The goal is an AI Admin Agent that understands natural language requests, determines what needs to change, and executes bulk updates — with a human in the loop. Templates are the foundation, not the destination.</div>
 
-    <div class="g3" style="margin-bottom:24px;">
+    <!-- 3-phase roadmap -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px;">
+      <div class="card" style="border-color:var(--purple-border);background:var(--purple-light);position:relative;">
+        <div style="position:absolute;top:12px;right:12px;"><span class="pill pill-purple" style="font-size:10px;">Q3</span></div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--purple-dark);margin-bottom:6px;">Phase 1</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;">Template Foundation</div>
+        <div style="font-size:12px;color:var(--text-2);display:flex;flex-direction:column;gap:4px;">
+          <span>→ Master template → child CCs</span>
+          <span>→ Bulk apply with preview</span>
+          <span>→ Drift detection</span>
+          <span>→ AI analytics chat (read-only)</span>
+        </div>
+      </div>
+      <div class="card" style="position:relative;">
+        <div style="position:absolute;top:12px;right:12px;"><span class="pill pill-gray" style="font-size:10px;">Q4</span></div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:6px;">Phase 2</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text-2);">Natural Language Actions</div>
+        <div style="font-size:12px;color:var(--text-3);display:flex;flex-direction:column;gap:4px;">
+          <span>→ Natural language admin requests</span>
+          <span>→ AI-driven bulk changes</span>
+          <span>→ Settings discovery</span>
+          <span>→ Aligned to new Admin IA</span>
+        </div>
+      </div>
+      <div class="card" style="position:relative;">
+        <div style="position:absolute;top:12px;right:12px;"><span class="pill pill-gray" style="font-size:10px;">Q5+</span></div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:6px;">Phase 3</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text-2);">Fully Agentic Admin</div>
+        <div style="font-size:12px;color:var(--text-3);display:flex;flex-direction:column;gap:4px;">
+          <span>→ Multi-step execution workflows</span>
+          <span>→ Cross-setting orchestration</span>
+          <span>→ Guided recommendations</span>
+          <span>→ Proactive compliance monitoring</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="g3">
       <div class="card" style="text-align:center;padding:16px;">
         <div style="font-size:28px;font-weight:800;color:var(--purple);">62%</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">of CC settings covered by existing public API — can build Q3</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">Phase 1 template coverage with existing public API</div>
       </div>
       <div class="card" style="text-align:center;padding:16px;">
         <div style="font-size:28px;font-weight:800;color:var(--yellow);">5</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">new public API endpoints needed to reach full coverage in Q4</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">new public API endpoints needed for full Phase 2</div>
       </div>
       <div class="card" style="text-align:center;padding:16px;">
-        <div style="font-size:28px;font-weight:800;color:var(--text-1);">3</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">pillars: templates + AI analytics chat + AI agent (sequenced Q3→Q4)</div>
-      </div>
-    </div>
-
-    <div class="label">Approach selected</div>
-    <div class="screen">
-      <div class="approach-row selected">
-        <span class="pill pill-purple">✅ Q3</span>
-        <div><strong>A — Template-first</strong><div style="font-size:12px;color:var(--text-3);margin-top:2px;">Master template → child CCs. AI agent + analytics layer on top as accelerators. Familiar from RingCentral — minimal ramp-up.</div></div>
-        <span style="font-size:12px;color:var(--purple-dark);font-weight:600;">Selected</span>
-      </div>
-      <div class="approach-row">
-        <span class="pill pill-gray">Q4/Q5</span>
-        <div><strong>B — AI-first (future vision)</strong><div style="font-size:12px;color:var(--text-3);margin-top:2px;">Chat is the primary model. Templates become saved prompts. Analytics and admin live in one conversation.</div></div>
-        <span style="font-size:12px;color:var(--text-3);">Future</span>
-      </div>
-      <div class="approach-row">
-        <span class="pill pill-gray">Rejected</span>
-        <div><strong>C — Settings dashboard first, AI deferred</strong><div style="font-size:12px;color:var(--text-3);margin-top:2px;">No AI in Q3. Loses the narrative the EM wants to tell.</div></div>
-        <span style="font-size:12px;color:var(--text-3);">Rejected</span>
+        <div style="font-size:28px;font-weight:800;color:var(--red);">0</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">settings with bulk API support today — batch endpoint is the key gap</div>
       </div>
     </div>
   </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- TWO AGENTS -->
+<section id="two-agents">
+<div class="page">
+  <div class="sec-num">Architecture decision</div>
+  <div class="sec-title">Two agents, not one</div>
+  <div class="sec-sub">Recommendation from Abhishek: keep Admin Agent and Analytics Agent separate. Smaller domain = better accuracy, easier implementation, consistent with industry direction.</div>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;margin-bottom:20px;">
+    <div class="card" style="border-color:var(--purple-border);background:var(--purple-light);padding:22px 24px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--purple-dark);margin-bottom:8px;">Admin Agent · This project</div>
+      <div style="font-size:16px;font-weight:800;margin-bottom:12px;">Settings &amp; Configuration</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="pill pill-purple">Bulk updates</span>
+        <span class="pill pill-purple">Templates</span>
+        <span class="pill pill-purple">CC management</span>
+        <span class="pill pill-purple">Settings discovery</span>
+        <span class="pill pill-purple">Configuration changes</span>
+        <span class="pill pill-purple">Exception handling</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding:0 20px;gap:6px;">
+      <div style="width:1px;height:30px;background:var(--border);"></div>
+      <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;">Do not<br>combine</div>
+      <div style="width:1px;height:30px;background:var(--border);"></div>
+    </div>
+    <div class="card" style="padding:22px 24px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green);margin-bottom:8px;">Analytics Agent · Existing</div>
+      <div style="font-size:16px;font-weight:800;margin-bottom:12px;">Reporting &amp; Insights</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="pill pill-green">Metrics</span>
+        <span class="pill pill-green">CSAT trends</span>
+        <span class="pill pill-green">Agent performance</span>
+        <span class="pill pill-green">Operational analysis</span>
+        <span class="pill pill-green">Custom reports</span>
+        <span class="pill pill-green">Forecasting</span>
+      </div>
+    </div>
+  </div>
+  <div class="note">The Admin Agent can surface analytics context to inform decisions ("4 CCs have high abandon rate — want to update their overflow routing?") but does not own analytics. The Analytics Agent does not make configuration changes.</div>
 </div>
 </section>
 
@@ -497,11 +563,52 @@
 <hr class="divider">
 
 <!-- ─────────────────────────────────────────────────────────────────── -->
-<!-- SECTION 4 — ENGINEERING DELTA -->
+<!-- GLOBAL ADMIN IA -->
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<section id="global-ia">
+<div class="page">
+  <div class="sec-num">Section 4 · Dependency</div>
+  <div class="sec-title">Align with new Global Admin IA</div>
+  <div class="sec-sub">Core UX is redesigning Admin with global search, URL-addressable settings, and a structured information architecture. The Admin Agent should live inside this new experience — and eventually consume the same navigation registry.</div>
+
+  <div class="g2" style="margin-bottom:20px;">
+    <div>
+      <div class="label">What Core UX is building</div>
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="color:var(--purple);font-weight:700;flex-shrink:0;">→</span><div><strong>Global search</strong> — admin searches "Call Center Routing" and navigates directly to that setting</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="color:var(--purple);font-weight:700;flex-shrink:0;">→</span><div><strong>URL-addressable settings</strong> — every setting has a stable, shareable URL</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="color:var(--purple);font-weight:700;flex-shrink:0;">→</span><div><strong>Navigation metadata model</strong> — settings discoverable from a central registry</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="color:var(--purple);font-weight:700;flex-shrink:0;">→</span><div><strong>Structured information architecture</strong> — consistent, predictable settings hierarchy</div></div>
+        </div>
+      </div>
+      <div class="note">The Admin Agent should live inside this new Global Admin experience — not as a side panel on top of the old UI.</div>
+    </div>
+
+    <div>
+      <div class="label">How AI leverages the same registry</div>
+      <div class="card">
+        <div style="font-size:12px;color:var(--text-3);margin-bottom:12px;">Once the navigation schema is available, the Agent can consume it directly instead of maintaining manual setting mappings.</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:var(--purple-light);border-radius:8px;padding:10px 12px;font-size:12px;"><strong>Agent knows where settings live</strong> — navigates automatically without hardcoded paths</div>
+          <div style="background:var(--purple-light);border-radius:8px;padding:10px 12px;font-size:12px;"><strong>Better discoverability</strong> — agent surfaces settings the admin didn't know existed</div>
+          <div style="background:var(--purple-light);border-radius:8px;padding:10px 12px;font-size:12px;"><strong>Easier bulk execution</strong> — same metadata model drives both UI navigation and agent actions</div>
+          <div style="background:var(--yellow-light);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--yellow);"><strong>Open question:</strong> When will Core UX expose the navigation schema? This determines Phase 2 start date.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ─────────────────────────────────────────────────────────────────── -->
+<!-- SECTION 5 — ENGINEERING DELTA -->
 <!-- ─────────────────────────────────────────────────────────────────── -->
 <section id="eng-delta">
 <div class="page">
-  <div class="sec-num">Section 4</div>
+  <div class="sec-num">Section 5</div>
   <div class="sec-title">Engineering delta</div>
   <div class="sec-sub">What's needed to build this, what's already possible, and what API gaps block full coverage.</div>
 
@@ -596,23 +703,35 @@
 <!-- ─────────────────────────────────────────────────────────────────── -->
 <section id="ask">
 <div class="page" style="padding-bottom:64px;">
-  <div class="sec-num">The ask</div>
-  <div class="sec-title">What we need the EM to decide</div>
-  <div class="sec-sub" style="margin-bottom:20px;">Three decisions. The Q4 timeline is entirely determined by #3.</div>
+  <div class="sec-num">Open questions</div>
+  <div class="sec-title">What needs alignment</div>
+  <div class="sec-sub" style="margin-bottom:20px;">From Abhishek's feedback — five open questions before Phase 2 can be scoped.</div>
   <div class="ask-box">
-    <div class="ask-title">3 decisions from this meeting</div>
+    <div class="ask-title">5 open questions</div>
     <div class="ask-item">
       <div class="ask-num">1</div>
-      <div class="ask-text"><strong>Direction approval</strong> — green light on the template-first approach: master template → child CCs, Locked/Adjustable settings, drift detection, and bulk apply as the Q3 design direction.</div>
+      <div class="ask-text"><strong>Core UX navigation schema</strong> — what metadata/schema will Core UX expose for settings navigation? Can the Admin Agent leverage the same registry? When is it available?</div>
     </div>
     <div class="ask-item">
       <div class="ask-num">2</div>
-      <div class="ask-text"><strong>Q3 scope agreement</strong> — template CRUD + bulk apply for the 62% of settings with existing API support + AI analytics chat (read-only). Holiday hours, CSAT, AI config, and CC recording policy are explicitly Q4.</div>
+      <div class="ask-text"><strong>API gap ownership</strong> — who owns the 5 new public API endpoints (holiday schedule, CC recording policy, AI/voice intelligence fields, CSAT, batch)? Platform team, CC backend, or dedicated API team? <strong>This determines Q4 start date.</strong></div>
     </div>
     <div class="ask-item">
       <div class="ask-num">3</div>
-      <div class="ask-text"><strong>API gap ownership</strong> — who owns the 5 new public API endpoints? Platform team, CC backend team, or dedicated API team? <strong>The Q4 start date is determined by when these APIs are available.</strong></div>
+      <div class="ask-text"><strong>First end-to-end agent workflow</strong> — what is the first agentic workflow to prototype for Phase 2? Suggested: "Apply EMEA compliance settings to all European CCs" as the proof-of-concept.</div>
     </div>
+    <div class="ask-item">
+      <div class="ask-num">4</div>
+      <div class="ask-text"><strong>Template versioning &amp; inheritance</strong> — how should template versioning work? How are templates applied during new CC creation vs. existing CCs?</div>
+    </div>
+    <div class="ask-item">
+      <div class="ask-num">5</div>
+      <div class="ask-text"><strong>Global Admin IA timeline</strong> — when does the new Global Admin experience launch? The Admin Agent UI positioning depends on this. Phase 2 should launch inside the new IA, not the old one.</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="api-inventory.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:#fff;text-decoration:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;">View full API inventory →</a>
+    <a href="qbr.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--purple-light);color:var(--purple-dark);text-decoration:none;border:1px solid var(--purple-border);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;">View QBR slide →</a>
   </div>
 </div>
 </section>

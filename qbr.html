@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Admin Agent — QBR Vision Slide</title>
+<style>
+  :root {
+    --purple:#7C52FF;--purple-dark:#5023DD;--purple-light:#F5F0FF;--purple-border:#D3BCFF;
+    --green:#008E52;--green-light:#F6FCF5;
+    --yellow:#815008;--yellow-light:#FFFAE5;
+    --red:#D90A45;--red-light:#FFF2F3;
+    --text-1:#1C1C1C;--text-2:#3A3A3A;--text-3:#535353;
+    --border:rgba(0,0,0,.11);--surface:#fff;--bg:#F9F9F9;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro","Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);font-size:14px;background:#0d0626;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+  .slide{max-width:1100px;margin:0 auto;padding:56px 48px;}
+
+  /* Header */
+  .slide-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:52px;}
+  .logo{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);}
+  .logo svg{width:22px;height:22px;}
+  .qbr-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--purple-border);background:rgba(124,82,255,.15);border:1px solid rgba(124,82,255,.3);padding:4px 12px;border-radius:20px;}
+
+  /* Hero text */
+  .hero-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--purple-border);margin-bottom:12px;}
+  .hero-title{font-size:42px;font-weight:900;line-height:1.1;letter-spacing:-.025em;margin-bottom:16px;}
+  .hero-title span{color:var(--purple);}
+  .hero-sub{font-size:16px;color:rgba(255,255,255,.55);max-width:580px;line-height:1.6;margin-bottom:48px;}
+
+  /* Phase roadmap */
+  .roadmap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:48px;}
+  .phase{border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;}
+  .phase-1{background:rgba(124,82,255,.15);border:1px solid rgba(124,82,255,.3);}
+  .phase-2{background:rgba(0,142,82,.12);border:1px solid rgba(0,142,82,.3);}
+  .phase-3{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);}
+  .phase-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+  .p1-label{color:#a78bfa;}
+  .p2-label{color:#6ee7b7;}
+  .p3-label{color:rgba(255,255,255,.4);}
+  .phase-title{font-size:15px;font-weight:800;margin-bottom:10px;}
+  .phase-items{display:flex;flex-direction:column;gap:6px;}
+  .phase-item{font-size:12px;color:rgba(255,255,255,.65);display:flex;gap:7px;align-items:flex-start;}
+  .phase-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+  .pd-1{background:#a78bfa;}
+  .pd-2{background:#6ee7b7;}
+  .pd-3{background:rgba(255,255,255,.3);}
+  .phase-status{position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:10px;}
+  .s-build{background:rgba(124,82,255,.3);color:#c4b5fd;}
+  .s-next{background:rgba(0,142,82,.25);color:#6ee7b7;}
+  .s-future{background:rgba(255,255,255,.08);color:rgba(255,255,255,.35);}
+
+  /* Two-agent diagram */
+  .agents-row{display:grid;grid-template-columns:1fr 48px 1fr;gap:0;align-items:center;margin-bottom:48px;}
+  .agent-card{border-radius:14px;padding:20px 22px;}
+  .agent-admin{background:rgba(124,82,255,.15);border:1px solid rgba(124,82,255,.35);}
+  .agent-analytics{background:rgba(0,142,82,.1);border:1px solid rgba(0,142,82,.3);}
+  .agent-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+  .al-admin{color:#a78bfa;}
+  .al-analytics{color:#6ee7b7;}
+  .agent-title{font-size:16px;font-weight:800;margin-bottom:10px;}
+  .agent-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .achip{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:500;}
+  .achip-purple{background:rgba(124,82,255,.2);color:#c4b5fd;}
+  .achip-green{background:rgba(0,142,82,.2);color:#6ee7b7;}
+  .agent-sep{display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:center;}
+  .sep-line{width:1px;height:40px;background:rgba(255,255,255,.1);}
+  .sep-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.05em;writing-mode:vertical-rl;}
+
+  /* Stats row */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:48px;}
+  .stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 18px;text-align:center;}
+  .stat-num{font-size:28px;font-weight:900;line-height:1;}
+  .stat-label{font-size:11px;color:rgba(255,255,255,.45);margin-top:5px;line-height:1.4;}
+
+  /* Open questions */
+  .questions{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:22px 24px;}
+  .q-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.35);margin-bottom:14px;}
+  .q-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .q-item{font-size:12px;color:rgba(255,255,255,.55);display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:8px;}
+  .q-num{width:18px;height:18px;border-radius:50%;background:rgba(124,82,255,.3);color:#c4b5fd;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  /* Footer */
+  .footer{display:flex;align-items:center;justify-content:space-between;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);}
+  .footer-links{display:flex;gap:16px;}
+  .footer-link{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;}
+  .footer-link:hover{color:rgba(255,255,255,.6);}
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- Header -->
+  <div class="slide-header">
+    <div class="logo">
+      <svg viewBox="18 19 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="19" width="56" height="56" rx="10" fill="rgba(255,255,255,.1)"/><path d="M67.3113 44.9586C67.9208 45.0949 68.0417 46.0897 67.4718 46.3489C56.4717 50.0934 47.8132 59.6668 43.2922 72.411C43.0448 73.0289 41.9593 72.8798 41.8573 72.2204C40.3108 62.2251 33.405 54.2445 24.5086 52.091C23.9191 51.9483 23.8077 51.0222 24.3565 50.76C35.6512 46.1128 44.1398 36.5799 48.0621 24.4006C48.3071 23.7651 49.4906 23.9256 49.5913 24.6007C51.112 34.7954 58.2031 42.9218 67.3113 44.9586Z" fill="#7C52FF"/></svg>
+      Dialpad
+    </div>
+    <span class="qbr-tag">QBR · AI Platform Vision</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero-eyebrow">AI Admin Agent</div>
+  <div class="hero-title">Manage any contact center<br>with <span>natural language</span></div>
+  <div class="hero-sub">From manually editing 400 contact centers one by one, to telling an AI agent what you need and having it execute — with a human in the loop at every step.</div>
+
+  <!-- Phase roadmap -->
+  <div class="roadmap">
+    <div class="phase phase-1">
+      <span class="phase-status s-build">Q3 — Build now</span>
+      <div class="phase-label p1-label">Phase 1</div>
+      <div class="phase-title">Template Foundation</div>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-dot pd-1"></div>Master template → child CCs</div>
+        <div class="phase-item"><div class="phase-dot pd-1"></div>Locked &amp; adjustable settings</div>
+        <div class="phase-item"><div class="phase-dot pd-1"></div>Drift detection</div>
+        <div class="phase-item"><div class="phase-dot pd-1"></div>Bulk apply with preview</div>
+        <div class="phase-item"><div class="phase-dot pd-1"></div>AI analytics chat (read-only)</div>
+      </div>
+    </div>
+    <div class="phase phase-2">
+      <span class="phase-status s-next">Q4 — After API gaps</span>
+      <div class="phase-label p2-label">Phase 2</div>
+      <div class="phase-title">Natural Language Actions</div>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-dot pd-2"></div>Natural language admin requests</div>
+        <div class="phase-item"><div class="phase-dot pd-2"></div>AI-driven bulk changes</div>
+        <div class="phase-item"><div class="phase-dot pd-2"></div>Settings discovery via agent</div>
+        <div class="phase-item"><div class="phase-dot pd-2"></div>Exception handling post-template</div>
+        <div class="phase-item"><div class="phase-dot pd-2"></div>Aligned to new Admin IA</div>
+      </div>
+    </div>
+    <div class="phase phase-3">
+      <span class="phase-status s-future">Q5+ — Future</span>
+      <div class="phase-label p3-label">Phase 3</div>
+      <div class="phase-title">Fully Agentic Admin</div>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-dot pd-3"></div>Multi-step execution workflows</div>
+        <div class="phase-item"><div class="phase-dot pd-3"></div>Cross-setting orchestration</div>
+        <div class="phase-item"><div class="phase-dot pd-3"></div>Guided configuration &amp; recommendations</div>
+        <div class="phase-item"><div class="phase-dot pd-3"></div>Proactive policy enforcement</div>
+        <div class="phase-item"><div class="phase-dot pd-3"></div>Automated compliance monitoring</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two agents -->
+  <div class="agents-row">
+    <div class="agent-card agent-admin">
+      <div class="agent-label al-admin">Admin Agent (this project)</div>
+      <div class="agent-title">Settings &amp; Configuration</div>
+      <div class="agent-chips">
+        <span class="achip achip-purple">Bulk updates</span>
+        <span class="achip achip-purple">Templates</span>
+        <span class="achip achip-purple">Contact center management</span>
+        <span class="achip achip-purple">Settings discovery</span>
+        <span class="achip achip-purple">Configuration changes</span>
+      </div>
+    </div>
+    <div class="agent-sep">
+      <div class="sep-line"></div>
+      <div class="sep-label">Separate</div>
+      <div class="sep-line"></div>
+    </div>
+    <div class="agent-card agent-analytics">
+      <div class="agent-label al-analytics">Analytics Agent (existing)</div>
+      <div class="agent-title">Reporting &amp; Insights</div>
+      <div class="agent-chips">
+        <span class="achip achip-green">Metrics</span>
+        <span class="achip achip-green">CSAT trends</span>
+        <span class="achip achip-green">Agent performance</span>
+        <span class="achip achip-green">Operational analysis</span>
+        <span class="achip achip-green">Custom reports</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num" style="color:#a78bfa;">46%</div>
+      <div class="stat-label">CC settings covered by existing public API today</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:#fbbf24;">5</div>
+      <div class="stat-label">New public API endpoints needed for full Phase 2 coverage</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:#f87171;">0</div>
+      <div class="stat-label">Settings with bulk API support — a batch endpoint is the critical gap</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:#6ee7b7;">62%</div>
+      <div class="stat-label">Phase 1 template coverage achievable with APIs available today</div>
+    </div>
+  </div>
+
+  <!-- Open questions -->
+  <div class="questions">
+    <div class="q-title">Open questions for alignment</div>
+    <div class="q-grid">
+      <div class="q-item"><div class="q-num">1</div>What metadata/schema will Core UX expose for settings navigation? Can the Admin Agent use the same registry?</div>
+      <div class="q-item"><div class="q-num">2</div>Which team owns the 5 new public API endpoints (holiday schedule, CC recording policy, AI fields, CSAT, batch)?</div>
+      <div class="q-item"><div class="q-num">3</div>What is the first end-to-end agent workflow to prototype for Phase 2?</div>
+      <div class="q-item"><div class="q-num">4</div>How should template versioning and inheritance work across new CC creation?</div>
+      <div class="q-item"><div class="q-num">5</div>How does the Admin Agent live inside the new Global Admin experience (Core UX redesign timeline)?</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-links">
+      <a class="footer-link" href="presentation.html">Full design presentation →</a>
+      <a class="footer-link" href="api-inventory.html">API inventory matrix →</a>
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.2);">Dialpad EPD · AI Admin Agent · 2026</div>
+  </div>
+
+</div>
+</body>
+</html>

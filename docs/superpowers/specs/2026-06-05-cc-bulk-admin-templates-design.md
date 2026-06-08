@@ -1,9 +1,9 @@
-# Contact Center Bulk Admin — Template System Design
+# AI Admin Agent — Design Proposal
 
-**Date:** 2026-06-05
+**Date:** 2026-06-05 · Updated 2026-06-08
 **Author:** Sherlaine Lau
-**Status:** Draft — pending EM review
-**Presentation:** EM design validation meeting
+**Status:** Updated — incorporating Abhishek feedback
+**Artifacts:** [presentation.html](../../presentation.html) · [api-inventory.html](../../api-inventory.html) · [qbr.html](../../qbr.html)
 
 ---
 
@@ -11,7 +11,29 @@
 
 Enterprise Dialpad customers managing 50–500+ contact centers have no scalable way to enforce consistent settings across their CC fleet. Today every CC is configured individually. One policy change (e.g. "enable recording for all NA CCs") requires touching each CC one by one.
 
-This spec defines a **template-based bulk administration system** for Contact Center settings, integrated with an **AI analytics chat** surface for settings queries and an **AI agent** for natural-language bulk actions. The three pillars together form the "AI Admin" product direction.
+The goal is an **AI Admin Agent** that understands natural language admin requests, determines which settings need to change, and executes bulk updates — with a human in the loop at every step. Templates are the Phase 1 foundation that makes this possible.
+
+## Direction Update (2026-06-08) — Abhishek Feedback
+
+Key pivots from EM review:
+
+1. **Separate agents, not one** — Admin Agent (settings/config/bulk) and Analytics Agent (reporting/insights) must remain separate. Smaller domain = better accuracy, consistent with industry direction. The Admin Agent may surface analytics context but does not own it.
+
+2. **Templates are Phase 1, not the end state** — Templates are validated by customer feedback and are the right foundation, but the long-term goal is a fully agentic admin assistant that can handle natural language requests, exceptions, and multi-step workflows beyond what templates cover.
+
+3. **Align with new Global Admin IA** — Core UX is redesigning Admin with global search, URL-addressable settings, and a navigation metadata model. The Admin Agent should live inside this new experience and eventually consume the same navigation registry (agent knows where settings live without manual mappings).
+
+4. **UI positioning** — Admin Agent lives in the new Global Admin experience, not as a side panel on existing pages.
+
+5. **API inventory** — Continue and formalize as a matrix: Setting Area | API Exists | Writable | Bulk Supported | Notes. See [api-inventory.html](../../api-inventory.html).
+
+### 3-Phase MVP
+
+| Phase | Quarter | Scope |
+|---|---|---|
+| **Phase 1** | Q3 | Template CRUD, bulk apply, drift detection, AI analytics chat (read-only) |
+| **Phase 2** | Q4 (pending API gaps + Core UX IA) | Natural language admin actions, AI-driven bulk changes, settings discovery via agent |
+| **Phase 3** | Q5+ | Fully agentic admin, multi-step workflows, cross-setting orchestration, recommendations |
 
 ---
 
@@ -195,13 +217,17 @@ One unified conversation surface where the admin can ask questions, get insights
 
 ---
 
-## The Ask — What the EM needs to decide
+## Open Questions (from Abhishek feedback)
 
-1. **Direction approval** — green light on the template-first approach (master template → child CCs, Locked/Adjustable settings, drift detection, bulk apply) as the Q3 design direction.
+1. **Core UX navigation schema** — what metadata/schema will Core UX expose? Can the Admin Agent consume the same registry? When is it available?
 
-2. **Q3 scope agreement** — confirm the Q3 build covers: template CRUD + bulk apply for the 62% of settings with existing API support + AI analytics chat (read-only). Holiday hours, CSAT, AI config, and recording policy are explicitly Q4.
+2. **API gap ownership** — who owns the 5 new public API endpoints (holiday schedule, CC recording policy, AI/voice intelligence fields, CSAT, batch)? Determines Q4 start date.
 
-3. **API gap ownership** — who builds the 5 new public API endpoints? This is the single biggest Q4 timeline dependency. Engineering needs to decide whether this is owned by the platform team, the CC backend team, or a dedicated API team. The Q4 start date is determined by when these APIs are available.
+3. **First end-to-end agent workflow** — what is the first Phase 2 agentic workflow to prototype? Suggested: "Apply EMEA compliance settings to all European CCs."
+
+4. **Template versioning and inheritance** — how does versioning work? How are templates applied during new CC creation?
+
+5. **Global Admin IA timeline** — when does the new Global Admin experience launch? Phase 2 Admin Agent UI positioning depends on this.
 
 ---
 

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Inventory — Contact Center Settings</title>
+<style>
+  :root {
+    --purple:#7C52FF;--purple-dark:#5023DD;--purple-light:#F5F0FF;--purple-border:#D3BCFF;
+    --green:#008E52;--green-light:#F6FCF5;--green-border:#D1FF76;
+    --yellow:#815008;--yellow-light:#FFFAE5;--yellow-border:#FFDB80;
+    --red:#D90A45;--red-light:#FFF2F3;--red-border:#FF716F;
+    --text-1:#1C1C1C;--text-2:#3A3A3A;--text-3:#535353;
+    --border:rgba(0,0,0,.11);--surface:#fff;--bg:#F9F9F9;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro","Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--text-1);line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+  .nav{position:sticky;top:0;z-index:100;background:rgba(249,249,249,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;height:52px;gap:16px;}
+  .nav-logo{font-size:13px;font-weight:700;}
+  .nav-tag{background:var(--purple-light);color:var(--purple-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:auto;}
+
+  .page{max-width:1100px;margin:0 auto;padding:40px 32px;}
+  h1{font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.01em;}
+  .subtitle{font-size:13px;color:var(--text-3);margin-bottom:28px;}
+
+  /* Summary stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center;}
+  .stat-num{font-size:26px;font-weight:800;line-height:1;}
+  .stat-label{font-size:11px;color:var(--text-3);margin-top:4px;}
+
+  /* Coverage bar */
+  .cov-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;}
+  .cov-bar{height:10px;border-radius:10px;background:#f0f0f0;display:flex;overflow:hidden;margin:8px 0;}
+  .cov-g{background:var(--green);}
+  .cov-y{background:#FFDB80;}
+  .cov-r{background:#FF716F;}
+  .cov-legend{display:flex;gap:20px;font-size:11px;flex-wrap:wrap;}
+  .cov-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  /* Filter bar */
+  .filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .filter-btn{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;transition:background .1s;}
+  .filter-btn:hover{background:var(--bg);}
+  .filter-btn.active{background:var(--purple-dark);color:#fff;border-color:var(--purple-dark);}
+
+  /* Main table */
+  .matrix{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+  .matrix thead tr{background:var(--bg);}
+  .matrix th{text-align:left;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.1);white-space:nowrap;}
+  .matrix td{padding:9px 14px;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:top;font-size:12px;}
+  .matrix tr:last-child td{border-bottom:none;}
+  .matrix tr:hover td{background:#fafafa;}
+  .matrix tbody tr.group-header td{background:#F9F9F9;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;padding:8px 14px;border-top:1px solid rgba(0,0,0,.08);}
+
+  .setting-name{font-weight:600;color:var(--text-1);}
+  .setting-sub{font-size:11px;color:var(--text-3);margin-top:1px;}
+
+  /* Status badges */
+  .badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+  .badge-yes{background:var(--green-light);color:var(--green);}
+  .badge-partial{background:var(--yellow-light);color:var(--yellow);}
+  .badge-no{background:var(--red-light);color:var(--red);}
+  .badge-na{background:#f0f0f0;color:var(--text-3);}
+
+  /* Notes */
+  .note-cell{font-size:11px;color:var(--text-3);max-width:260px;}
+  .api-path{font-family:monospace;font-size:10px;background:#f0f0f0;padding:1px 5px;border-radius:4px;color:var(--text-2);}
+
+  /* Section totals */
+  .section-total{display:flex;gap:6px;align-items:center;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">AI Admin Agent — API Inventory</div>
+  <a href="presentation.html" style="font-size:12px;color:var(--purple-dark);font-weight:500;text-decoration:none;">← Back to presentation</a>
+  <span class="nav-tag">API Gap Analysis</span>
+</nav>
+
+<div class="page">
+  <h1>Contact Center Settings — API Inventory</h1>
+  <p class="subtitle">Complete matrix of settings APIs: what exists, what's writable, what supports bulk operations, and what's missing. Used to scope the AI Admin Agent implementation.</p>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num" style="color:var(--green);">23</div><div class="stat-label">Settings with full public API</div></div>
+    <div class="stat"><div class="stat-num" style="color:var(--yellow);">8</div><div class="stat-label">Settings with partial / opaque API</div></div>
+    <div class="stat"><div class="stat-num" style="color:var(--red);">19</div><div class="stat-label">Settings with no public API</div></div>
+    <div class="stat"><div class="stat-num" style="color:var(--text-1);">0</div><div class="stat-label">Settings with bulk API support</div></div>
+  </div>
+
+  <!-- Coverage bar -->
+  <div class="cov-wrap">
+    <div style="font-size:13px;font-weight:600;margin-bottom:2px;">Overall API coverage for AI Admin Agent</div>
+    <div style="font-size:12px;color:var(--text-3);">Bulk support is 0% across all settings — a batch endpoint is required for any agent execution at scale</div>
+    <div class="cov-bar">
+      <div class="cov-g" style="width:46%;"></div>
+      <div class="cov-y" style="width:16%;"></div>
+      <div class="cov-r" style="width:38%;"></div>
+    </div>
+    <div class="cov-legend">
+      <div style="display:flex;align-items:center;gap:5px;"><div class="cov-dot" style="background:var(--green);"></div><strong>46%</strong> — Full public API (readable + writable)</div>
+      <div style="display:flex;align-items:center;gap:5px;"><div class="cov-dot" style="background:#FFDB80;"></div><strong>16%</strong> — Partial (fields exist but undocumented / scope unclear)</div>
+      <div style="display:flex;align-items:center;gap:5px;"><div class="cov-dot" style="background:#FF716F;"></div><strong>38%</strong> — No public API — internal only or missing entirely</div>
+    </div>
+  </div>
+
+  <!-- Matrix table -->
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th style="width:220px;">Setting area</th>
+        <th style="width:100px;">API exists?</th>
+        <th style="width:90px;">Writable?</th>
+        <th style="width:110px;">Bulk supported?</th>
+        <th>Notes / endpoint</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- CONTACT CENTER INFO -->
+      <tr class="group-header"><td colspan="5">Contact Center — Core Info</td></tr>
+      <tr>
+        <td><div class="setting-name">List contact centers</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td class="note-cell"><span class="api-path">GET /api/v2/offices/{id}/callcenters</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Get contact center</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">GET /api/v2/callcenters/{id}</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Create contact center</div><div class="setting-sub">Name, description, office</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">POST /api/v2/callcenters</span> — name + office_id required</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Update name / description</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">PATCH /api/v2/callcenters/{id}</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Delete contact center</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">DELETE /api/v2/callcenters/{id}</span></td>
+      </tr>
+
+      <!-- NUMBERS -->
+      <tr class="group-header"><td colspan="5">Numbers</td></tr>
+      <tr>
+        <td><div class="setting-name">Assign phone number</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">POST /api/v2/callcenters/{id}/phonenumbers</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Unassign / swap numbers</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Unassign + auto-assign + swap all exist</td>
+      </tr>
+
+      <!-- AGENTS / ADMINS -->
+      <tr class="group-header"><td colspan="5">Agents &amp; Admins</td></tr>
+      <tr>
+        <td><div class="setting-name">Add / remove agent</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">POST/DELETE /api/v2/callcenters/{id}/operators</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">List agents</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td class="note-cell"><span class="api-path">GET /api/v2/callcenters/{id}/operators</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Supervisor / admin role assignment</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Role distinction (agent vs supervisor vs admin) not exposed in public API</td>
+      </tr>
+
+      <!-- SKILL LEVELS -->
+      <tr class="group-header"><td colspan="5">Skill Levels</td></tr>
+      <tr>
+        <td><div class="setting-name">Get / update skill level</div><div class="setting-sub">Per operator per CC</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">GET/PATCH /api/v2/callcenters/{cc}/operators/{op}/skill</span></td>
+      </tr>
+
+      <!-- BUSINESS HOURS -->
+      <tr class="group-header"><td colspan="5">Business Hours</td></tr>
+      <tr>
+        <td><div class="setting-name">Per-day open/close hours</div><div class="setting-sub">Mon–Sun basic schedule</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Via <span class="api-path">monday_hours</span> … <span class="api-path">sunday_hours</span> on CC create/update</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Timezone configuration</div></td>
+        <td><span class="badge badge-partial">~ Unclear</span></td>
+        <td><span class="badge badge-partial">~ Unclear</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Not documented as a standalone field in public API</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Split shifts / advanced schedules</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Internal via <span class="api-path">/api/recurringevent</span> — not public</td>
+      </tr>
+
+      <!-- CALL ROUTING -->
+      <tr class="group-header"><td colspan="5">Call Routing</td></tr>
+      <tr>
+        <td><div class="setting-name">Webhook-based dynamic routing</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Full Call Router API — <span class="api-path">/api/v2/callrouters</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Static routing mode</div><div class="setting-sub">Round robin, skills-based, fixed order</div></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Inside opaque <span class="api-path">routing_options</span> object — sub-fields not documented</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Overflow / hold queue</div></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Inside opaque <span class="api-path">hold_queue</span> object — sub-fields not documented</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Custom IVR</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">POST/GET/PATCH/DELETE /api/v2/ivr/{id}</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Ring seconds</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">ring_seconds</span> field on CC create/update (10–45s)</td>
+      </tr>
+
+      <!-- HOLIDAY HOURS -->
+      <tr class="group-header"><td colspan="5">Holiday Hours &amp; Holiday Routing</td></tr>
+      <tr>
+        <td><div class="setting-name">Holiday schedule CRUD</div><div class="setting-sub">Date-specific hour overrides</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Internal only — <span class="api-path">/api/observedholiday</span>. <strong>Priority 1 for new public API.</strong></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Holiday routing rules</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Where calls go when a holiday override is active — no public API</td>
+      </tr>
+
+      <!-- AI SETTINGS -->
+      <tr class="group-header"><td colspan="5">AI Settings</td></tr>
+      <tr>
+        <td><div class="setting-name">AI summaries / transcription (on/off)</div></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">voice_intelligence</span> object exists in CC create/update — sub-fields undocumented</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">AI coaching alerts</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API. Needs sub-field documentation in voice_intelligence.</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">PII redaction</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Real-time agent assist</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API</td>
+      </tr>
+
+      <!-- INTEGRATIONS -->
+      <tr class="group-header"><td colspan="5">Integrations</td></tr>
+      <tr>
+        <td><div class="setting-name">CRM integrations</div><div class="setting-sub">Salesforce, HubSpot, ServiceNow, Zendesk</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Internal only — <span class="api-path">/api/settings/integrations</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Slack integration</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API</td>
+      </tr>
+
+      <!-- CSAT -->
+      <tr class="group-header"><td colspan="5">CSAT Surveys</td></tr>
+      <tr>
+        <td><div class="setting-name">CSAT survey configuration</div><div class="setting-sub">Enable, questions, timing, channel</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Zero public API coverage. <strong>Priority 2 for new public API.</strong></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">CSAT results / data</div></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">CSAT data surfaces in call events API — read-only, not configurable</td>
+      </tr>
+
+      <!-- DASHBOARDS & ALERTS -->
+      <tr class="group-header"><td colspan="5">Dashboards &amp; Alerts</td></tr>
+      <tr>
+        <td><div class="setting-name">Alert thresholds / config</div></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Inside opaque <span class="api-path">alerts</span> object on CC create/update — sub-fields not documented</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Stats / reporting API</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td class="note-cell"><span class="api-path">POST /api/v2/stats</span> — initiate + get result</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Scheduled reports</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Full CRUD for scheduled reports</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Agent metrics / activity metrics</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td class="note-cell">Dedicated metrics endpoints</td>
+      </tr>
+
+      <!-- CALLER ID / FAILOVER -->
+      <tr class="group-header"><td colspan="5">Caller ID / Failover / Auto Answer</td></tr>
+      <tr>
+        <td><div class="setting-name">Caller ID (get / set)</div></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-partial">~ Partial</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Endpoints exist but CC-level vs user-level scope is unclear from public docs</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Failover / forwarding config</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Internal — <span class="api-path">/api/verifyforwarding</span> has no public equivalent</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Auto answer</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Likely inside opaque <span class="api-path">advanced_settings</span> — sub-fields not documented</td>
+      </tr>
+
+      <!-- AGENT SETTINGS -->
+      <tr class="group-header"><td colspan="5">Agent Settings</td></tr>
+      <tr>
+        <td><div class="setting-name">Duty status (on/off duty)</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">GET/PATCH /api/v2/callcenters/{cc}/operators/{op}/duty</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Custom agent status types</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Full CRUD — <span class="api-path">/api/v2/agentstatus</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Wrap-up time / after-call work</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API</td>
+      </tr>
+
+      <!-- RECORDING & TRANSCRIPTION -->
+      <tr class="group-header"><td colspan="5">Call Recording &amp; Transcription</td></tr>
+      <tr>
+        <td><div class="setting-name">CC-level recording policy</div><div class="setting-sub">"Always on" for all calls</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">User-level toggle exists; CC-level "always record" policy does not. <strong>Priority 2 for new public API.</strong></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">User-level recording toggle</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">POST /api/v2/users/{id}/callrecording/toggle</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Recording sharelinks</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Full CRUD for sharelinks</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Call transcripts</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Get transcript + get URL endpoints</td>
+      </tr>
+
+      <!-- CALL BLOCKING -->
+      <tr class="group-header"><td colspan="5">Call Blocking &amp; Spam Prevention</td></tr>
+      <tr>
+        <td><div class="setting-name">Blocked numbers (company-wide)</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">/api/v2/blockednumbers</span> — company-wide only, not per-CC</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Per-CC spam prevention</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Spam thresholds, STIR/SHAKEN per CC — no public API</td>
+      </tr>
+
+      <!-- CALL DISPOSITIONS -->
+      <tr class="group-header"><td colspan="5">Call Dispositions</td></tr>
+      <tr>
+        <td><div class="setting-name">Individual disposition CRUD</div></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-yes">✓ Yes</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell"><span class="api-path">POST/GET/PATCH/DELETE /api/v2/dispositions</span></td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Disposition list management</div><div class="setting-sub">Named lists assigned to CCs</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Internal — <span class="api-path">/api/dispositionlist</span>. Per-CC assignment not publicly exposed.</td>
+      </tr>
+
+      <!-- RETENTION -->
+      <tr class="group-header"><td colspan="5">Retention Policy</td></tr>
+      <tr>
+        <td><div class="setting-name">Recording retention period</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Transcript retention period</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No public API</td>
+      </tr>
+
+      <!-- BULK / AGENT INFRA -->
+      <tr class="group-header"><td colspan="5">Bulk / Agent Infrastructure</td></tr>
+      <tr>
+        <td><div class="setting-name">Batch update endpoint</div><div class="setting-sub">Apply changes to N CCs in one call</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">Does not exist. Critical for AI agent execution at scale. Without it: 200 CCs = 200 sequential API calls.</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Async job API</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No job submission / polling model. Needed for long-running bulk operations.</td>
+      </tr>
+      <tr>
+        <td><div class="setting-name">Dry-run / validation mode</div></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-na">N/A</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td class="note-cell">No way to preview what a bulk operation would change before committing</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px;padding:14px 18px;background:var(--purple-light);border:1px solid var(--purple-border);border-radius:10px;font-size:12px;color:var(--text-2);">
+    <strong>Note on opaque fields:</strong> Several CC settings exist inside undocumented objects (<span class="api-path">advanced_settings</span>, <span class="api-path">routing_options</span>, <span class="api-path">hold_queue</span>, <span class="api-path">alerts</span>, <span class="api-path">voice_intelligence</span>) on the CC create/update endpoint. These are marked Partial above. Documenting their sub-fields is the lowest-effort gap to close — no new backend work required, just schema exposure and API docs.
+  </div>
+</div>
+
+</body>
+</html>
