@@ -98,11 +98,14 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
 .btn-ai:hover{background:#ede5ff;}
 .btn-ai-spark{font-size:14px;}
 
-/* ── Sub-tabs ── */
-.sub-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px;gap:0;}
-.sub-tab{padding:8px 16px;font-size:13px;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .1s;}
-.sub-tab:hover{color:var(--text-1);}
-.sub-tab.active{color:var(--dp-purple);border-bottom-color:var(--dp-purple);font-weight:600;}
+/* ── Content two-column layout ── */
+.content-layout{display:flex;align-items:stretch;min-height:calc(100vh - var(--top-h) - 96px);}
+.settings-subnav{width:220px;flex-shrink:0;border-right:1px solid var(--border);padding:8px 0;}
+.subnav-item{display:flex;align-items:center;justify-content:space-between;padding:9px 20px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;transition:background .1s;}
+.subnav-item:hover{background:rgba(0,0,0,.04);}
+.subnav-item.active{background:rgba(0,0,0,.06);color:var(--text-1);font-weight:600;}
+.subnav-chevron{color:var(--text-3);font-size:11px;}
+.settings-main{flex:1;padding:24px 32px;min-width:0;}
 
 /* ── Settings content ── */
 .settings-view{display:none;}
@@ -180,8 +183,11 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
 .qa-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:8px;z-index:50;box-shadow:0 4px 16px rgba(0,0,0,.1);max-height:320px;overflow-y:auto;}
 .qa-menu.open{display:block;}
 .qa-group{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);padding:8px 12px 3px;}
-.qa-item{padding:7px 12px;font-size:12px;color:var(--text-2);cursor:pointer;}
+.qa-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 12px;font-size:12px;color:var(--text-2);cursor:pointer;}
 .qa-item:hover{background:var(--bg);}
+.qa-api-badge{font-size:10px;font-weight:600;padding:1px 6px;border-radius:8px;flex-shrink:0;white-space:nowrap;}
+.qa-api-needs{background:#FFF0E0;color:#B85C00;}
+.qa-api-partial{background:var(--dp-yellow-light);color:var(--dp-yellow);}
 .qa-divider{border:none;border-top:1px solid var(--border);margin:4px 0;}
 .qa-group-em{color:var(--dp-emergency);}
 .qa-item-em{color:var(--dp-emergency);}
@@ -408,14 +414,13 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
     </div>
 
     <!-- Page -->
-    <div class="page-wrap">
-      <div class="page-hd">
+    <div class="page-wrap" style="overflow-y:auto;padding:0;">
+      <div class="page-hd" style="padding:24px 32px 20px;">
         <div class="page-hd-left">
           <h1>Contact Centers Settings</h1>
           <p>Settings applied to all contact centers in this office</p>
         </div>
         <div class="page-hd-right">
-          <!-- AI Admin Agent entry point — next to primary CTA -->
           <button class="btn-ai" onclick="openDrawer()">
             <span class="btn-ai-spark">✦</span> AI Admin Agent
           </button>
@@ -423,14 +428,19 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
         </div>
       </div>
 
-      <!-- Sub-tabs -->
-      <div class="sub-tabs">
-        <div class="sub-tab active" onclick="switchTab('agents', this)" id="tab-agents">Agent and Call Settings</div>
-        <div class="sub-tab" onclick="switchTab('digital', this)" id="tab-digital">Digital Settings</div>
-        <div class="sub-tab" onclick="switchTab('holidays', this)" id="tab-holidays">Contact Center Holidays</div>
-        <div class="sub-tab" onclick="switchTab('groups', this)" id="tab-groups">Agent Groups</div>
-        <div class="sub-tab" onclick="switchTab('advanced', this)" id="tab-advanced">Advanced Settings</div>
-      </div>
+      <div class="content-layout">
+
+        <!-- Left sub-nav (matching real Dialpad admin) -->
+        <div class="settings-subnav">
+          <div class="subnav-item active" onclick="switchTab('agents', this)" id="tab-agents">Agent and Call Settings <span class="subnav-chevron">›</span></div>
+          <div class="subnav-item" onclick="switchTab('digital', this)" id="tab-digital">Digital Settings <span class="subnav-chevron">›</span></div>
+          <div class="subnav-item" onclick="switchTab('holidays', this)" id="tab-holidays">Contact Center Holidays <span class="subnav-chevron">›</span></div>
+          <div class="subnav-item" onclick="switchTab('groups', this)" id="tab-groups">Agent Groups <span class="subnav-chevron">›</span></div>
+          <div class="subnav-item" onclick="switchTab('advanced', this)" id="tab-advanced">Advanced Settings <span class="subnav-chevron">›</span></div>
+        </div>
+
+        <!-- Right settings content -->
+        <div class="settings-main">
 
       <!-- Agent and Call Settings -->
       <div id="view-agents" class="settings-view active">
@@ -578,8 +588,9 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
             <div class="sb-row-text"><div class="sb-row-label">Enable whisper coaching</div><div class="sb-row-desc">Supervisors can speak to agents without the caller hearing</div></div>
           </div>
         </div>
-      </div>
 
+        </div><!-- /settings-main -->
+      </div><!-- /content-layout -->
     </div><!-- /page-wrap -->
   </div><!-- /main -->
 </div><!-- /app -->
@@ -632,33 +643,33 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
           </button>
           <div class="qa-menu" id="qaMenu">
             <div class="qa-group">Hours &amp; Holidays</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')">Set NA holiday closures · Dec 25 + Jan 1</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Add US federal holidays for 2026 to all contact centers')">Add US federal holidays · all CCs</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Shorten Friday hours by 1 hour for NA support contact centers next quarter')">Shorten Friday hours · NA support</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')"><span>Set NA holiday closures · Dec 25 + Jan 1</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Add US federal holidays for 2026 to all contact centers')"><span>Add US federal holidays · all CCs</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Shorten Friday hours by 1 hour for NA support contact centers next quarter')"><span>Shorten Friday hours · NA support</span></div>
 
             <div class="qa-group">Call Recording</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Enable automatic call recording on all contact centers that have it disabled')">Enable recording · all CCs with issues</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Enable call recording backup for all contact centers')">Enable recording backup · all CCs</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable recording · EU GDPR</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable automatic call recording on all contact centers that have it disabled')"><span>Enable recording · all CCs with issues</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable call recording backup for all contact centers')"><span>Enable recording backup · all CCs</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')"><span>Disable recording · EU GDPR</span></div>
 
             <div class="qa-group">Agent Settings</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Enable agent unavailable timer set to 5 minutes for all contact centers')">Enable agent unavailable timer · 5 min</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Restrict agents from viewing contact center settings across all CCs')">Restrict agent settings visibility</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up time 90s · all CCs</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable agent unavailable timer set to 5 minutes for all contact centers')"><span>Enable agent unavailable timer · 5 min</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Restrict agents from viewing contact center settings across all CCs')"><span>Restrict agent settings visibility</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Set wrap-up time to 90 seconds across all contact centers')"><span>Set wrap-up time 90s · all CCs</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
 
             <div class="qa-group">Call Routing</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Change routing method to round robin for all NA contact centers')">Set round robin routing · NA</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Set overflow routing to voicemail for all contact centers when no agents available')">Set overflow → voicemail · all CCs</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Change routing method to round robin for all NA contact centers')"><span>Set round robin routing · NA</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Set overflow routing to voicemail for all contact centers when no agents available')"><span>Set overflow → voicemail · all CCs</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
 
             <div class="qa-group">AI Features</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Enable Dialpad AI features — transcription, summaries, and AI CSAT — on all contact centers')">Enable Dialpad AI · all CCs</div>
-            <div class="qa-item" onclick="closeQA(); aipFill('Enable PII redaction on all contact center transcripts and recordings')">Enable PII redaction · all</div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable Dialpad AI features — transcription, summaries, and AI CSAT — on all contact centers')"><span>Enable Dialpad AI · all CCs</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+            <div class="qa-item" onclick="closeQA(); aipFill('Enable PII redaction on all contact center transcripts and recordings')"><span>Enable PII redaction · all</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
 
             <div class="qa-divider"></div>
             <div class="qa-group qa-group-em">Emergency &amp; Disaster</div>
-            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup, and close for 72 hours')">Hurricane mode · FL contact centers</div>
-            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Deploy emergency IVR message to all contact centers: operating at reduced capacity due to severe weather')">Emergency IVR · all contact centers</div>
-            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Restore all Florida contact centers to normal operations after hurricane')">Restore normal · FL contact centers</div>
+            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup, and close for 72 hours')"><span>Hurricane mode · FL contact centers</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Deploy emergency IVR message to all contact centers: operating at reduced capacity due to severe weather')"><span>Emergency IVR · all contact centers</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+            <div class="qa-item qa-item-em" onclick="closeQA(); aipFill('Restore all Florida contact centers to normal operations after hurricane')"><span>Restore normal · FL contact centers</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
           </div>
         </div>
       </div>
@@ -816,13 +827,13 @@ function closeDrawer() {
   document.getElementById('drawerOverlay').classList.remove('open');
 }
 function updateCtxFromTab() {
-  const active = document.querySelector('.sub-tab.active');
-  if (active) document.getElementById('drwCtx').textContent = active.textContent;
+  const active = document.querySelector('.subnav-item.active');
+  if (active) document.getElementById('drwCtx').textContent = active.firstChild.textContent.trim();
 }
 
 // ── Sub-tab switching ──
 function switchTab(name, el) {
-  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.subnav-item').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.settings-view').forEach(v => v.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('view-' + name).classList.add('active');
