@@ -131,6 +131,18 @@ body {
 .ask-decision.purple { border-left: 3px solid #7C52FF; color: rgba(255,255,255,.65); }
 .ask-decision.red { border-left: 3px solid #f87171; color: rgba(255,255,255,.65); }
 
+/* ── API table ── */
+.api-table-wrap { border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+.api-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.api-table thead tr { background: rgba(255,255,255,.04); }
+.api-table th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.api-table td { padding: 8px 14px; border-bottom: 1px solid rgba(255,255,255,.05); color: rgba(255,255,255,.7); vertical-align: middle; }
+.api-table tbody tr:last-child td { border-bottom: none; }
+.api-table tbody tr:hover td { background: rgba(255,255,255,.02); }
+.api-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; white-space: nowrap; }
+.api-yes { background: rgba(52,211,153,.15); color: #34d399; }
+.api-partial { background: rgba(251,191,36,.12); color: #fbbf24; }
+
 /* ── Footer ── */
 .footer {
   padding-top: 32px; border-top: 1px solid rgba(255,255,255,.08);
@@ -225,7 +237,88 @@ body {
       </div>
     </div>
 
-    <div style="margin-top:28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);margin-bottom:12px;">5 missing APIs blocking full agent coverage</div>
+    <!-- What we have -->
+    <div style="margin-top:28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);margin-bottom:12px;">What the agent can do today</div>
+    <div class="api-table-wrap">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Setting area</th>
+            <th>Status</th>
+            <th>What's covered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Contact center management</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Create, read, update, delete any CC</td>
+          </tr>
+          <tr>
+            <td>Agents &amp; admins</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Add, remove, list operators per CC</td>
+          </tr>
+          <tr>
+            <td>Skill levels</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Get and update skill level per agent per CC</td>
+          </tr>
+          <tr>
+            <td>Duty status</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Get and update on/off duty per agent</td>
+          </tr>
+          <tr>
+            <td>Number assignment</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Assign, unassign, auto-assign, swap numbers</td>
+          </tr>
+          <tr>
+            <td>Business hours</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Per-day open/close hours (Mon–Sun)</td>
+          </tr>
+          <tr>
+            <td>Call routing — dynamic</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Webhook-based call router + IVR create/update</td>
+          </tr>
+          <tr>
+            <td>Dispositions</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Create, read, update, delete, list</td>
+          </tr>
+          <tr>
+            <td>Blocked numbers</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Add, list, remove (company-wide)</td>
+          </tr>
+          <tr>
+            <td>Stats &amp; reporting</td>
+            <td><span class="api-tag api-yes">✓ Full API</span></td>
+            <td>Custom stats, scheduled reports, agent metrics</td>
+          </tr>
+          <tr>
+            <td>Call routing — static rules</td>
+            <td><span class="api-tag api-partial">~ Partial</span></td>
+            <td>routing_options field exists but sub-fields undocumented</td>
+          </tr>
+          <tr>
+            <td>AI / voice intelligence</td>
+            <td><span class="api-tag api-partial">~ Partial</span></td>
+            <td>voice_intelligence object exists but fields undocumented</td>
+          </tr>
+          <tr>
+            <td>Alerts &amp; thresholds</td>
+            <td><span class="api-tag api-partial">~ Partial</span></td>
+            <td>alerts object exists on CC update but undocumented</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:32px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);margin-bottom:12px;">5 missing APIs blocking full agent coverage</div>
     <div class="gaps-grid">
       <div class="gap-card">
         <div class="gap-num">1</div>
