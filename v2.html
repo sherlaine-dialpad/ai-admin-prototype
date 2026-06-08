@@ -384,6 +384,10 @@
     .aip-qa-item:hover { background: var(--hover-bg); }
     .aip-qa-item-em { color: var(--emergency); }
     .aip-qa-item-em:hover { background: var(--emergency-surface); }
+    .aip-qa-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .qa-api-badge { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 8px; flex-shrink: 0; white-space: nowrap; }
+    .qa-api-needs { background: #FFF0E0; color: #B85C00; }
+    .qa-api-partial { background: var(--warning-surface); color: var(--warning); }
     .aip-qa-divider { border: none; border-top: 1px solid var(--border); margin: 5px 0; }
 
     /* ── Templates view ── */
@@ -718,6 +722,9 @@
 
         <div class="nav-section" style="margin-top:4px">Contact Centers</div>
         <div class="nav-parent" id="navAllCCs" style="cursor:pointer" onclick="showView('allccs')"><span>All Contact Centers</span><span class="nav-parent-add">+</span></div>
+        <div class="nav-item" id="navAIAdmin" onclick="openAIPanel()" style="cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--purple-text);font-weight:500;">
+          <span style="font-size:13px;line-height:1;">✦</span><span>AI Admin Agent</span>
+        </div>
         <div class="nav-item" id="navSalesEast" onclick="showView('saleseast')" style="display:flex;align-items:center;justify-content:space-between">
           <span>Sales East</span><span class="nav-dot"></span>
         </div>
@@ -1223,40 +1230,40 @@
             </button>
             <div class="aip-qa-menu" id="qaMenu">
               <div class="aip-qa-group">Hours &amp; Holidays</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')">Set NA holiday closures · Dec 25 + Jan 1</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Shorten Friday hours by 1hr for NA support centers next quarter')">Shorten Friday hours · NA support</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')">Clone US → CA Thanksgiving hours</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set all NA contact centers closed on Dec 25 and Jan 1')"><span>Set NA holiday closures · Dec 25 + Jan 1</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Shorten Friday hours by 1hr for NA support centers next quarter')"><span>Shorten Friday hours · NA support</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Clone US Thanksgiving hours to Canadian queues with +1 day offset')"><span>Clone US → CA Thanksgiving hours</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
 
               <div class="aip-qa-group">Call Recording</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable automatic call recording on all 23 contact centers that have it disabled')">Enable recording · 23 CCs with issues</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable automatic call recording on all 400+ contact centers')">Enable recording · all CCs</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')">Disable recording · EU GDPR</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable automatic call recording on all 23 contact centers that have it disabled')"><span>Enable recording · 23 CCs with issues</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable automatic call recording on all 400+ contact centers')"><span>Enable recording · all CCs</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Disable call recording for all CCs in Germany and France for GDPR compliance')"><span>Disable recording · EU GDPR</span></div>
 
               <div class="aip-qa-group">Greetings &amp; Audio</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Add after-hours greeting to the 8 contact centers that are missing one')">Add missing greetings · 8 CCs</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Replace outdated greetings with updated standard welcome on all affected CCs')">Replace outdated greetings · all affected</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')">Update EMEA greeting · spring promo</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Add after-hours greeting to the 8 contact centers that are missing one')"><span>Add missing greetings · 8 CCs</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Replace outdated greetings with updated standard welcome on all affected CCs')"><span>Replace outdated greetings · all affected</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Update EMEA sales after-hours greeting to spring_promo_2026.mp3')"><span>Update EMEA greeting · spring promo</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
 
               <div class="aip-qa-group">Call Routing</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Change routing method to round robin for all NA contact centers')">Set round robin routing · NA</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set overflow routing to voicemail for all CCs when no agents are available')">Set overflow → voicemail · all CCs</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')">APAC queue timeout + overflow</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Change routing method to round robin for all NA contact centers')"><span>Set round robin routing · NA</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set overflow routing to voicemail for all CCs when no agents are available')"><span>Set overflow → voicemail · all CCs</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set queue timeout to 2 minutes and overflow to Support Tier 2 for APAC tech support queues')"><span>APAC queue timeout + overflow</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
 
               <div class="aip-qa-group">Agent Management</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Remove inactive agents from all contact centers — last active 60+ days')">Remove inactive agents · all CCs</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set wrap-up time to 90 seconds across all contact centers')">Set wrap-up time 90s · all CCs</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')">Add agents · EMEA CCs</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Remove inactive agents from all contact centers — last active 60+ days')"><span>Remove inactive agents · all CCs</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Set wrap-up time to 90 seconds across all contact centers')"><span>Set wrap-up time 90s · all CCs</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Add Sarah Chen and Marcus Liu as agents to all EMEA contact centers')"><span>Add agents · EMEA CCs</span></div>
 
               <div class="aip-qa-group">AI Features</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')">Enable Dialpad AI · all CCs</div>
-              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable PII redaction on all contact center transcripts and recordings')">Enable PII redaction · all</div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable Dialpad AI features including transcription, summaries, and AI CSAT on all contact centers')"><span>Enable Dialpad AI · all CCs</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+              <div class="aip-qa-item" onclick="closeQADropdown(); aipFill('Enable PII redaction on all contact center transcripts and recordings')"><span>Enable PII redaction · all</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
 
               <div class="aip-qa-divider"></div>
               <div class="aip-qa-group aip-qa-group-em">Emergency &amp; Disaster</div>
-              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup CCs, and close offices for the next 72 hours')">Hurricane mode · FL contact centers</div>
-              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Deploy emergency IVR message to all contact centers: we are operating at reduced capacity due to severe weather, please hold or call back later')">Emergency IVR · all contact centers</div>
-              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Restore all Florida contact centers to normal operations after hurricane — standard hours, routing, and greetings')">Restore normal · FL contact centers</div>
-              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Reroute all Florida inbound calls to Austin Texas backup contact centers until further notice')">Disaster routing → TX backup</div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Activate hurricane emergency mode for all Florida contact centers — update IVR greeting, reroute calls to Texas backup CCs, and close offices for the next 72 hours')"><span>Hurricane mode · FL contact centers</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Deploy emergency IVR message to all contact centers: we are operating at reduced capacity due to severe weather, please hold or call back later')"><span>Emergency IVR · all contact centers</span><span class="qa-api-badge qa-api-needs">Needs API</span></div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Restore all Florida contact centers to normal operations after hurricane — standard hours, routing, and greetings')"><span>Restore normal · FL contact centers</span><span class="qa-api-badge qa-api-partial">Partial</span></div>
+              <div class="aip-qa-item aip-qa-item-em" onclick="closeQADropdown(); aipFill('Reroute all Florida inbound calls to Austin Texas backup contact centers until further notice')"><span>Disaster routing → TX backup</span></div>
             </div>
           </div>
 
@@ -2403,9 +2410,20 @@
     const panel = document.querySelector('.ai-panel');
     const collapsed = panel.classList.toggle('collapsed');
     const icon = document.getElementById('aipToggleIcon');
-    // Point chevron right when collapsed (to signal "expand"), left when open
     icon.style.transform = collapsed ? 'rotate(180deg)' : '';
     document.getElementById('aipToggle').title = collapsed ? 'Expand' : 'Collapse';
+  }
+
+  function openAIPanel() {
+    const panel = document.querySelector('.ai-panel');
+    if (panel.classList.contains('collapsed')) {
+      panel.classList.remove('collapsed');
+      const icon = document.getElementById('aipToggleIcon');
+      if (icon) icon.style.transform = '';
+      document.getElementById('aipToggle').title = 'Collapse';
+    }
+    aipSwitchTab('cmd');
+    setTimeout(() => document.getElementById('aipInput').focus(), 100);
   }
 
   // ── Keyboard shortcut + init ──
