@@ -110,6 +110,14 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
 /* ── Settings content ── */
 .settings-view{display:none;}
 .settings-view.active{display:block;}
+
+/* ── Empty state for unbuilt sections ── */
+.section-empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 32px;text-align:center;}
+.ses-icon{font-size:32px;margin-bottom:12px;}
+.ses-title{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:6px;}
+.ses-desc{font-size:13px;color:var(--text-3);max-width:360px;line-height:1.6;margin-bottom:16px;}
+.ses-btn{display:inline-flex;align-items:center;gap:6px;background:var(--dp-purple-light);color:var(--dp-purple-dark);border:1px solid var(--dp-purple-border);border-radius:7px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.ses-btn:hover{background:#ede5ff;}
 .settings-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:16px;}
 .sb-title{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--text-1);}
 .sb-desc{font-size:12px;color:var(--text-3);margin-bottom:14px;}
@@ -523,71 +531,43 @@ body{font-family:var(--font);font-size:13px;background:var(--bg);color:var(--tex
 
       <!-- Digital Settings -->
       <div id="view-digital" class="settings-view">
-        <div class="settings-block">
-          <div class="sb-title">Digital Channel Settings</div>
-          <div class="sb-desc">Configure settings that apply to digital channels across all contact centers.</div>
-          <div class="sb-row">
-            <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"></span></label>
-            <div class="sb-row-text"><div class="sb-row-label">Enable live chat for contact centers</div><div class="sb-row-desc">Allows customers to initiate chats via web widget</div></div>
-          </div>
-          <div class="sb-row">
-            <label class="dp-toggle"><input type="checkbox"><span class="dp-track"></span></label>
-            <div class="sb-row-text"><div class="sb-row-label">Require agent availability for digital channels</div><div class="sb-row-desc">Offline message shown when no agents are available</div></div>
-          </div>
+        <div class="section-empty-state">
+          <div class="ses-icon">💬</div>
+          <div class="ses-title">Digital Settings</div>
+          <div class="ses-desc">Configure digital channel settings across all contact centers — live chat, SMS, and messaging defaults.</div>
+          <button class="ses-btn" onclick="openDrawer(); aipFill('Configure digital channel settings across all contact centers')">✦ Ask AI Admin Agent</button>
         </div>
       </div>
 
       <!-- Contact Center Holidays -->
       <div id="view-holidays" class="settings-view">
-        <div class="settings-block">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-            <div>
-              <div class="sb-title">Contact Center Holidays</div>
-              <div class="sb-desc" style="margin:0;">Configure holiday closures that apply across all contact centers in this office.</div>
-            </div>
-            <div style="display:flex;gap:8px;">
-              <button class="btn-ai" onclick="openDrawer(); aipFill('Set all contact centers closed on Dec 25 and Jan 1 for the holidays')">✦ Ask AI to set holidays</button>
-              <button class="add-holiday-btn">+ Add holiday</button>
-            </div>
-          </div>
-
-          <div class="holiday-empty">
-            <div class="holiday-empty-icon">📅</div>
-            <div class="holiday-empty-text">No holiday hours set for this office.</div>
-            <div class="holiday-empty-sub">Holiday closures apply globally to all contact centers unless overridden per CC.</div>
-            <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
-              <button class="add-holiday-btn">+ Add holiday manually</button>
-            </div>
-            <div style="margin-top:10px;">
-              <span class="ai-suggest" onclick="openDrawer(); aipFill('Add common US federal holidays for 2026 to all contact centers — include New Years, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas')">✦ Ask AI to add US federal holidays →</span>
-            </div>
-          </div>
+        <div class="section-empty-state">
+          <div class="ses-icon">📅</div>
+          <div class="ses-title">No holiday hours set</div>
+          <div class="ses-desc">Holiday closures apply globally to all contact centers. Add key dates or ask AI Admin Agent to set them automatically.</div>
+          <button class="ses-btn" onclick="openDrawer(); aipFill('Add US federal holidays for 2026 to all contact centers — New Years, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas')">✦ Ask AI Admin Agent to set holidays</button>
         </div>
       </div>
 
       <!-- Agent Groups -->
       <div id="view-groups" class="settings-view">
-        <div class="settings-block">
-          <div class="sb-title">Agent Groups</div>
-          <div class="sb-desc">Group agents across contact centers by skill, team, or availability.</div>
-          <div style="padding:24px 0;text-align:center;color:var(--text-3);font-size:13px;">No agent groups configured. <span class="ai-suggest" onclick="openDrawer(); aipFill('Create an agent group for all senior agents across NA contact centers')">✦ Ask AI to create a group →</span></div>
+        <div class="section-empty-state">
+          <div class="ses-icon">👥</div>
+          <div class="ses-title">No agent groups configured</div>
+          <div class="ses-desc">Group agents across contact centers by skill, team, or region for smarter routing and management.</div>
+          <button class="ses-btn" onclick="openDrawer(); aipFill('Create agent groups for NA, EU, and APAC contact centers based on current rosters')">✦ Ask AI Admin Agent to create groups</button>
         </div>
       </div>
 
       <!-- Advanced Settings -->
       <div id="view-advanced" class="settings-view">
-        <div class="settings-block">
-          <div class="sb-title">Advanced Settings</div>
-          <div class="sb-desc">Advanced configuration options for contact center behavior.</div>
-          <div class="sb-row">
-            <label class="dp-toggle"><input type="checkbox"><span class="dp-track"></span></label>
-            <div class="sb-row-text"><div class="sb-row-label">Enable contact center monitoring</div><div class="sb-row-desc">Allow supervisors to monitor and barge in on calls</div></div>
-          </div>
-          <div class="sb-row">
-            <label class="dp-toggle"><input type="checkbox" checked><span class="dp-track"></span></label>
-            <div class="sb-row-text"><div class="sb-row-label">Enable whisper coaching</div><div class="sb-row-desc">Supervisors can speak to agents without the caller hearing</div></div>
-          </div>
+        <div class="section-empty-state">
+          <div class="ses-icon">🔧</div>
+          <div class="ses-title">Advanced Settings</div>
+          <div class="ses-desc">Configure supervisor monitoring, whisper coaching, and advanced call handling across all contact centers.</div>
+          <button class="ses-btn" onclick="openDrawer(); aipFill('Enable supervisor monitoring and whisper coaching across all contact centers')">✦ Ask AI Admin Agent to configure</button>
         </div>
+      </div>
 
         </div><!-- /settings-main -->
       </div><!-- /content-layout -->
